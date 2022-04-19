@@ -1,0 +1,20 @@
+@model IEnumerable<Account>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+    </tr>
+
+    @foreach (var account in Model)
+    {
+    <tr>
+        <td>@account.Id</td>
+        <td>@account.Username</td>
+        <td>@account.Email</td>
+        <td>@account.Password</td>
+    </tr>
+    }
+</table>

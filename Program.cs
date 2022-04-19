@@ -1,3 +1,6 @@
+using CoronaCheckIn;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Overwrite appsettings loading so we can have a Local one f.e. db connection strings
@@ -19,6 +22,12 @@ builder.Host.ConfigureAppConfiguration(
             config.AddCommandLine(args);
         }
     });
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
