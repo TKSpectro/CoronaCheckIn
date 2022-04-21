@@ -1,9 +1,13 @@
+using System.Globalization;
 using CoronaCheckIn;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Overwrite appsettings loading so we can have a Local one f.e. db connection strings
+// Overwrite appsettings loading so we can have a Local one for f.e. db connection strings
 builder.Host.ConfigureAppConfiguration(
     (hostingContext, config) =>
     {
@@ -29,6 +33,27 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { new CultureInfo("de"), new CultureInfo("en") };
+
+    options.DefaultRequestCulture = new RequestCulture("de");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+// Add services to the container.
+builder.Services
+    .AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+    });
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -44,6 +69,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value);
 
 app.UseRouting();
 

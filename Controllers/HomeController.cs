@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Localization;
 
 namespace CoronaCheckIn.Controllers;
 
@@ -21,6 +22,16 @@ public class HomeController : Controller
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    public IActionResult SetLang(string lang, string url)
+    {
+        Response.Cookies.Append(
+            CookieRequestCultureProvider.DefaultCookieName,
+            CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang))
+        );
+
+        return LocalRedirect(url);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
