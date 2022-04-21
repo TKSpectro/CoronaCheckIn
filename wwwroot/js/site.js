@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function switchLanguage(dropdown) {
+    const loc = dropdown.options[dropdown.selectedIndex].value;
 
-// Write your JavaScript code.
+    $.ajax({
+        url: '/Home/SetLang',
+        type: 'POST',
+        data: {
+            lang: loc,
+            url: window.location.pathname,
+        },
+        success: function (result) {
+            window.location.pathname = result;
+            window.location.reload();
+        },
+    });
+}

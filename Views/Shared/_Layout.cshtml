@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http.Extensions
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,6 +30,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="accounts" asp-action="Index">Accounts</a>
                         </li>
+                        <li class="nav-item">
+                                   
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -42,6 +47,13 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            @* TODO: Vertical center the select *@
+            <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)" >
+                @* TODO: Is there a better way to do this *@
+                <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"].Split("=")[2] == "en" ? true : false)>English</option>
+                <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"].Split("=")[2] == "de" ? true : false) >Deutsch</option>
+            </select>         
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

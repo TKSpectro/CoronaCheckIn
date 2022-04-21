@@ -1,11 +1,12 @@
 @model IEnumerable<Account>
 
+@Localizer["Accounts"]
 <table>
     <tr>
         <th>Id</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Password</th>
+        <th>@SharedLocalizer["Username"]</th>
+        <th>@SharedLocalizer["Email"]</th>
+        <th>@SharedLocalizer["Password"]</th>
     </tr>
 
     @foreach (var account in Model)
