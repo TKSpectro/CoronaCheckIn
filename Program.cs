@@ -33,6 +33,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+// Add our own data seeder
+builder.Services.AddTransient<DataSeeder>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -65,6 +67,18 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+// Passing seed as a parameter when running dotnet run will seed the database
+if (args.Length == 1 && args[0].ToLower() == "seed")
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<DataSeeder>();
+        service.Seed();
+    }
 }
 
 app.UseHttpsRedirection();

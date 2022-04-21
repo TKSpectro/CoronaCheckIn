@@ -6,7 +6,7 @@ CREATE TABLE Accounts
     password  VARCHAR (100)  NOT NULL
 );
 
-Insert into Accounts(username,email,password) values( 'Name 1','email1@mail.com', '123123123');
-Insert into Accounts(username,email,password) values( 'Name 2','email2@mail.com', '123123123');
-Insert into Accounts(username,email,password) values( 'Name 3','email3@mail.com', '123123123');
-Insert into Accounts(username,email,password) values( 'Name 4','email4@mail.com', '123123123');
+-- Insert into Accounts(username,email,password) values( 'Name 1','email1@mail.com', '123123123');
+-- Insert into Accounts(username,email,password) values( 'Name 2','email2@mail.com', '123123123');
+-- Insert into Accounts(username,email,password) values( 'Name 3','email3@mail.com', '123123123');
+-- Insert into Accounts(username,email,password) values( 'Name 4','email4@mail.com', '123123123');

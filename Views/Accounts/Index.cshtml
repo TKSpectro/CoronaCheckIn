@@ -1,21 +1,24 @@
 @model IEnumerable<Account>
 
 @Localizer["Accounts"]
-<table>
-    <tr>
-        <th>Id</th>
-        <th>@SharedLocalizer["Username"]</th>
-        <th>@SharedLocalizer["Email"]</th>
-        <th>@SharedLocalizer["Password"]</th>
-    </tr>
-
-    @foreach (var account in Model)
-    {
-    <tr>
-        <td>@account.Id</td>
-        <td>@account.Username</td>
-        <td>@account.Email</td>
-        <td>@account.Password</td>
-    </tr>
-    }
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">@SharedLocalizer["Username"]</th>
+            <th scope="col">@SharedLocalizer["Email"]</th>
+            <th scope="col">@SharedLocalizer["Password"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model)
+        {
+        <tr>
+            <th scope="row">@account.Id</th>
+            <td>@account.Username</td>
+            <td>@account.Email</td>
+            <td>@account.Password</td>
+        </tr>
+        }
+    </tbody>
 </table>

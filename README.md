@@ -10,8 +10,14 @@ docker-compose up -d
 dotnet run
 ```
 
-Before accessing any data you should run the Scripts/seed.sql script while being connected to the database
-// TODO: Maybe find an easier way for seeding the database
+## Seeding the database
+
+1. Run the Scripts/seed.sql script to create the database and needed tables.
+2. You can seed the database with example data by running
+
+```bash
+dotnet run seed
+```
 
 ## Examples
 
