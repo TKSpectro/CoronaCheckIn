@@ -1,6 +1,7 @@
 @model IEnumerable<Account>
 
 @Localizer["Accounts"]
+<a href="/accounts/create">Create</a>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -18,7 +19,27 @@
             <td>@account.Username</td>
             <td>@account.Email</td>
             <td>@account.Password</td>
+            <td>
+                <img src="~/lib/bootstrap-icons/icons/trash.svg" 
+                    alt="Delete" width="32" height="32" class="btn btn-sm btn-danger"
+                    onclick="deleteAccount('@account.Id')"
+                >
+            </td>
         </tr>
         }
     </tbody>
 </table>
+
+<script>
+    // call delete endpoint
+    function deleteAccount(id) {
+        var url = "/accounts/delete/" + id;
+        $.ajax({
+            url: url,
+            type: "DELETE",
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+</script>
