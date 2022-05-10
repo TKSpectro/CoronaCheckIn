@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoronaCheckIn.Models
 {
-    [Index(nameof(Email), IsUnique = true)]
     public class Account
     {
         [Required]

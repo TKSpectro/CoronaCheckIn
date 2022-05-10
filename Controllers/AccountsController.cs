@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CoronaCheckIn.Managers;
 using Microsoft.AspNetCore.Mvc;
 using CoronaCheckIn.Models;
 
@@ -7,19 +8,19 @@ namespace CoronaCheckIn.Controllers
     public class AccountsController : Controller
     {
         private readonly ILogger<AccountsController> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly AccountManager _accountManager;
 
-        public AccountsController(ILogger<AccountsController> logger, ApplicationDbContext context)
+        public AccountsController(ILogger<AccountsController> logger, AccountManager accountManager)
         {
             _logger = logger;
-            _context = context;
+            _accountManager = accountManager;
         }
 
         public IActionResult Index()
         {
             ViewBag.title = "Accounts";
 
-            IEnumerable<Account> accounts = _context.Accounts;
+            IEnumerable<Account> accounts = _accountManager.GetAccounts();
             return View(accounts);
         }
 
@@ -35,11 +36,10 @@ namespace CoronaCheckIn.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(model);
+                _accountManager.Add(model);
 
                 // TODO: Encrypt Password
-
-                _context.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             else
@@ -50,19 +50,12 @@ namespace CoronaCheckIn.Controllers
 
         public IActionResult Delete(Guid id)
         {
-            Account? account = _context.Accounts.Find(id);
-            if (account == null)
-            {
-                return NotFound();
-            }
-
-            _context.Accounts.Remove(account);
-            _context.SaveChanges();
+            _accountManager.Remove(id);
 
             return RedirectToAction("Index");
         }
 
-        // TODO Add Edit and Delete Examples
+        // TODO Add Edit
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

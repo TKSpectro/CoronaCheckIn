@@ -11,8 +11,8 @@
     "CoronaCheckIn": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:7223;http://localhost:5175",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:5001;http://localhost:5175",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

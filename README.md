@@ -10,13 +10,17 @@ docker-compose up -d
 dotnet run
 ```
 
-## Seeding the database
-
-1. Run the Scripts/seed.sql script to create the database and needed tables.
-2. You can seed the database with example data by running
+## Database Migrations
+You will have to install the ef tool for the dotnet cli
 
 ```bash
-dotnet run seed
+# change "init" (title of the migration)
+dotnet ef migrations add init
+```
+
+Bring your database up to the newest state/migration
+```bash
+dotnet ef database update
 ```
 
 ## Examples

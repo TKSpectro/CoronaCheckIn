@@ -1,5 +1,7 @@
 using System.Globalization;
 using CoronaCheckIn;
+using CoronaCheckIn.Managers;
+using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -27,15 +29,6 @@ builder.Host.ConfigureAppConfiguration(
         }
     });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-});
-
-// Add our own data seeder
-builder.Services.AddTransient<DataSeeder>();
-
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[] { new CultureInfo("de"), new CultureInfo("en") };
@@ -56,8 +49,9 @@ builder.Services
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options => options
+    .UseSqlServer(builder.Configuration.GetConnectionString("AppDb")));
+builder.Services.AddScoped<AccountManager>();
 
 var app = builder.Build();
 
@@ -69,22 +63,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Passing seed as a parameter when running dotnet run will seed the database
-if (args.Length == 1 && args[0].ToLower() == "seed")
-{
-    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<DataSeeder>();
-        service.Seed();
-    }
-}
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value);
+var requestLocalizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>()?.Value;
+if (requestLocalizationOptions != null)
+    app.UseRequestLocalization(requestLocalizationOptions);
 
 app.UseRouting();
 

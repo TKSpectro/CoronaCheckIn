@@ -51,8 +51,8 @@
             @* TODO: Vertical center the select *@
             <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)" >
                 @* TODO: Is there a better way to do this *@
-                <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"].Split("=")[2] == "en" ? true : false)>English</option>
-                <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"].Split("=")[2] == "de" ? true : false) >Deutsch</option>
+                <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
+                <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false) >Deutsch</option>
             </select>         
         </div>
     </footer>
