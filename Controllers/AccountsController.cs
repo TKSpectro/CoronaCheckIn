@@ -2,6 +2,7 @@ using System.Diagnostics;
 using CoronaCheckIn.Managers;
 using Microsoft.AspNetCore.Mvc;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoronaCheckIn.Controllers
 {
@@ -16,46 +17,14 @@ namespace CoronaCheckIn.Controllers
             _accountManager = accountManager;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             ViewBag.title = "Accounts";
 
-            IEnumerable<Account> accounts = _accountManager.GetAccounts();
+            IEnumerable<User> accounts = _accountManager.GetAccounts();
             return View(accounts);
         }
-
-        public IActionResult Create()
-        {
-            ViewBag.title = "Create Account";
-
-            return View(new Account());
-        }
-
-        [HttpPost]
-        public IActionResult Create(Account model)
-        {
-            if (ModelState.IsValid)
-            {
-                _accountManager.Add(model);
-
-                // TODO: Encrypt Password
-                
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(model);
-            }
-        }
-
-        public IActionResult Delete(Guid id)
-        {
-            _accountManager.Remove(id);
-
-            return RedirectToAction("Index");
-        }
-
-        // TODO Add Edit
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
