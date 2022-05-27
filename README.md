@@ -23,6 +23,11 @@ Bring your database up to the newest state/migration
 dotnet ef database update
 ```
 
+Seed your database with good testing data
+```bash
+dotnet run seed
+```
+
 ## Examples
 
 ### Read from appsettings.json
