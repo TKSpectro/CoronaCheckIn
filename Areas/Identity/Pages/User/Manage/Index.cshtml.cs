@@ -17,7 +17,7 @@ namespace CoronaCheckIn.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-
+        
         public IndexModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager)
@@ -32,7 +32,7 @@ namespace CoronaCheckIn.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public string Username { get; set; }
         
-        public IList<string> RoleIds { get; set; }
+        public string Roles { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -67,10 +67,10 @@ namespace CoronaCheckIn.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var roleIds = await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
 
             Username = userName;
-            RoleIds = roleIds;
+            Roles = string.Join(", ", roles);
 
             Input = new InputModel
             {

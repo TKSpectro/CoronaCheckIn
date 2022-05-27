@@ -56,7 +56,8 @@ namespace CoronaCheckIn.Models
                         Firstname = "John",
                         Lastname = "Doe",
                         EmailConfirmed = true,
-                        PasswordHash = "AQAAAAEAACcQAAAAEKck5f2Wq+Q42rT3NtskgCXJnjIj5tMlZ5swPyjuiIN6wTkMizK6WGlqzjoYNCbV1A=="
+                        // CoronaCheckIn1!
+                        PasswordHash = "AQAAAAEAACcQAAAAEGxpSFInnWQ9g7rPuupxXhzp5oqVjvYb8mO4X6xoZ/1ZCwI53XSWsOvk2XTu8hig7w=="
                     });
             }
             
@@ -73,7 +74,8 @@ namespace CoronaCheckIn.Models
                         Firstname = "Admin",
                         Lastname = "Admin",
                         EmailConfirmed = true,
-                        PasswordHash = "AQAAAAEAACcQAAAAEKck5f2Wq+Q42rT3NtskgCXJnjIj5tMlZ5swPyjuiIN6wTkMizK6WGlqzjoYNCbV1A=="
+                        // CoronaCheckIn1!
+                        PasswordHash = "AQAAAAEAACcQAAAAEGxpSFInnWQ9g7rPuupxXhzp5oqVjvYb8mO4X6xoZ/1ZCwI53XSWsOvk2XTu8hig7w=="
                     });
             }
 
