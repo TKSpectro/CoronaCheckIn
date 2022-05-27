@@ -17,11 +17,13 @@ namespace CoronaCheckIn.Areas.Identity.Pages.User
     {
         private readonly UserManager<Models.User> _userManager;
         private readonly IEmailSender _sender;
+        private readonly IConfiguration _configuration;
 
-        public RegisterConfirmationModel(UserManager<Models.User> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<Models.User> userManager, IEmailSender sender, IConfiguration configuration)
         {
             _userManager = userManager;
             _sender = sender;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -58,14 +60,14 @@ namespace CoronaCheckIn.Areas.Identity.Pages.User
 
             Email = email;
             // Once you add a real email sender, you should remove this code that lets you confirm the account
-            DisplayConfirmAccountLink = true;
+            DisplayConfirmAccountLink = !bool.Parse(_configuration["smtp:enabled"]);
             if (DisplayConfirmAccountLink)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 EmailConfirmationUrl = Url.Page(
-                    "/Account/ConfirmEmail",
+                    "/User/ConfirmEmail",
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                     protocol: Request.Scheme);

@@ -28,6 +28,28 @@ Seed your database with good testing data
 dotnet run seed
 ```
 
+## Enabling actual email sending
+
+Create a appsettings.Local.json and set your own smtp settings
+We recommend [Ethereal Mail](https://ethereal.email/) for testing purposes.
+
+The appsettings.Local.json can be copied from the Development one or created by hand and should contain:
+
+```json
+{
+    "smtp": {
+        "enabled": true,
+        "host": "smtp.ethereal.email",
+        "enableSsl": true,
+        "port": 587,
+        "auth": {
+            "user": "your user name (email)",
+            "pass": "your password"
+        }
+    }
+}
+```
+
 ## Examples
 
 ### Read from appsettings.json

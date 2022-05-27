@@ -163,7 +163,7 @@ namespace CoronaCheckIn.Areas.Identity.Pages.User
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
+                            "/User/ConfirmEmail",
                             pageHandler: null,
                             values: new { area = "Identity", userId = userId, code = code },
                             protocol: Request.Scheme);
@@ -202,7 +202,7 @@ namespace CoronaCheckIn.Areas.Identity.Pages.User
             {
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(User)}'. " +
                     $"Ensure that '{nameof(User)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
+                    $"override the external login page in /Areas/Identity/Pages/User/ExternalLogin.cshtml");
             }
         }
 

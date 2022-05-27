@@ -2,11 +2,13 @@ using System.Globalization;
 using CoronaCheckIn;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
+using CoronaCheckIn.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +63,9 @@ builder.Services.AddScoped<AccountManager>();
 
 // Add our own data seeder
 builder.Services.AddTransient<DataSeeder>();
+
+// Email sender for auth and other usages
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
