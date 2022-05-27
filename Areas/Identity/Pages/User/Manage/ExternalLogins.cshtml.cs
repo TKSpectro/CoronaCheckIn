@@ -2,29 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CoronaCheckIn.Areas.Identity.Pages.Account.Manage
+namespace CoronaCheckIn.Areas.Identity.Pages.User.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly IUserStore<User> _userStore;
+        private readonly UserManager<Models.User> _userManager;
+        private readonly SignInManager<Models.User> _signInManager;
+        private readonly IUserStore<Models.User> _userStore;
 
         public ExternalLoginsModel(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IUserStore<User> userStore)
+            UserManager<Models.User> userManager,
+            SignInManager<Models.User> signInManager,
+            IUserStore<Models.User> userStore)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -70,7 +64,7 @@ namespace CoronaCheckIn.Areas.Identity.Pages.Account.Manage
                 .ToList();
 
             string passwordHash = null;
-            if (_userStore is IUserPasswordStore<User> userPasswordStore)
+            if (_userStore is IUserPasswordStore<Models.User> userPasswordStore)
             {
                 passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
             }

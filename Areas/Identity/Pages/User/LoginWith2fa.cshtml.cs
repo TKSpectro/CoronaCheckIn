@@ -2,30 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
-namespace CoronaCheckIn.Areas.Identity.Pages.Account
+namespace CoronaCheckIn.Areas.Identity.Pages.User
 {
     public class LoginWith2faModel : PageModel
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<Models.User> _signInManager;
+        private readonly UserManager<Models.User> _userManager;
         private readonly ILogger<LoginWith2faModel> _logger;
 
         public LoginWith2faModel(
-            SignInManager<User> signInManager,
-            UserManager<User> userManager,
+            SignInManager<Models.User> signInManager,
+            UserManager<Models.User> userManager,
             ILogger<LoginWith2faModel> logger)
         {
             _signInManager = signInManager;

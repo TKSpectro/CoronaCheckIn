@@ -2,24 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CoronaCheckIn.Areas.Identity.Pages.Account.Manage
+namespace CoronaCheckIn.Areas.Identity.Pages.User.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<Models.User> _userManager;
+        private readonly SignInManager<Models.User> _signInManager;
 
         public SetPasswordModel(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            UserManager<Models.User> userManager,
+            SignInManager<Models.User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
