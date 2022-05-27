@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,8 +51,16 @@ builder.Services
     });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("AppDb")));
+    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddScoped<AccountManager>();
+
+// Add our own data seeder
+builder.Services.AddTransient<DataSeeder>();
 
 var app = builder.Build();
 
@@ -63,6 +72,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Passing seed as a parameter when running dotnet run will seed the database
+if (args.Length == 1 && args[0].ToLower() == "seed")
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using var scope = scopedFactory.CreateScope();
+    var service = scope.ServiceProvider.GetService<DataSeeder>();
+    service.Seed();
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -72,10 +91,12 @@ if (requestLocalizationOptions != null)
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();

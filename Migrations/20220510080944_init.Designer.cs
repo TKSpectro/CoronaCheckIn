@@ -24,7 +24,7 @@ namespace CoronaCheckIn.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CoronaCheckIn.Models.Account", b =>
+            modelBuilder.Entity("CoronaCheckIn.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

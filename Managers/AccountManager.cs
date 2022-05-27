@@ -10,38 +10,37 @@ namespace CoronaCheckIn.Managers
             Container = context;
         }
 
-        public IEnumerable<Account> GetAccounts()
+        public IEnumerable<User> GetAccounts()
         {
-            return Container.Accounts.AsEnumerable();
+            return Container.Users.AsEnumerable();
         }
         
-        public Account? GetAccount(Guid id)
+        public User? GetAccount(Guid id)
         {
-            return Container.Accounts.Find(id);
+            return Container.Users.Find(id);
         }
 
-        public void Add(Account account)
+        public void Add(User user)
         {
-            account.Id = Guid.NewGuid();
-            Container.Accounts.Add(account);
+            Container.Users.Add(user);
             Container.SaveChanges();
         }
         
         public void Remove(Guid id)
         {
-            Account? account = GetAccount(id);
+            User? account = GetAccount(id);
             if (account == null)
             {
-                throw new Exception("Account not found");
+                throw new Exception("User not found");
             }
             
-            Container.Accounts.Remove(account);
+            Container.Users.Remove(account);
             Container.SaveChanges();
         }
 
-        public void Remove(Account account)
+        public void Remove(User user)
         {
-            Container.Accounts.Remove(account);
+            Container.Users.Remove(user);
             Container.SaveChanges();
         }
 
