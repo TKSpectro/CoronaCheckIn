@@ -84,6 +84,8 @@ namespace CoronaCheckIn.Models
             
             Console.WriteLine("[Seed] Adding User-Roles");
 
+            adminUser = _context.Users.FirstOrDefault(r => r.Email == "admin@ethereal.com");
+            adminRole = _context.Roles.FirstOrDefault(r => r.Name == "Admin");
             List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
             if (adminUser != null && adminRole != null)
             {
