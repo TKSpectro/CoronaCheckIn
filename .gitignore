@@ -455,3 +455,11 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+Migrations/20220510080944_init.cs
+Migrations/20220510080944_init.Designer.cs
+Migrations/20220524061407_try fixing auth.cs
+Migrations/20220524061407_try fixing auth.Designer.cs
+Migrations/20220524070940_try fix auth again.cs
+Migrations/20220524070940_try fix auth again.Designer.cs
+Migrations/20220531080230_init.cs
+Migrations/20220531080230_init.Designer.cs
