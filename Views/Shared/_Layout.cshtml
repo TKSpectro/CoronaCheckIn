@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
 <body style="background-color: #E9ECEF">
-<header>
+@*<header>
     <nav class="navbar  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CoronaCheckIn</a>
@@ -38,23 +38,23 @@
             </div>
         </div>
     </nav>
-</header>
-<div class="container-fluid vh-100">
+</header>*@
+<div class="container-fluid p-0 vh-100">
     <main role="main" class="h-100 position-relative">
         @RenderBody()
         <div class="w-100 position-absolute bottom-0">
-        <footer class="border-top footer text-muted ">
+        @*<footer class="border-top footer text-muted ">
             <div class="container">
                 &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 
-                @* TODO: Vertical center the select *@
+                $1$ TODO: Vertical center the select #1#
                 <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)">
-                    @* TODO: Is there a better way to do this *@
+                    $1$ TODO: Is there a better way to do this #1#
                     <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
                     <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option>
                 </select>
             </div>
-        </footer>
+        </footer>*@
         </div>
     </main>
 </div>
