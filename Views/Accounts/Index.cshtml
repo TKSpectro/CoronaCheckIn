@@ -1,5 +1,7 @@
 @model IEnumerable<User>
 
+<h2>@ViewBag.title</h2>
+
 @Localizer["Users"]
 <table class="table table-hover">
     <thead>
@@ -15,7 +17,7 @@
         {
         <tr>
             <th scope="row">@account.Id</th>
-            <td>@account.UserName</td>
+            <td>@account.Firstname</td>
             <td>@account.Email</td>
             <td>@account.PasswordHash</td>
             <td>

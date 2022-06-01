@@ -17,6 +17,7 @@ namespace CoronaCheckIn.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

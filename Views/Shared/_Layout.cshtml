@@ -11,39 +11,107 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 </head>
 <body style="background-color: #E9ECEF">
-@*<header>
-    <nav class="navbar  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CoronaCheckIn</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="accounts" asp-action="Index">Accounts</a>
-                    </li>
-                    <li class="nav-item">
+@* <header> *@
+@*     <nav class="navbar  navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
+@*         <div class="container-fluid"> *@
+@*             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CoronaCheckIn</a> *@
+@*             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
+@*                     aria-expanded="false" aria-label="Toggle navigation"> *@
+@*                 <span class="navbar-toggler-icon"></span> *@
+@*             </button> *@
+@*             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> *@
+@*                 <ul class="navbar-nav flex-grow-1"> *@
+@*                     <li class="nav-item"> *@
+@*                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
+@*                     </li> *@
+@*                     <li class="nav-item"> *@
+@*                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+@*                     </li> *@
+@*                     <li class="nav-item"> *@
+@*                         <a class="nav-link text-dark" asp-area="" asp-controller="accounts" asp-action="Index">Accounts</a> *@
+@*                     </li> *@
+@*                     <li class="nav-item"> *@
+@* *@
+@*                     </li> *@
+@*                 </ul> *@
+@*                 <partial name="_LoginPartial"/> *@
+@*             </div> *@
+@*         </div> *@
+@*     </nav> *@
+@* </header> *@
 
-                    </li>
-                </ul>
-                <partial name="_LoginPartial"/>
-            </div>
+<div class="container-fluid p-0 vh-100 d-flex">
+    <div class="h-100 d-flex flex-column flex-shrink-0 p-3 bg-dark " style="width: 280px;">
+        <div class="h3 nav-item text-center mb-5 pb-5 mt-4">
+            <a class="mb-3 link-light text-decoration-none" style="color: #9551FE" asp-area="" asp-controller="Home" asp-action="Index">
+                CoronaCheckIn
+            </a>
         </div>
-    </nav>
-</header>*@
-<div class="container-fluid p-0 vh-100">
+        <ul class="nav nav-pills h-50 flex-column mt-4 mb-auto">
+            <li class="nav-item mb-4 text-center">
+                <div>
+                    <a class="nav-link link-light @(ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewBag.title != ""  ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-layout-text-window-reverse pe-1"></i>
+                        Dashboard
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item mb-4 text-center">
+                <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Privacy">
+                    <i class="bi bi-clock pe-1"></i>
+
+                    Session
+                </a>
+            </li>
+            <li class="nav-item mb-4 text-center">
+                <a href="#" class="nav-link link-light">
+                    <i class="bi bi-clipboard-pulse pe-1"></i>
+                    Cases
+                </a>
+            </li>
+            <li class="nav-item mb-4 text-center">
+                <a href="#" class="nav-link link-light">
+                    <i class="bi bi-house pe-1"></i>
+                    Rooms
+                </a>
+            </li>
+            <li class="nav-item mb-4 text-center">
+                <a class="nav-link link-light @(ViewBag.title== "Accounts" ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="Index">
+                    <i class="bi bi-people-fill pe-1"></i>
+                    Profilies
+                </a>
+            </li>
+            <li class="nav-item mb-4 text-center">
+                <a href="#" class="nav-link link-light">
+                    <i class="bi bi-gear pe-1"></i>
+                    Settings
+                </a>
+            </li>
+        </ul>
+
+        <ul class="nav nav-pills flex-column align-items-center">
+
+
+            <partial name="_LoginPartial"/>
+            <li class="nav-item mb-3 text-center">
+                <a href="#" class="nav-link link-light" aria-current="page">
+                    Imprint
+                </a>
+            </li>
+            <li class="nav-item  text-center">
+                <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Privacy">
+                    Privacy
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
     <main role="main" class="h-100 position-relative">
+        
         @RenderBody()
         <div class="w-100 position-absolute bottom-0">
-        @*<footer class="border-top footer text-muted ">
+            @*<footer class="border-top footer text-muted ">
             <div class="container">
                 &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 
