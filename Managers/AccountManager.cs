@@ -17,7 +17,9 @@ namespace CoronaCheckIn.Managers
         
         public User? GetAccount(Guid id)
         {
-            return Container.Users.Find(id);
+            Console.WriteLine("Account Manager");
+            Console.WriteLine(id);
+            return Container.Users.Find(id.ToString());
         }
 
         public void Add(User user)

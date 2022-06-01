@@ -17,8 +17,13 @@ namespace CoronaCheckIn.Controllers
             _accountManager = accountManager;
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Index()
+        {
+            return RedirectToAction("List");
+        }
+        
+        [Authorize(Roles = "Admin")]
+        public IActionResult List()
         {
             ViewBag.title = "Accounts";
 
@@ -30,6 +35,14 @@ namespace CoronaCheckIn.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        
+        public IActionResult Remove(Guid id)
+        {
+            Console.WriteLine(id);
+            Console.WriteLine("test");
+            _accountManager.Remove(id);
+            return RedirectToAction("Index");
         }
     }
 }
