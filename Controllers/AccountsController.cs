@@ -17,8 +17,13 @@ namespace CoronaCheckIn.Controllers
             _accountManager = accountManager;
         }
 
+        // public IActionResult Index()
+        // {
+        //     return RedirectToAction("Index");
+        // }
+        
         [Authorize(Roles = "Admin")]
-        public IActionResult Index()
+        public IActionResult List()
         {
             ViewBag.title = "Accounts";
 
@@ -30,6 +35,12 @@ namespace CoronaCheckIn.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        
+        public IActionResult Remove(Guid id)
+        {
+            _accountManager.Remove(id);
+            return RedirectToAction("List");
         }
     }
 }

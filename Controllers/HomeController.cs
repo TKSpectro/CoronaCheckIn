@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using CoronaCheckIn.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CoronaCheckIn.Controllers
 {
@@ -17,10 +16,18 @@ namespace CoronaCheckIn.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Console.WriteLine("Test");
+            Console.WriteLine(User.Identity.IsAuthenticated);
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(); 
+            }
+            return Redirect("/Identity/Account/Login");
+            
         }
 
-        [Authorize]
+
+       
         public IActionResult Privacy()
         {
             return View();

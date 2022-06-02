@@ -12,7 +12,7 @@ html {
   position: relative;
   min-height: 100%;
 }
-
-body {
-  margin-bottom: 60px;
+.link-active{
+  color:#9551FE;
+  
 }
