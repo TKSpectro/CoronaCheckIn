@@ -42,7 +42,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
 // Add services to the container.
 builder.Services
     .AddControllersWithViews()
@@ -66,6 +65,7 @@ builder.Services.AddTransient<DataSeeder>();
 
 // Email sender for auth and other usages
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+
 
 var app = builder.Build();
 

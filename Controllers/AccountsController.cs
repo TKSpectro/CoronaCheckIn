@@ -17,10 +17,10 @@ namespace CoronaCheckIn.Controllers
             _accountManager = accountManager;
         }
 
-        public IActionResult Index()
-        {
-            return RedirectToAction("List");
-        }
+        // public IActionResult Index()
+        // {
+        //     return RedirectToAction("Index");
+        // }
         
         [Authorize(Roles = "Admin")]
         public IActionResult List()
@@ -39,10 +39,8 @@ namespace CoronaCheckIn.Controllers
         
         public IActionResult Remove(Guid id)
         {
-            Console.WriteLine(id);
-            Console.WriteLine("test");
             _accountManager.Remove(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("List");
         }
     }
 }
