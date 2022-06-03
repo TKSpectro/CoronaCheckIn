@@ -9,6 +9,10 @@ namespace CoronaCheckIn.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
+        
+        public virtual DbSet<Room> Rooms { get; set; } = null!;
+        public virtual DbSet<Session> Sessions { get; set; } = null!;
+        public virtual DbSet<Infection> Infections { get; set; } = null!;
     }
     
     public class DataSeeder
