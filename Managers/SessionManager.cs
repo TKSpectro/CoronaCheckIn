@@ -12,7 +12,7 @@ namespace CoronaCheckIn.Managers
             Context = context;
         }
 
-        public IEnumerable<Session> GetSessions(Room? room, Guid? roomId, User? user, string? userId, bool? isInfected, DateTime? after, DateTime? before)
+        public IEnumerable<Session> GetSessions(Room? room = null, Guid? roomId = null, User? user = null, string? userId = null, bool? isInfected = null, DateTime? after = null, DateTime? before = null)
         {
             var queryable = Context.Sessions.AsQueryable();
 
@@ -42,7 +42,7 @@ namespace CoronaCheckIn.Managers
             }
             if (before != null)
             {
-                queryable = queryable.Where(session => session.EndTime <= before);
+                queryable = queryable.Where(session => session.EndTime <= before || (session.EndTime == null && session.StartTime <= before));
             }
 
             return queryable.AsEnumerable();

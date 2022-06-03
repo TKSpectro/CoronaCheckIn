@@ -29,7 +29,7 @@ namespace CoronaCheckIn.Controllers.api
         [HttpGet("")]
         public ActionResult<String> Index([FromQuery] Guid? roomId, [FromQuery] string? userId, [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before)
         {
-            var sessions = _sessionManager.GetSessions(null, roomId, null, userId, isInfected, after, before);
+            var sessions = _sessionManager.GetSessions(roomId: roomId, userId: userId, isInfected: isInfected, after: after, before: before);
 
             return JsonSerializer.Serialize(sessions);
         }
@@ -60,7 +60,8 @@ namespace CoronaCheckIn.Controllers.api
                 RoomId = postSession.RoomId,
                 UserId = postSession.UserId,
                 Infected = postSession.Infected,
-                StartTime = postSession.StartTime
+                StartTime = postSession.StartTime,
+                EndTime = null
             };
 
             var createdSession = _sessionManager.Add(session);
