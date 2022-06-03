@@ -153,42 +153,57 @@ namespace CoronaCheckIn.Models
             if (testUser?.Id != null && adminUser?.Id != null && aiRoom?.Id != null && getRoom?.Id != null)
             {
                 {
-                    sessions.Add(new Session()
+                    if (_context.Sessions.Find(new Guid("00000000-0000-0000-0004-000000000001")) == null)
                     {
-                        Id = new Guid("00000000-0000-0000-0004-000000000001"),
-                        UserId = adminUser.Id,
-                        RoomId = aiRoom.Id,
-                        StartTime = DateTime.Parse("2022-05-28T07:58:00.0000000Z"),
-                        EndTime = DateTime.Parse("2022-05-28T09:33:00.0000000Z"),
-                        Infected = false,
-                    });
-                    sessions.Add(new Session()
+                        sessions.Add(new Session()
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000001"),
+                            UserId = adminUser.Id,
+                            RoomId = aiRoom.Id,
+                            StartTime = DateTime.Parse("2022-05-28T07:58:00.0000000Z"),
+                            EndTime = DateTime.Parse("2022-05-28T09:33:00.0000000Z"),
+                            Infected = false,
+                        });
+                    }
+
+                    if (_context.Sessions.Find(new Guid("00000000-0000-0000-0004-000000000002")) == null)
                     {
-                        Id = new Guid("00000000-0000-0000-0004-000000000002"),
-                        UserId = testUser.Id,
-                        RoomId = aiRoom.Id,
-                        StartTime = DateTime.Parse("2022-05-28T08:00:00.0000000Z"),
-                        EndTime = DateTime.Parse("2022-05-28T09:25:00.0000000Z"),
-                        Infected = false,
-                    });
-                    sessions.Add(new Session()
+                        sessions.Add(new Session()
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000002"),
+                            UserId = testUser.Id,
+                            RoomId = aiRoom.Id,
+                            StartTime = DateTime.Parse("2022-05-28T08:00:00.0000000Z"),
+                            EndTime = DateTime.Parse("2022-05-28T09:25:00.0000000Z"),
+                            Infected = false,
+                        });
+                    }
+
+                    if (_context.Sessions.Find(new Guid("00000000-0000-0000-0004-000000000003")) == null)
+                    { 
+                        sessions.Add(new Session()
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000003"),
+                            UserId = testUser.Id,
+                            RoomId = getRoom.Id,
+                            StartTime = DateTime.Parse("2022-05-29T08:14:00.0000000Z"),
+                            EndTime = DateTime.Parse("2022-05-29T09:44:00.0000000Z"),
+                            Infected = false,
+                        });
+                    }
+
+                    if (_context.Sessions.Find(new Guid("00000000-0000-0000-0004-000000000004")) == null)
                     {
-                        Id = new Guid("00000000-0000-0000-0004-000000000003"),
-                        UserId = testUser.Id,
-                        RoomId = getRoom.Id,
-                        StartTime = DateTime.Parse("2022-05-29T08:14:00.0000000Z"),
-                        EndTime = DateTime.Parse("2022-05-29T09:44:00.0000000Z"),
-                        Infected = false,
-                    });
-                    sessions.Add(new Session()
-                    {
-                        Id = new Guid("00000000-0000-0000-0004-000000000004"),
-                        UserId = testUser.Id,
-                        RoomId = getRoom.Id,
-                        StartTime = DateTime.Parse("2022-05-30T08:14:00.0000000Z"),
-                        EndTime = DateTime.Parse("2022-05-30T09:44:00.0000000Z"),
-                        Infected = true,
-                    });
+                        sessions.Add(new Session()
+                        {
+                            Id = new Guid("00000000-0000-0000-0004-000000000004"),
+                            UserId = testUser.Id,
+                            RoomId = getRoom.Id,
+                            StartTime = DateTime.Parse("2022-05-30T08:14:00.0000000Z"),
+                            EndTime = DateTime.Parse("2022-05-30T09:44:00.0000000Z"),
+                            Infected = true,
+                        });
+                    }
                 };
             }
             

@@ -6,6 +6,12 @@
 # -d runs it in detached mode
 docker-compose up -d
 
+# you need to pull our frontend libraries with libman
+libman restore
+
+# If you want to use some seed data then call this run this
+dotnet run seed
+
 # can use "dotnet watch" for development, but its sometimes buggy
 dotnet run
 ```
