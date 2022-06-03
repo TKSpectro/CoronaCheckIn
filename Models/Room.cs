@@ -15,6 +15,24 @@ namespace CoronaCheckIn.Models
         public string? QrCode { get; set; }
 
         public List<Session> Sessions { get; set; }
+        
+        public static Faculties? ParseFacultyFromString(string? faculty)
+        {
+            Faculties? parsedFaculty = null;
+            if (faculty != null)
+            {
+                if (Enum.TryParse(faculty, out Faculties tryParsing))
+                {
+                    parsedFaculty = tryParsing;
+                }
+                else
+                {
+                    Console.WriteLine("[API/ROOMS] Faculty could not be parsed");
+                }    
+            }
+
+            return parsedFaculty;
+        }
     }
 
     public enum Faculties

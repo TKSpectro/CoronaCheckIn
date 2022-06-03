@@ -59,6 +59,7 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<AccountManager>();
+builder.Services.AddScoped<RoomManager>();
 
 // Add our own data seeder
 builder.Services.AddTransient<DataSeeder>();

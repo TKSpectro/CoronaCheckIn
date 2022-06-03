@@ -106,6 +106,38 @@ namespace CoronaCheckIn.Models
             
             _context.UserRoles.AddRange(userRoles);
             _context.SaveChanges();
+            
+            Console.WriteLine("[Seed] Adding Rooms");
+
+            var aiRoom = _context.Rooms.FirstOrDefault(r => r.Name == "5.1.05" && r.Faculty == Faculties.AI);
+            var getRoom = _context.Rooms.FirstOrDefault(r => r.Name == "7.2.01" && r.Faculty == Faculties.GET);
+            
+            List<Room> rooms = new List<Room>();
+            
+            if (aiRoom == null)
+            {
+                rooms.Add(new Room()
+                {
+                    Name = "5.1.05",
+                    Faculty = Faculties.AI,
+                    MaxDuration = 90,
+                    MaxParticipants = 25
+                });
+            }
+            
+            if (getRoom == null)
+            {
+                rooms.Add(new Room()
+                {
+                    Name = "7.2.01",
+                    Faculty = Faculties.GET,
+                    MaxDuration = 90,
+                    MaxParticipants = 25
+                });
+            }
+
+            _context.Rooms.AddRange(rooms);
+            _context.SaveChanges();
         }
     }
 }
