@@ -115,8 +115,8 @@ namespace CoronaCheckIn.Models
             
             Console.WriteLine("[Seed] Adding Rooms");
 
-            var aiRoom = _context.Rooms.FirstOrDefault(r => r.Name == "5.1.05" && r.Faculty == Faculties.AI);
-            var getRoom = _context.Rooms.FirstOrDefault(r => r.Name == "7.2.01" && r.Faculty == Faculties.GET);
+            var aiRoom = _context.Rooms.FirstOrDefault(r => r.Name == "5.1.05" && r.Faculty == Faculty.AI);
+            var getRoom = _context.Rooms.FirstOrDefault(r => r.Name == "7.2.01" && r.Faculty == Faculty.GET);
             List<Room> rooms = new List<Room>();
             if (aiRoom == null)
             {
@@ -124,7 +124,7 @@ namespace CoronaCheckIn.Models
                 {
                     Id = new Guid("00000000-0000-0000-0003-000000000001"),
                     Name = "5.1.05",
-                    Faculty = Faculties.AI,
+                    Faculty = Faculty.AI,
                     MaxDuration = 90,
                     MaxParticipants = 25
                 });
@@ -135,7 +135,7 @@ namespace CoronaCheckIn.Models
                 {
                     Id = new Guid("00000000-0000-0000-0003-000000000002"),
                     Name = "7.2.01",
-                    Faculty = Faculties.GET,
+                    Faculty = Faculty.GET,
                     MaxDuration = 90,
                     MaxParticipants = 25
                 });
@@ -144,8 +144,8 @@ namespace CoronaCheckIn.Models
             _context.Rooms.AddRange(rooms);
             _context.SaveChanges();
 
-            aiRoom = _context.Rooms.FirstOrDefault(r => r.Name == "5.1.05" && r.Faculty == Faculties.AI);
-            getRoom = _context.Rooms.FirstOrDefault(r => r.Name == "7.2.01" && r.Faculty == Faculties.GET);
+            aiRoom = _context.Rooms.FirstOrDefault(r => r.Name == "5.1.05" && r.Faculty == Faculty.AI);
+            getRoom = _context.Rooms.FirstOrDefault(r => r.Name == "7.2.01" && r.Faculty == Faculty.GET);
 
             Console.WriteLine("[Seed] Adding Sessions");
 
