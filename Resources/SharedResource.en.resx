@@ -153,4 +153,24 @@
     <value>Password</value>
     <comment/>
   </data>
+  <data name="Faculty" xml:space="preserve">
+    <value>Faculty</value>
+    <comment>Faculty</comment>
+  </data>
+  <data name="MaxDuration" xml:space="preserve">
+    <value>Max. Duration</value>
+    <comment>MaxDuration</comment>
+  </data>
+  <data name="MaxParticipants" xml:space="preserve">
+    <value>Max. Participants</value>
+    <comment>MaxParticipants</comment>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+    <comment>All</comment>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+    <comment>Search</comment>
+  </data>
 </root>

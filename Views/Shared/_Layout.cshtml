@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a href="#" class="nav-link link-light">
+                    <a class="nav-link link-light @(ViewBag.title == "Rooms" ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
                         <i class="bi bi-house pe-1"></i>
                         Rooms
                     </a>
