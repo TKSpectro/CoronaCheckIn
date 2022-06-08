@@ -10,16 +10,28 @@ namespace CoronaCheckIn.Models
 
         public int MaxDuration { get; set; }
 
-        public Faculties Faculty { get; set; }
+        public Faculty Faculty { get; set; }
 
         public string? QrCode { get; set; }
 
         public List<Session> Sessions { get; set; }
-    }
+        
+        public static Faculty? ParseFacultyFromString(string? faculty)
+        {
+            Faculty? parsedFaculty = null;
+            if (faculty != null)
+            {
+                if (Enum.TryParse(faculty, out Faculty tryParsing))
+                {
+                    parsedFaculty = tryParsing;
+                }
+                else
+                {
+                    Console.WriteLine("[API/ROOMS] Faculty could not be parsed");
+                }    
+            }
 
-    public enum Faculties
-    {
-        AI, // Angewandte Informatik
-        GET // Gebäude- und Energietechnik
+            return parsedFaculty;
+        }
     }
 }
