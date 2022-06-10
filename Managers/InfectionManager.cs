@@ -33,7 +33,7 @@ namespace CoronaCheckIn.Managers
             return Context.Infections.Find(id);
         }
 
-        public Infection? Add(Infection infection)
+        public Infection? AddInfection(Infection infection)
         {
             var addedInfection = Context.Infections.Add(infection);
             Context.SaveChanges();
@@ -41,7 +41,7 @@ namespace CoronaCheckIn.Managers
             return addedInfection.Entity;
         }
         
-        public Infection? Update(Infection infection)
+        public Infection? UpdateInfection(Infection infection)
         {
             var editedInfection = Context.Infections.Update(infection);
             Context.SaveChanges();
@@ -49,13 +49,13 @@ namespace CoronaCheckIn.Managers
             return editedInfection.Entity;
         }
 
-        public void Remove(Infection infection)
+        public void RemoveInfection(Infection infection)
         {
             Context.Infections.Remove(infection);
             Context.SaveChanges();
         }
 
-        public void Remove(Guid id)
+        public void RemoveInfection(Guid id)
         {
             var infection = Context.Infections.Find(id);
             if (infection == null)

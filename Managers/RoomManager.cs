@@ -56,7 +56,7 @@ namespace CoronaCheckIn.Managers
             return Context.Rooms.Find(id);
         }
 
-        public Room? Add(Room room)
+        public Room? AddRoom(Room room)
         {
             var addedRoom = Context.Rooms.Add(room);
             Context.SaveChanges();
@@ -64,7 +64,7 @@ namespace CoronaCheckIn.Managers
             return addedRoom.Entity;
         }
 
-        public Room? Update(Room room)
+        public Room? UpdateRoom(Room room)
         {
             var editedRoom = Context.Rooms.Update(room);
             Context.SaveChanges();
@@ -72,13 +72,13 @@ namespace CoronaCheckIn.Managers
             return editedRoom.Entity;
         }
 
-        public void Remove(Room room)
+        public void RemoveRoom(Room room)
         {
             Context.Rooms.Remove(room);
             Context.SaveChanges();
         }
 
-        public void Remove(Guid id)
+        public void RemoveRoom(Guid id)
         {
             var room = Context.Rooms.Find(id);
             if (room == null)

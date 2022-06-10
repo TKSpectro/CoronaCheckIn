@@ -19,7 +19,7 @@ public class ApiRoomsController : ControllerBase
     }
 
     [HttpGet("")]
-    public ActionResult<string> Index([FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
+    public ActionResult<string> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
     {
         var rooms = _roomManager.GetRooms(sortBy: sortBy, sortOrder: sortOrder, faculty: faculty);
 
@@ -47,7 +47,7 @@ public class ApiRoomsController : ControllerBase
             Faculty = (Faculty) parsedFaculty
         };
 
-        var createdRoom = _roomManager.Add(room);
+        var createdRoom = _roomManager.AddRoom(room);
         return JsonSerializer.Serialize(createdRoom);
     }
 

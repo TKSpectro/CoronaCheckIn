@@ -53,7 +53,7 @@ namespace CoronaCheckIn.Managers
             return Context.Sessions.Find(id);
         }
 
-        public Session? Add(Session session)
+        public Session? AddSession(Session session)
         {
             var addedSession = Context.Sessions.Add(session);
             Context.SaveChanges();
@@ -61,7 +61,7 @@ namespace CoronaCheckIn.Managers
             return addedSession.Entity;
         }
 
-        public Session? Update(Session session)
+        public Session? UpdateSession(Session session)
         {
             var editedSession = Context.Sessions.Update(session);
             Context.SaveChanges();
@@ -69,13 +69,13 @@ namespace CoronaCheckIn.Managers
             return editedSession.Entity;
         }
 
-        public void Remove(Session session)
+        public void RemoveSession(Session session)
         {
             Context.Sessions.Remove(session);
             Context.SaveChanges();
         }
 
-        public void Remove(Guid id)
+        public void RemoveSession(Guid id)
         {
             var session = Context.Sessions.Find(id);
             if (session == null)

@@ -25,7 +25,7 @@ public class ApiSessionsController : ControllerBase
     }
 
     [HttpGet("")]
-    public ActionResult<string> Index([FromQuery] Guid? roomId, [FromQuery] string? userId,
+    public ActionResult<string> GetAll([FromQuery] Guid? roomId, [FromQuery] string? userId,
         [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before)
     {
         var sessions = _sessionManager.GetSessions(roomId: roomId, userId: userId, isInfected: isInfected, after: after,
@@ -53,7 +53,7 @@ public class ApiSessionsController : ControllerBase
             EndTime = null
         };
 
-        var createdSession = _sessionManager.Add(session);
+        var createdSession = _sessionManager.AddSession(session);
         return JsonSerializer.Serialize(createdSession);
     }
 
