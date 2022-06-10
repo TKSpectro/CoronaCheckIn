@@ -33,7 +33,7 @@ namespace CoronaCheckIn.Controllers
         
         public IActionResult Remove(Guid id)
         {
-            _roomManager.Remove(id);
+            _roomManager.RemoveRoom(id);
             return RedirectToAction("Index");
         }
     }
