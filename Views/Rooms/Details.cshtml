@@ -1,0 +1,12 @@
+﻿@model Room
+
+<div class="container">
+    <h1>@SharedLocalizer["Room"]: @Model.Name</h1>
+    <p>@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
+    <p>@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
+    <p>@SharedLocalizer["Faculty"]: @Model.Faculty</p>
+    <h2>QR-Code</h2>
+    @Model.QrCode
+
+
+</div>

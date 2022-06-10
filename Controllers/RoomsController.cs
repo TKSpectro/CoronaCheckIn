@@ -30,7 +30,13 @@ namespace CoronaCheckIn.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Details(Guid id)
+        {
+            return View(_roomManager.GetRoom(id));
+        }
+
         public IActionResult Remove(Guid id)
         {
             _roomManager.RemoveRoom(id);
