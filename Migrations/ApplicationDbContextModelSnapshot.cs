@@ -309,7 +309,7 @@ namespace CoronaCheckIn.Migrations
             modelBuilder.Entity("CoronaCheckIn.Models.Infection", b =>
                 {
                     b.HasOne("CoronaCheckIn.Models.User", "User")
-                        .WithMany("Infections")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -320,13 +320,13 @@ namespace CoronaCheckIn.Migrations
             modelBuilder.Entity("CoronaCheckIn.Models.Session", b =>
                 {
                     b.HasOne("CoronaCheckIn.Models.Room", "Room")
-                        .WithMany("Sessions")
+                        .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CoronaCheckIn.Models.User", "User")
-                        .WithMany("Sessions")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -385,18 +385,6 @@ namespace CoronaCheckIn.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CoronaCheckIn.Models.Room", b =>
-                {
-                    b.Navigation("Sessions");
-                });
-
-            modelBuilder.Entity("CoronaCheckIn.Models.User", b =>
-                {
-                    b.Navigation("Infections");
-
-                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

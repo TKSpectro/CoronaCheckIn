@@ -26,10 +26,11 @@ public class ApiSessionsController : ControllerBase
 
     [HttpGet("")]
     public ActionResult<string> GetAll([FromQuery] Guid? roomId, [FromQuery] string? userId,
-        [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before)
+        [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before,
+        [FromQuery] bool includeRoom = false)
     {
         var sessions = _sessionManager.GetSessions(roomId: roomId, userId: userId, isInfected: isInfected, after: after,
-            before: before);
+            before: before, includeRoom: includeRoom);
 
         return JsonSerializer.Serialize(sessions);
     }
