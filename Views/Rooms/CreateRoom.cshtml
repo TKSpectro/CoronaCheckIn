@@ -1,0 +1,41 @@
+@model Room
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-2" asp-for="Name">Name</label>
+        <div class="col-md-10">
+            <input asp-for="Name" type="text" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <label class="control-label col-md-2" asp-for="MaxParticipants">Max Participants</label>
+        <div class="col-md-10">
+            <input asp-for="MaxParticipants" type="number" class="form-control"/>
+            <span asp-validation-for="MaxParticipants" class="text-danger"></span>
+        </div>
+        <label class="control-label col-md-2" asp-for="MaxDuration">MaxDuration</label>
+        <div class="col-md-10">
+            <input asp-for="MaxDuration" type="number" class="form-control"/>
+            <span asp-validation-for="MaxDuration" class="text-danger"></span>
+        </div>
+        <label class="control-label col-md-2" asp-for="Faculty">Faculty</label>
+        <div class="col-md-10">
+            <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" asp-for="Faculty">
+                <option value="@Faculty.AI" selected=@Faculty.AI>Angewandte Informatik</option>
+                <option value="@Faculty.GET" >Gebäude und Energietechnik</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Submit" class="mt-2 btn btn-primary"/>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
