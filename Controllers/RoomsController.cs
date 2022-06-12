@@ -1,8 +1,12 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using CoronaCheckIn.Managers;
 using Microsoft.AspNetCore.Mvc;
 using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Authorization;
+using QRCoder;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using static QRCoder.PayloadGenerator;
 
 namespace CoronaCheckIn.Controllers
 {
@@ -41,6 +45,43 @@ namespace CoronaCheckIn.Controllers
         {
             _roomManager.RemoveRoom(id);
             return RedirectToAction("Index");
+        }
+
+        public FileContentResult GenerateQrCode()
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("The text which should be encoded.", QRCodeGenerator.ECCLevel.Q);
+            BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
+            byte[] qrCodeAsBitmapByteArr = qrCode.GetGraphic(20);
+
+            var image = SixLabors.ImageSharp.Image.Load<Rgba32>(qrCodeAsBitmapByteArr);
+            image.Mutate(x => x.Grayscale());
+            var result = File(qrCodeAsBitmapByteArr, "image/png");
+            return result;
+        }
+        public async Task<ActionResult> GetQRCode(long photoId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                string baseUrl = string.Format("{0}://{1}",
+                       HttpContext.Request.Scheme, HttpContext.Request.Host);
+                
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(baseUrl, QRCodeGenerator.ECCLevel.Q);
+                BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
+                byte[] qrCodeAsBitmapByteArr = qrCode.GetGraphic(20);
+
+                var image = SixLabors.ImageSharp.Image.Load<Rgba32>(qrCodeAsBitmapByteArr);
+                image.Mutate(x => x.Grayscale());
+                var result = File(qrCodeAsBitmapByteArr, "image/png");
+
+
+                return result;
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }

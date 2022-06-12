@@ -5,8 +5,31 @@
     <p>@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
     <p>@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
     <p>@SharedLocalizer["Faculty"]: @Model.Faculty</p>
+
     <h2>QR-Code</h2>
     @Model.QrCode
-
-
+    <button type="button" class="btn btn-outline-primary" onclick="generateQrCode()">
+        <span>test</span>
+    </button>
+    <div id="qrcode"></div>
+    <img src="@Url.Action("GetPhoto", "Rooms")" class="user" alt="profile pic" />
+    <h2>Sessions</h2>
 </div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+       function generateQrCode() {
+          $.ajax({
+            url: "/rooms/GenerateQrCode",
+            success: function (data) {
+                document.getElementById("qrcode").innerHTML = data;
+            },
+            error: function (error) {
+              alert("Error: " + error);
+            }
+          })
+        }
+    </script>
+}
