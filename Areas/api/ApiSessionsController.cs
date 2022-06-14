@@ -25,24 +25,30 @@ public class ApiSessionsController : ControllerBase
     }
 
     [HttpGet("")]
-    public ActionResult<string> GetAll([FromQuery] Guid? roomId, [FromQuery] string? userId,
-        [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before)
+    public ActionResult<IEnumerable<Session>> GetAll([FromQuery] Guid? roomId, [FromQuery] string? userId,
+        [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before,
+        [FromQuery] bool includeRoom = false)
     {
         var sessions = _sessionManager.GetSessions(roomId: roomId, userId: userId, isInfected: isInfected, after: after,
-            before: before);
+            before: before, includeRoom: includeRoom);
 
-        return JsonSerializer.Serialize(sessions);
+        return sessions.ToList();
     }
 
     [HttpGet("{id}")]
-    public ActionResult<string> GetOne(Guid id)
+    public ActionResult<Session> GetOne(Guid id)
     {
         var session = _sessionManager.GetSession(id);
-        return JsonSerializer.Serialize(session);
+        if(session == null)
+        {
+            throw new Exception("No session found with this id");
+        }
+        
+        return session;
     }
 
     [HttpPost("")]
-    public ActionResult<string> Create([FromBody] PostSession postSession)
+    public ActionResult<Session> Create([FromBody] PostSession postSession)
     {
         var session = new Session
         {
@@ -54,7 +60,12 @@ public class ApiSessionsController : ControllerBase
         };
 
         var createdSession = _sessionManager.AddSession(session);
-        return JsonSerializer.Serialize(createdSession);
+        if(createdSession == null)
+        {
+            throw new Exception("Session could not be created");
+        }
+        
+        return createdSession;
     }
 
     public class PostSession
