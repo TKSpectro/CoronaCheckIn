@@ -1,8 +1,6 @@
 @model Room
 
 
-@using (Html.BeginForm())
-{
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -26,16 +24,15 @@
         <div class="col-md-10">
             <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" asp-for="Faculty">
                 <option value="@Faculty.AI" selected=@Faculty.AI>Angewandte Informatik</option>
-                <option value="@Faculty.GET" >Gebäude und Energietechnik</option>
+                <option value="@Faculty.GET">Gebäude und Energietechnik</option>
             </select>
         </div>
     </div>
 
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Submit" class="mt-2 btn btn-primary"/>
-    </div>
-}
+    @* <div class="col-md-offset-2 col-md-10"> *@
+    @*     <button type="button" class="btn btn-primary" onclick="submitRoom()">Submit</button> *@
+    @* </div> *@
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
+@* <script type="text/javascript"> *@
+
+@*     </script> *@

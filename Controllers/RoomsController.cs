@@ -25,6 +25,8 @@ namespace CoronaCheckIn.Controllers
                 _roomManager.GetRooms(name: name, sortBy: sortBy, sortOrder: sortOrder, faculty: faculty);
 
             ViewBag.room = rooms.ToArray()[0];
+            ViewBag.newRoom = new Room();
+
             return View(rooms);
         }
 
@@ -46,26 +48,36 @@ namespace CoronaCheckIn.Controllers
         //     return RedirectToAction("Index");
         // }
 
-        public IActionResult CreateRoom(Room? room=null)
+        public IActionResult CreateRoom()
         {
-            return PartialView(new Room());
+            return View();
         }
 
         [HttpPost]
-        [Route("CreateRoom")]
-        public IActionResult AddRoom(Room room)
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateRoom(Room room)
         {
-            room.QrCode = "code";
+            // room.QrCode = "code";
+            // if (ModelState.IsValid)
+            // {
+            //     _roomManager.AddRoom(room);
+            //     return PartialView("CreateRoom");
+            // }
+            //
+            // return PartialView("CreateRoom", room);
+
+            Console.WriteLine("test");
+            Console.WriteLine(room);
             if (ModelState.IsValid)
             {
-                _roomManager.AddRoom(room);
-                return RedirectToAction("Index");
+                System.Threading.Thread.Sleep(1000);
+                return Json(room);
             }
 
-            return View("CreateRoom", room);
+            return Json(room);
         }
-        
-        
+
+
         [HttpPost]
         public IActionResult UpdateRoom(Room room)
         {

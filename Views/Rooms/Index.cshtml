@@ -1,5 +1,5 @@
 @model IEnumerable<Room>
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <h1>@Localizer["All Rooms"]</h1>
 
@@ -57,29 +57,33 @@
 </table>
 
 
-<div id="createRoomModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>@Localizer["RegistrationForm"]</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="detailsContent" class="container"></div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
-                <button type="button" id="saveButton" class="btn btn-primary">Save changes</button>
+<form id="roomForm" data-ajax-method="POST">
+    <div id="createRoomModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>@Localizer["RegistrationForm"]</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="formDetails">
+                    @* <div id="detailsContent" class="container"></div> *@
+                    <partial name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
+                </div>
+                <div class="modal-footer">
+                    <input id="btnSubmit" type="submit" value="Submit" class="btn btn-primary" onclick="submitRoom()"/>
+                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+                    <button type="button" id="saveButton" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</form>
 
 @section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script>
         let initialFacultySwitch = false;
         
@@ -170,6 +174,36 @@
             alert("Saved");
             $("#createRoomModal").modal("hide");
         });
-        
+     
+  
+ 
+         function submitRoom() {
+             console.log('valid',$("#roomForm").valid());
+      
+             if ($("#roomForm").valid()){
+             $('#roomForm').on('submit', function(e){
+                   e.preventDefault();
+                        let dataForm = $("#roomForm").serialize();
+                              console.log('data', dataForm);
+    
+                              $.ajax({
+                                  type: 'POST',
+                                  url: '/rooms/CreateRoom',
+                                  contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                  data: dataForm,
+                                  success: function (result) {
+                                      console.log('Successfully received Data ');
+                                      console.log('result', result);
+                                  },
+                                  error: function () {
+                                      console.log('Failed to receive the Data');
+                                      console.log('error','Failed ');
+                                  }
+                              })
+               });
+            }
+          
+           }
+         
     </script>
 }
