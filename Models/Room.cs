@@ -22,8 +22,6 @@ namespace CoronaCheckIn.Models
 
         public string? QrCode { get; set; }
 
-        public List<Session>? Sessions { get; set; }
-        
         public static Faculty? ParseFacultyFromString(string? faculty)
         {
             Faculty? parsedFaculty = null;
