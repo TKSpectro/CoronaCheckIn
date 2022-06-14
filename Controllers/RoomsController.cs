@@ -59,7 +59,7 @@ namespace CoronaCheckIn.Controllers
             var result = File(qrCodeAsBitmapByteArr, "image/png");
             return result;
         }
-        public async Task<ActionResult> GetQRCode(long photoId, CancellationToken cancellationToken)
+        public async Task<ActionResult> GetQRCode()
         {
             try
             {
