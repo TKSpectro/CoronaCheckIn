@@ -10,7 +10,7 @@ namespace CoronaCheckIn.Models
         public string Name { get; set; } = string.Empty;
         
         [Required(ErrorMessage = "Required")]
-        [Range(1, 25, ErrorMessage = "Please enter a value bigger than {1}")]
+        [Range(1, 25, ErrorMessage = "Please enter a value bigger than {1} and smaller then {2}")]
         public int MaxParticipants { get; set; }
         
         [Required(ErrorMessage = "Required")]

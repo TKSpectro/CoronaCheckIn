@@ -26,8 +26,6 @@ namespace CoronaCheckIn.Controllers
 
             ViewBag.room = rooms.ToArray()[0];
             ViewBag.newRoom = new Room();
-            // ViewData["newRoom"] = new Room();
-            
             return View(rooms);
         }
 
@@ -43,62 +41,41 @@ namespace CoronaCheckIn.Controllers
             return RedirectToAction("Index");
         }
 
-        // public IActionResult AddRoom(Room room)
-        // {
-        //     _roomManager.AddRoom(room);
-        //     return RedirectToAction("Index");
-        // }
-
         [HttpGet]
-        public IActionResult CreateRoom(string roomId)
+        public IActionResult CreateRoom(string? roomId)
         {
-            Console.WriteLine("CreateRoom");
-            Console.WriteLine(roomId);
-            if (roomId != null)
+            if (roomId == null)
             {
-                var room = _roomManager.GetRoom(new Guid(roomId));
-
-                Console.WriteLine("room name");
-                ViewBag.getRoom = room;
-                return Json(room);
+                return PartialView(new Room());
             }
-            return PartialView(new Room());
+
+            var room = _roomManager.GetRoom(new Guid(roomId));
+            ViewBag.getRoom = room;
+            return Json(room);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateRoom(Room room)
         {
-            // room.QrCode = "code";
-            // if (ModelState.IsValid)
-            // {
-            //     _roomManager.AddRoom(room);
-            //     return PartialView("CreateRoom");
-            // }
-            //
-            // return PartialView("CreateRoom", room);
-
-            Console.WriteLine("test");
-            Console.WriteLine(room);
-
             if (ModelState.IsValid)
             {
-                System.Threading.Thread.Sleep(1000);
-                return Json(room);
+                 var checkRoom = _roomManager.GetRoom(room.Id);
+                
+                if (checkRoom != null)
+                {
+                    Console.WriteLine("update");
+                    var newRoom = _roomManager.UpdateRoom(room);
+                    Console.WriteLine(newRoom);
+                }
+                else
+                {
+                    Console.WriteLine("add");
+                    _roomManager.AddRoom(room);
+                }
             }
 
             return Json(room);
-        }
-
-
-        [HttpPost]
-        public IActionResult UpdateRoom(Room room)
-        {
-            // Room? room = _roomManager.GetRoom(newRoom.Id);
-
-            Room? newRoom = _roomManager.UpdateRoom(room);
-            Console.WriteLine(newRoom);
-            return RedirectToAction("Index");
         }
     }
 }

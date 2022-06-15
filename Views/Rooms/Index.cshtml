@@ -50,9 +50,9 @@
             <td>@room.Faculty</td>
             <td>@room.MaxDuration</td>
             <td>@room.MaxParticipants</td>
-            @* <td> *@
-            @*     <a type="submit" asp-action="Remove" asp-route-id="@room.Id" class="btn btn-primary"><i class="bi bi-trash"></i></a> *@
-            @* </td> *@
+            <td>
+                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn btn-primary"><i class="bi bi-trash"></i></a>
+            </td>
         </tr>
     }
     </tbody>
@@ -74,9 +74,8 @@
                     @* <div id="detailsContent" class="container"></div> *@
                 </div>
                 <div class="modal-footer">
-                    <input id="btnSubmit" type="submit" value="Submit" class="btn btn-primary" onclick="submitRoom()"/>
                     <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
-                    <button type="button" id="saveButton" class="btn btn-primary">Save changes</button>
+                    <input id="btnSubmit" type="submit" value="Erstellen" class="btn btn-primary" onclick="submitRoom()"/>
                 </div>
             </div>
         </div>
@@ -155,9 +154,7 @@
         }
         
         function getRoomModal(room){
-          
-            console.log('roomId', room);
-            
+            console.log('room id', room);
                    $.ajax({
                             url: "/rooms/CreateRoom",
                             method: "GET",
@@ -169,7 +166,7 @@
                                  
                                  let modalBody = $("#formDetails")[0];
                                  let children = modalBody.children[1];
-                                console.log('children', children);
+                                console.log('children', children.children);
                                 let name = children.children[1].children[0];
                                 name.value= result.name;
                                 
@@ -179,8 +176,11 @@
                                  let maxDuration= children.children[5].children[0];
                                     maxDuration.value= result.maxDuration;
                                     
-                                    let faculty= children.children[7].children[0];
-                                        faculty.selectedIndex= result.faculty;
+                                let faculty= children.children[7].children[0];
+                                    faculty.selectedIndex= result.faculty;
+                                    
+                                 let id= children.children[8];
+                                    id.value= result.id;
                             }
                         });
 
@@ -188,15 +188,8 @@
         
         // Modal 
         $("#modalBtn").click(function () {
+            $("#roomForm")[0].reset();
             $("#createRoomModal").modal("show");
-                   // $.ajax({
-                   //          url: "/rooms/CreateRoom/",
-                   //          method: "GET",
-                   //          success: function (result) {
-                   //              console.log('result get', $("#detailsContent").html(result));
-                   //              $("#detailsContent").html(result);
-                   //          }
-                   //      });
         });
 
         $('[data-dismiss="modal"]').each(function () {
@@ -204,35 +197,24 @@
                 $("#createRoomModal").modal("hide");
             });
         });
-
-        $("#saveButton").click(function () {
-            alert("Saved");
-            $("#createRoomModal").modal("hide");
-        });
-     
-  
  
          function submitRoom() {
-             console.log('valid',$("#roomForm").valid());
-      
              if ($("#roomForm").valid()){
              $('#roomForm').on('submit', function(e){
                    e.preventDefault();
-                        let dataForm = $("#roomForm").serialize();
-                              console.log('data', dataForm);
-    
+                        let dataForm = $("#roomForm").serialize();   
+                        console.log(dataForm);
                               $.ajax({
                                   type: 'POST',
                                   url: '/rooms/CreateRoom',
                                   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                                   data: dataForm,
                                   success: function (result) {
-                                      console.log('Successfully received Data ');
-                                      console.log('result', result);
+                                        $("#createRoomModal").modal("hide");
+                                        // window.location.reload();
                                   },
                                   error: function () {
                                       console.log('Failed to receive the Data');
-                                      console.log('error','Failed ');
                                   }
                               })
                });

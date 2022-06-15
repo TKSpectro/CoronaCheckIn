@@ -18,7 +18,7 @@ namespace CoronaCheckIn.Controllers
 
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity is { IsAuthenticated: true })
             {
                 return View();
             }
