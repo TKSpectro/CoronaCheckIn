@@ -1,4 +1,5 @@
 using CoronaCheckIn.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CoronaCheckIn.Managers
@@ -53,7 +54,7 @@ namespace CoronaCheckIn.Managers
 
         public Room? GetRoom(Guid id)
         {
-            return Context.Rooms.Find(id);
+            return Context.Rooms.AsNoTracking().FirstOrDefault(r => r.Id == id);
         }
 
         public Room? AddRoom(Room room)
