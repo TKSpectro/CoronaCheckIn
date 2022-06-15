@@ -1,6 +1,8 @@
 @model IEnumerable<Room>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+
+
 <h1>@Localizer["All Rooms"]</h1>
 
 <div>
@@ -42,8 +44,8 @@
     <tbody>
     @foreach (var room in Model)
     {
-        <tr>
-            <th hidden scope="row">@room.Id</th>
+        <tr onclick="getRoomModal('@room.Id')">
+            <th hidden  scope="row">@room.Id</th>
             <td>@room.Name</td>
             <td>@room.Faculty</td>
             <td>@room.MaxDuration</td>
@@ -68,8 +70,8 @@
                     </button>
                 </div>
                 <div class="modal-body" id="formDetails">
+                    <partial  id="detailsContent"  name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
                     @* <div id="detailsContent" class="container"></div> *@
-                    <partial name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
                 </div>
                 <div class="modal-footer">
                     <input id="btnSubmit" type="submit" value="Submit" class="btn btn-primary" onclick="submitRoom()"/>
@@ -152,16 +154,49 @@
             window.location.search = params.toString();
         }
         
+        function getRoomModal(room){
+          
+            console.log('roomId', room);
+            
+                   $.ajax({
+                            url: "/rooms/CreateRoom",
+                            method: "GET",
+                            data: {"roomId": room},
+                            success: function (result) {
+                                console.log('result', result);
+                                
+                                 $("#createRoomModal").modal("show");
+                                 
+                                 let modalBody = $("#formDetails")[0];
+                                 let children = modalBody.children[1];
+                                console.log('children', children);
+                                let name = children.children[1].children[0];
+                                name.value= result.name;
+                                
+                                let maxParticipants= children.children[3].children[0];
+                                maxParticipants.value= result.maxParticipants;
+                            
+                                 let maxDuration= children.children[5].children[0];
+                                    maxDuration.value= result.maxDuration;
+                                    
+                                    let faculty= children.children[7].children[0];
+                                        faculty.selectedIndex= result.faculty;
+                            }
+                        });
+
+        }
+        
         // Modal 
         $("#modalBtn").click(function () {
             $("#createRoomModal").modal("show");
-                   $.ajax({
-                            url: "/rooms/createRoom/",
-                            method: "GET",
-                            success: function (result) {
-                                $("#detailsContent").html(result);
-                            }
-                        });
+                   // $.ajax({
+                   //          url: "/rooms/CreateRoom/",
+                   //          method: "GET",
+                   //          success: function (result) {
+                   //              console.log('result get', $("#detailsContent").html(result));
+                   //              $("#detailsContent").html(result);
+                   //          }
+                   //      });
         });
 
         $('[data-dismiss="modal"]').each(function () {

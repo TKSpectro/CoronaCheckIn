@@ -26,7 +26,8 @@ namespace CoronaCheckIn.Controllers
 
             ViewBag.room = rooms.ToArray()[0];
             ViewBag.newRoom = new Room();
-
+            // ViewData["newRoom"] = new Room();
+            
             return View(rooms);
         }
 
@@ -48,9 +49,20 @@ namespace CoronaCheckIn.Controllers
         //     return RedirectToAction("Index");
         // }
 
-        public IActionResult CreateRoom()
+        [HttpGet]
+        public IActionResult CreateRoom(string roomId)
         {
-            return View();
+            Console.WriteLine("CreateRoom");
+            Console.WriteLine(roomId);
+            if (roomId != null)
+            {
+                var room = _roomManager.GetRoom(new Guid(roomId));
+
+                Console.WriteLine("room name");
+                ViewBag.getRoom = room;
+                return Json(room);
+            }
+            return PartialView(new Room());
         }
 
         [HttpPost]
@@ -68,6 +80,7 @@ namespace CoronaCheckIn.Controllers
 
             Console.WriteLine("test");
             Console.WriteLine(room);
+
             if (ModelState.IsValid)
             {
                 System.Threading.Thread.Sleep(1000);

@@ -1,7 +1,5 @@
 @model Room
-
-
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -28,11 +26,4 @@
             </select>
         </div>
     </div>
-
-    @* <div class="col-md-offset-2 col-md-10"> *@
-    @*     <button type="button" class="btn btn-primary" onclick="submitRoom()">Submit</button> *@
-    @* </div> *@
-
-@* <script type="text/javascript"> *@
-
-@*     </script> *@
+    
