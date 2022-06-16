@@ -1,5 +1,8 @@
 using CoronaCheckIn.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
+using NuGet.Protocol;
 
 namespace CoronaCheckIn.Managers
 {
@@ -12,7 +15,9 @@ namespace CoronaCheckIn.Managers
             Context = context;
         }
 
-        public IEnumerable<Session> GetSessions(Room? room = null, Guid? roomId = null, User? user = null, string? userId = null, bool? isInfected = null, DateTime? after = null, DateTime? before = null)
+        public IEnumerable<Session> GetSessions(Room? room = null, Guid? roomId = null, User? user = null,
+            string? userId = null, bool? isInfected = null, DateTime? after = null, DateTime? before = null,
+            bool includeRoom = false)
         {
             var queryable = Context.Sessions.AsQueryable();
 
@@ -43,6 +48,10 @@ namespace CoronaCheckIn.Managers
             if (before != null)
             {
                 queryable = queryable.Where(session => session.EndTime <= before || (session.EndTime == null && session.StartTime <= before));
+            }
+            if (includeRoom)
+            {
+                queryable = queryable.Include(s => s.Room);
             }
 
             return queryable.AsEnumerable();
