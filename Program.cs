@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text;
 using CoronaCheckIn;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,18 +63,64 @@ builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.Requi
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+SymmetricSecurityKey securityKey = new SymmetricSecurityKey(new Guid("00000000-0000-0000-0000-000000000000").ToByteArray());
+var issuer = "ccn";
+var audience = "ccn";
+var signingKey = securityKey.ToString();
+
+builder.Services.AddAuthentication(options =>
     {
-        options.TokenValidationParameters =
-            new TokenValidationParameters
-            {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateActor = false,
-                ValidateLifetime = true
-            };
+        // custom scheme defined in .AddPolicyScheme() below
+        options.DefaultScheme = "JWT_OR_COOKIE";
+        options.DefaultChallengeScheme = "JWT_OR_COOKIE";
+    })
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Identity/Account/Login";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+    })
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = issuer,
+            ValidateAudience = true,
+            ValidAudience = audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey))
+        };
+    })
+    // this is the key piece!
+    .AddPolicyScheme("JWT_OR_COOKIE", "JWT_OR_COOKIE", options =>
+    {
+        // runs on each request
+        options.ForwardDefaultSelector = context =>
+        {
+            // filter by auth type
+            string authorization = context.Request.Headers[HeaderNames.Authorization];
+            if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
+                return "Bearer";
+
+            // otherwise always check for cookie auth
+            return "Cookies";
+        };
     });
+    
+    
+    
+    // .AddJwtBearer(options =>
+    // {
+    //     options.TokenValidationParameters =
+    //         new TokenValidationParameters
+    //         {
+    //             ValidateAudience = false,
+    //             ValidateIssuer = false,
+    //             ValidateActor = false,
+    //             ValidateLifetime = true
+    //         };
+    //     options.Audience = "http://localhost:5000/api";
+    // });
 
 // services.AddIdentity<ApplicationUser, IdentityRole>()
     // .AddEntityFrameworkStores<ApplicationDbContext>()
