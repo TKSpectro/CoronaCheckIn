@@ -52,7 +52,7 @@ namespace CoronaCheckIn.Areas.api
                 throw new Exception("Invalid login");
             }
             
-            
+            // TODO: Get the key from env variables
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(new Guid("00000000-0000-0000-0000-000000000000").ToByteArray());
             var issuer = "ccn";
             var audience = "ccn";
@@ -67,18 +67,12 @@ namespace CoronaCheckIn.Areas.api
                 new[]
                 {
                     new Claim("UserId", user.Id)
-                });
+                }
+            );
+            
             var res = new LoginResponse();
             res.Token = new JwtSecurityTokenHandler().WriteToken(token);
             return res;
-        }
-    
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("auth")]
-        public ActionResult<string> Authed()
-        {
-        
-            return "You have access to this route";
         }
     }
 
@@ -87,7 +81,7 @@ namespace CoronaCheckIn.Areas.api
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }
-    
+
     public class LoginResponse
     {
         public string Token { get; set; } = string.Empty;

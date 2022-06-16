@@ -54,7 +54,7 @@
             <ul class="nav nav-pills h-50 flex-column mt-4 mb-auto">
                 <li class="nav-item mb-4 text-center">
                     <div>
-                        <a class="nav-link link-light @(ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewBag.title != "" ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
+                        <a class="nav-link link-light @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" && ViewBag.title != "" ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
                             <i class="bi bi-layout-text-window-reverse pe-1"></i>
                             Dashboard
                         </a>

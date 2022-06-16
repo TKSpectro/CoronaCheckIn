@@ -69,12 +69,12 @@ public class ApiRoomsController : ControllerBase
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostRoom
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public int MaxParticipants { get; set; } = -1;
 
         public int MaxDuration { get; set; } = 90;
 
-        public string Faculty { get; set; }
+        public string Faculty { get; set; } = string.Empty;
     }
 }

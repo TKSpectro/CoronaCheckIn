@@ -77,7 +77,7 @@ public class ApiSessionsController : ControllerBase
     {
         public Guid RoomId { get; set; }
 
-        public string UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
         public bool Infected { get; set; } = false;
 
