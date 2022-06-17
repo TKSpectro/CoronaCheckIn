@@ -1,6 +1,7 @@
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -18,12 +19,15 @@ namespace CoronaCheckIn.Areas.api
         private readonly ApplicationDbContext _context;
         private readonly ILogger<ApiIndexController> _logger;
         private readonly SignInManager<User> _signInManager;
+        private readonly IConfiguration _configuration;
 
-        public ApiIndexController(ILogger<ApiIndexController> logger, ApplicationDbContext context, SignInManager<User> signInManager)
+        public ApiIndexController(ILogger<ApiIndexController> logger, ApplicationDbContext context,
+            SignInManager<User> signInManager, IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
             _signInManager = signInManager;
+            _configuration = configuration;
         }
 
         [HttpGet("")]
@@ -52,15 +56,20 @@ namespace CoronaCheckIn.Areas.api
                 throw new Exception("Invalid login");
             }
             
-            // TODO: Get the key from env variables
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(new Guid("00000000-0000-0000-0000-000000000000").ToByteArray());
-            var issuer = "ccn";
-            var audience = "ccn";
-            var signingKey = securityKey.ToString();
+            // Get all jwt configuration from the appsettings or set defaults
+            var secret = _configuration.GetValue<string>("Jwt:Secret");
+            if (secret == null || secret.Trim().Length == 0)
+            {
+                throw new Exception("Please provide a valid Jwt:Secret in appsettings");
+            }
+            var issuer = _configuration.GetValue<string>("Jwt:Issuer");
+            if (issuer.Trim().Length == 0) issuer = "ccn";
+            var audience = _configuration.GetValue<string>("Jwt:Audience");;
+            if (audience.Trim().Length == 0) issuer = "ccn";
             
             var token = JwtHelper.GetJwtToken(
                 user.Email,
-                signingKey,
+                secret,
                 issuer,
                 audience,
                 TimeSpan.FromMinutes(90),

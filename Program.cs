@@ -59,11 +59,17 @@ builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.Requi
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
-// TODO: Get the key from env variables
-var securityKey = new SymmetricSecurityKey(new Guid("00000000-0000-0000-0000-000000000000").ToByteArray());
-var issuer = "ccn";
-var audience = "ccn";
-var signingKey = securityKey.ToString();
+// Get all jwt configuration from the appsettings or set defaults
+var secret = builder.Configuration.GetValue<string>("Jwt:Secret");
+if (secret == null || secret.Trim().Length == 0)
+{
+    throw new Exception("Please provide a valid Jwt:Secret in appsettings");
+}
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+var issuer = builder.Configuration.GetValue<string>("Jwt:Issuer");
+if (issuer.Trim().Length == 0) issuer = "ccn";
+var audience = builder.Configuration.GetValue<string>("Jwt:Audience");;
+if (audience.Trim().Length == 0) issuer = "ccn";
 
 builder.Services.AddAuthentication(options =>
     {
@@ -87,7 +93,7 @@ builder.Services.AddAuthentication(options =>
             ValidateAudience = true,
             ValidAudience = audience,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey))
+            IssuerSigningKey = signingKey
         };
     })
     // this is the key piece!
