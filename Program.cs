@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text;
 using CoronaCheckIn;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
@@ -9,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +28,8 @@ builder.Host.ConfigureAppConfiguration(
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true) //load environment settings
                 .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true) //load local settings
                 .AddEnvironmentVariables();
-
-        if (args != null)
-        {
-            config.AddCommandLine(args);
-        }
+        
+        config.AddCommandLine(args);
     });
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -54,9 +54,63 @@ builder.Services
 builder.Services.AddDbContext<ApplicationDbContext>(options => options
     .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+
+// Get all jwt configuration from the appsettings or set defaults
+var secret = builder.Configuration.GetValue<string>("Jwt:Secret");
+if (secret == null || secret.Trim().Length == 0)
+{
+    throw new Exception("Please provide a valid Jwt:Secret in appsettings");
+}
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+var issuer = builder.Configuration.GetValue<string>("Jwt:Issuer");
+if (issuer.Trim().Length == 0) issuer = "ccn";
+var audience = builder.Configuration.GetValue<string>("Jwt:Audience");;
+if (audience.Trim().Length == 0) issuer = "ccn";
+
+builder.Services.AddAuthentication(options =>
+    {
+        // custom scheme defined in .AddPolicyScheme() below
+        options.DefaultScheme = "JWT_OR_COOKIE";
+        options.DefaultChallengeScheme = "JWT_OR_COOKIE";
+    })
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Identity/Account/Login";
+        options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+        options.LogoutPath = "/Identity/Account/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+    })
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = issuer,
+            ValidateAudience = true,
+            ValidAudience = audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey
+        };
+    })
+    // this is the key piece!
+    .AddPolicyScheme("JWT_OR_COOKIE", "JWT_OR_COOKIE", options =>
+    {
+        // runs on each request
+        options.ForwardDefaultSelector = context =>
+        {
+            // filter by auth type
+            string authorization = context.Request.Headers[HeaderNames.Authorization];
+            if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
+                return "Bearer";
+
+            // otherwise always check for cookie auth
+            return "Cookies";
+        };
+    });
 
 builder.Services.AddScoped<AccountManager>();
 builder.Services.AddScoped<RoomManager>();
@@ -85,9 +139,9 @@ if (args.Length == 1 && args[0].ToLower() == "seed")
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 
-    using var scope = scopedFactory.CreateScope();
-    var service = scope.ServiceProvider.GetService<DataSeeder>();
-    service.Seed();
+    using var scope = scopedFactory?.CreateScope();
+    var service = scope?.ServiceProvider.GetService<DataSeeder>();
+    service?.Seed();
 }
 
 app.UseHttpsRedirection();
