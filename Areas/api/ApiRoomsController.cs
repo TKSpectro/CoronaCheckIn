@@ -1,6 +1,8 @@
 using System.Text.Json;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoronaCheckIn.Areas.api;
@@ -18,23 +20,31 @@ public class ApiRoomsController : ControllerBase
         _roomManager = roomManager;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("")]
-    public ActionResult<string> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
+    public ActionResult<IEnumerable<Room>> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
     {
         var rooms = _roomManager.GetRooms(sortBy: sortBy, sortOrder: sortOrder, faculty: faculty);
 
-        return JsonSerializer.Serialize(rooms);
+        return rooms.ToList();
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("{id}")]
-    public ActionResult<string> GetOne(Guid id)
+    public ActionResult<Room> GetOne(Guid id)
     {
         var room = _roomManager.GetRoom(id);
-        return JsonSerializer.Serialize(room);
+        if(room == null)
+        {
+            throw new Exception("No session found with this id");
+        }
+        
+        return room;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost("")]
-    public ActionResult<string> Create([FromBody] PostRoom postRoom)
+    public ActionResult<Room> Create([FromBody] PostRoom postRoom)
     {
         var parsedFaculty = Room.ParseFacultyFromString(postRoom.Faculty);
         if (parsedFaculty == null) throw new Exception("Could not parse faculty");
@@ -48,17 +58,23 @@ public class ApiRoomsController : ControllerBase
         };
 
         var createdRoom = _roomManager.AddRoom(room);
-        return JsonSerializer.Serialize(createdRoom);
+        if(createdRoom == null)
+        {
+            throw new Exception("Room could not be created");
+        }
+        
+        return createdRoom;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostRoom
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public int MaxParticipants { get; set; } = -1;
 
         public int MaxDuration { get; set; } = 90;
 
-        public string Faculty { get; set; }
+        public string Faculty { get; set; } = string.Empty;
     }
 }
