@@ -12,7 +12,7 @@ namespace CoronaCheckIn.Models
 
         public Faculty Faculty { get; set; }
 
-        public string? QrCode { get; set; }
+        public byte[]? QrCode { get; set; }
 
         public static Faculty? ParseFacultyFromString(string? faculty)
         {
