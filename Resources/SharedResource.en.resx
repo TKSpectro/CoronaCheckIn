@@ -173,4 +173,12 @@
     <value>Search</value>
     <comment>Search</comment>
   </data>
+  <data name="Imprint" xml:space="preserve">
+    <value>Imprint</value>
+    <comment>Imprint</comment>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+    <comment>Privacy</comment>
+  </data>
 </root>
