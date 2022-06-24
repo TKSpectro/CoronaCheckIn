@@ -181,4 +181,8 @@
     <value>Datenschutz</value>
     <comment>Privacy</comment>
   </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>Dashboard</comment>
+  </data>
 </root>
