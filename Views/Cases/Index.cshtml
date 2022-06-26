@@ -8,7 +8,7 @@
 
 <div>
     <div class="input-group mb-3">
-        <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]" aria-label="@Localizer["Search by name..."]">
+        <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Search by room-name..."]">
         <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
     </div>
     
@@ -17,16 +17,16 @@
             <label class="control-label">@SharedLocalizer["StartTime"]</label>
             <input id="input-start-time" type="date" class="form-control"/>
         </div>
-        <div class="flex-row">
+        <div class="flex-row ms-1">
             <label class="control-label">@SharedLocalizer["EndTime"]</label>
             <input id="input-end-time" type="date" class="form-control"/>
         </div>
-        <div class="flex-row">
+        <div class="flex-row ms-1">
             <label class="control-label"> </label>
             <button class="btn btn-outline-secondary form-control" type="button" onclick="searchDate(this)">@SharedLocalizer["Filter"]</button>
         </div>
         
-        <div class="flex-row ms-3">
+        <div class="flex-row ms-auto">
             <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
             <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
                 <option value="-1">@SharedLocalizer["All"]</option>
@@ -43,19 +43,19 @@
     <thead>
     <tr class="user-select-none">
         <th hidden scope="col">Id</th>
-        <th scope="col" id="table-head-name" onclick="sortBy('room')">
+        <th scope="col" id="table-head-room" onclick="sortBy('room')">
             @SharedLocalizer["Room"]
             <i class="bi bi-dash-lg pe-1"></i>
         </th>
-        <th scope="col" id="table-head-faculty" onclick="sortBy('user')">
+        <th scope="col" id="table-head-user" onclick="sortBy('user')">
             @SharedLocalizer["User"]
             <i class="bi bi-dash-lg pe-1"></i>
         </th>
-        <th scope="col" id="table-head-maxDuration" onclick="sortBy('startTime')">
+        <th scope="col" id="table-head-start" onclick="sortBy('start')">
             @SharedLocalizer["StartTime"]
             <i class="bi bi-dash-lg pe-1"></i>
         </th>
-        <th scope="col" id="table-head-maxParticipants" onclick="sortBy('endTime')">
+        <th scope="col" id="table-head-end" onclick="sortBy('end')">
             @SharedLocalizer["EndTime"]
             <i class="bi bi-dash-lg pe-1"></i>
         </th>
@@ -66,8 +66,8 @@
     {
         <tr>
             <th hidden scope="row">@session.Id</th>
-            <td>@session.RoomId</td>
-            <td>@session.UserId</td>
+            <td>@session.Room.Name</td>
+            <td>@session.User.Email</td>
             <td>@session.StartTime</td>
             <td>@session.EndTime</td>
         </tr>
@@ -89,7 +89,7 @@
             initialFacultySwitch = true;
             
             // Set name search to url query
-            $("#input-name-search").val(params.get('name'));
+            $("#input-room-name-search").val(params.get('roomName'));
             
             $("#input-start-time").val(params.get('start'));
             $("#input-end-time").val(params.get('end'));
@@ -139,10 +139,14 @@
         }
         
         function searchName(){
-            const searchString = $("#input-name-search").val();
+            const searchString = $("#input-room-name-search").val();
             
             const params = new URLSearchParams(window.location.search);
-            params.set('name', searchString);
+            if (searchString.toString().trim().length > 0){
+                params.set('roomName', searchString);
+            } else {
+                params.delete('roomName');
+            }
             
             window.location.search = params.toString();
         }
@@ -154,9 +158,13 @@
             const params = new URLSearchParams(window.location.search);
             if (startTime.toString().trim().length > 0){
                 params.set('start', startTime);
+            } else {
+                params.delete('start');
             }
             if (endTime.toString().trim().length > 0){
                 params.set('end', endTime);
+            } else {
+                params.delete('end');
             }
             window.location.search = params.toString();
         }

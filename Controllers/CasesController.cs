@@ -18,9 +18,12 @@ namespace CoronaCheckIn.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Index([FromQuery] string? name = null, [FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
+        public IActionResult Index([FromQuery] string? roomName = null, [FromQuery] string? sortBy = null,
+            [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null,
+            [FromQuery] DateTime? start = null, [FromQuery] DateTime? end = null)
         {
-            var sessions = _sessionManager.GetSessions();
+            var sessions = _sessionManager.GetSessions(isInfected: true, after: start, before: end,
+                sortBy: sortBy, sortOrder: sortOrder, faculty: faculty, roomName: roomName, includeRoom: true, includeUser: true);
 
             return View(sessions);
         }
@@ -28,7 +31,7 @@ namespace CoronaCheckIn.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
     }
 }
