@@ -3,28 +3,32 @@
 <div class="container">
     <div class="row">
 
-        <h1>@SharedLocalizer["Room"]: @Model.Name</h1>
-        <p>@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
-        <p>@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
+        <h1 class="print">@SharedLocalizer["Room"]: @Model.Name</h1>
+        <p class="print">@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
+        <p class="print">@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
         <p>@SharedLocalizer["Faculty"]: @Model.Faculty</p>
-
-        <h2>QR-Code</h2>
+        
+        <h2 class="print">QR-Code</h2>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid" style="image-rendering: pixelated;"/>
+            <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid print" style="image-rendering: pixelated;"/>
         </div>
     </div>
-    @{
-        string id = @Model.Id.ToString();
-    }
+    <p class="print only-print">Bitte scannen Sie den QR-Code mit der Corona-Checkin-App ein!</p>
     <div class="row">
         <div class="col-md-3 d-grid gap-2 mt-2">
-            <button type="button" class="btn btn-outline-primary btn-block" onclick="generateQrCode('@id')">
-                <span>Neu generieren</span>
+            <button type="button" class="btn btn-outline-primary btn-block" onclick="generateQrCode('@Model.Id')">
+                <span class="bi bi-arrow-clockwise"></span> Neuer QR-Code
             </button>
         </div>
-
+    </div>    
+    <div class="row">
+        <div class="col-md-3 d-grid gap-2 mt-2">
+            <button type="button" class="btn btn-outline-primary btn-block" onclick="window.print()">
+                <span class="bi bi-printer"></span> Drucken
+            </button>
+        </div>
     </div>    
     <div class="row">    
         <h2>Sessions</h2>
