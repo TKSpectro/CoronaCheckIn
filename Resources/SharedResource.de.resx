@@ -173,4 +173,32 @@
     <value>Suchen</value>
     <comment>Search</comment>
   </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Räume</value>
+    <comment>Rooms</comment>
+  </data>
+  <data name="Cases" xml:space="preserve">
+    <value>Infektionen</value>
+    <comment>Cases</comment>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Raum</value>
+    <comment>Room</comment>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Nutzer</value>
+    <comment>User</comment>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start-Zeit</value>
+    <comment>StartTime</comment>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End-Zeit</value>
+    <comment>EndTime</comment>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtern</value>
+    <comment>Filter</comment>
+  </data>
 </root>

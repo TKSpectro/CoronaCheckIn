@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a href="#" class="nav-link link-light">
+                    <a class="nav-link link-light @(ViewBag.title.Equals("Cases") ? "link-active" : "")" asp-controller="cases" asp-action="Index">
                         <i class="bi bi-clipboard-pulse pe-1"></i>
                         Cases
                     </a>
@@ -116,7 +116,7 @@
 
             @RenderBody()
             @* <div class="w-100 position-absolute bottom-0"> *@
-            @*<footer class="border-top footer text-muted ">
+            <footer class="border-top footer text-muted ">
             <div class="container">
                 &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 
@@ -127,7 +127,7 @@
                     <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option>
                 </select>
             </div>
-        </footer>*@
+        </footer>
             @* </div> *@
         </main>
     </div>
