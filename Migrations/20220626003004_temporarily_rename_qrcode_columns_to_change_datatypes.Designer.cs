@@ -4,6 +4,7 @@ using CoronaCheckIn.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoronaCheckIn.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220626003004_temporarily_rename_qrcode_columns_to_change_datatypes")]
+    partial class temporarily_rename_qrcode_columns_to_change_datatypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,10 +63,10 @@ namespace CoronaCheckIn.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("QrCode")
+                    b.Property<byte[]>("TMP_QrCode")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<long?>("QrCodeTimestamp")
+                    b.Property<long?>("TMP_QrCodeTimestamp")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
