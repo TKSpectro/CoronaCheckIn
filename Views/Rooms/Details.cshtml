@@ -15,12 +15,16 @@
             <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid" style="image-rendering: pixelated;"/>
         </div>
     </div>
+    @{
+        string id = @Model.Id.ToString();
+    }
     <div class="row">
         <div class="col-md-3 d-grid gap-2 mt-2">
-            <button type="button" class="btn btn-outline-primary btn-block" onclick="generateQrCode()">
+            <button type="button" class="btn btn-outline-primary btn-block" onclick="generateQrCode('@id')">
                 <span>Neu generieren</span>
             </button>
         </div>
+
     </div>    
     <div class="row">    
         <h2>Sessions</h2>
@@ -31,16 +35,17 @@
 @section Scripts {
     <script type="text/javascript">
 
-       function generateQrCode() {
-          $.ajax({
-            url: "/rooms/GenerateQrCode",
+       function generateQrCode(id) {
+           console.log(id);
+           $.ajax({
+            url: "/rooms/GenerateQrCode/" + id,
             success: function (data) {
                 document.getElementById('qrcode').src = 'data:image/png;base64,' + data;
             },
             error: function (error) {
-              alert("Error: " + error);
+                alert("Error: " + error);
             }
           })
-        }
+       }
     </script>
 }

@@ -39,7 +39,7 @@ namespace CoronaCheckIn.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Details(Guid id)
         {
-            byte[] qrCodeImage = createQrCode();
+            byte[] qrCodeImage = createQrCode(id);
 
             ViewBag.QrCode = qrCodeImage;
             return View(_roomManager.GetRoom(id));
@@ -51,39 +51,22 @@ namespace CoronaCheckIn.Controllers
             return RedirectToAction("Index");
         }
 
-        public byte[] GenerateQrCode()
+        public byte[] GenerateQrCode(Guid id)
         {
-            return createQrCode();
+            Room room = _roomManager.GetRoom(id);
+            DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
+            room.QrCodeTimestamp = dateTimeOffset.ToUnixTimeSeconds();
+            _roomManager.UpdateRoom(room);
+
+            return createQrCode(id);
         }
 
-        public async Task<ActionResult> GetQRCode()
+        private byte[] createQrCode(Guid id)
         {
-            try
-            {
-                QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                string payload = "{'id': " + 1 + ", 'timestamp':" + DateTime.Now + "}";
-                
-                QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
-                BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
-                byte[] qrCodeAsBitmapByteArr = qrCode.GetGraphic(20);
-
-                var image = SixLabors.ImageSharp.Image.Load<Rgba32>(qrCodeAsBitmapByteArr);
-                image.Mutate(x => x.Grayscale());
-                var result = File(qrCodeAsBitmapByteArr, "image/png");
-
-
-                return result;
-            }
-            catch
-            {
-                return NotFound();
-            }
-        }
-
-        private byte[] createQrCode()
-        {
+            Room room = _roomManager.GetRoom(id);
+            long? timestamp = room.QrCodeTimestamp;
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            string payload = "{'id': " + 1 + ", 'timestamp':" + DateTime.Now + "}";
+            string payload = "{'id': " + 1 + ", 'timestamp':" + timestamp + "}";
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
             BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
             return qrCode.GetGraphic(10);
