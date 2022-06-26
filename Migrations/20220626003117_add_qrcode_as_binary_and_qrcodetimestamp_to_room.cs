@@ -8,14 +8,6 @@ namespace CoronaCheckIn.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "QrCode",
-                table: "Rooms");
-
-            migrationBuilder.DropColumn(
-                name: "QrCodeTimestamp",
-                table: "Rooms");
-
             migrationBuilder.RenameColumn(
                 name: "TMP_QrCodeTimestamp",
                 table: "Rooms",
@@ -29,18 +21,6 @@ namespace CoronaCheckIn.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "QrCode",
-                table: "Rooms",
-                type: "varbinary(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "QrCode",
-                table: "Rooms",
-                type: "bigint",
-                nullable: true);
-
             migrationBuilder.RenameColumn(
                 name: "QrCodeTimestamp",
                 table: "Rooms",
