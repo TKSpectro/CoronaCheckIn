@@ -56,6 +56,10 @@ namespace CoronaCheckIn.Managers
         {
             return Context.Rooms.AsNoTracking().FirstOrDefault(r => r.Id == id);
         }
+        public Room? GetRoomByName(string name)
+        {
+            return Context.Rooms.FirstOrDefault(r => r.Name == name);
+        }
 
         public Room? AddRoom(Room room)
         {

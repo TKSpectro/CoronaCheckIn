@@ -1,6 +1,8 @@
 using System.Text.Json;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +26,7 @@ public class ApiSessionsController : ControllerBase
         _userManager = userManager;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("")]
     public ActionResult<IEnumerable<Session>> GetAll([FromQuery] Guid? roomId, [FromQuery] string? userId,
         [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before,
@@ -35,6 +38,7 @@ public class ApiSessionsController : ControllerBase
         return sessions.ToList();
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("{id}")]
     public ActionResult<Session> GetOne(Guid id)
     {
@@ -47,6 +51,7 @@ public class ApiSessionsController : ControllerBase
         return session;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost("")]
     public ActionResult<Session> Create([FromBody] PostSession postSession)
     {
@@ -72,7 +77,7 @@ public class ApiSessionsController : ControllerBase
     {
         public Guid RoomId { get; set; }
 
-        public string UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
 
         public bool Infected { get; set; } = false;
 

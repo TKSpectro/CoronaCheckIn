@@ -1,6 +1,8 @@
 using System.Text.Json;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoronaCheckIn.Areas.api;
@@ -18,6 +20,7 @@ public class ApiRoomsController : ControllerBase
         _roomManager = roomManager;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("")]
     public ActionResult<IEnumerable<Room>> GetAll([FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
     {
@@ -26,6 +29,7 @@ public class ApiRoomsController : ControllerBase
         return rooms.ToList();
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet("{id}")]
     public ActionResult<Room> GetOne(Guid id)
     {
@@ -38,6 +42,7 @@ public class ApiRoomsController : ControllerBase
         return room;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost("")]
     public ActionResult<Room> Create([FromBody] PostRoom postRoom)
     {
@@ -61,14 +66,15 @@ public class ApiRoomsController : ControllerBase
         return createdRoom;
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PostRoom
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public int MaxParticipants { get; set; } = -1;
 
         public int MaxDuration { get; set; } = 90;
 
-        public string Faculty { get; set; }
+        public string Faculty { get; set; } = string.Empty;
     }
 }
