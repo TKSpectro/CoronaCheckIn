@@ -173,4 +173,8 @@
     <value>Search</value>
     <comment>Search</comment>
   </data>
+  <data name="Room" xml:space="preserve">
+    <value>Room</value>
+    <comment>Room</comment>
+  </data>
 </root>
