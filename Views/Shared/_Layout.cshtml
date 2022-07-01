@@ -115,18 +115,18 @@
 
             @RenderBody()
             @* <div class="w-100 position-absolute bottom-0"> *@
-            <footer class="border-top footer text-muted ">
-            <div class="container">
-                &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-
-                $1$ TODO: Vertical center the select #1#
-                <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)">
-                    $1$ TODO: Is there a better way to do this #1#
-                    <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
-                    <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option>
-                </select>
-            </div>
-        </footer>
+        @*     <footer class="border-top footer text-muted "> *@
+        @*     <div class="container"> *@
+        @*         &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+        @* *@
+        @*         $1$ TODO: Vertical center the select #1# *@
+        @*         <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)"> *@
+        @*             $1$ TODO: Is there a better way to do this #1# *@
+        @*             <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option> *@
+        @*             <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option> *@
+        @*         </select> *@
+        @*     </div> *@
+        @* </footer> *@
             @* </div> *@
         </main>
     </div>
