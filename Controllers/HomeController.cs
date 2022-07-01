@@ -25,9 +25,13 @@ namespace CoronaCheckIn.Controllers
 
             return Redirect("/Identity/Account/Login");
         }
-
-
+        
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        
+        public IActionResult Imprint()
         {
             return View();
         }

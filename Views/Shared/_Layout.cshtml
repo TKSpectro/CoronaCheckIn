@@ -74,13 +74,13 @@
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title == "Rooms" ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
+                    <a class="nav-link link-light @(ViewBag.title?.Equals("Rooms") ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
                         <i class="bi bi-house pe-1"></i>
                         Rooms
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title == "Accounts" ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="List">
+                    <a class="nav-link link-light @(ViewBag.title?.Equals("Accounts") ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="List">
                         <i class="bi bi-people-fill pe-1"></i>
                         Profilies
                     </a>
@@ -98,7 +98,7 @@
 
                 <partial name="_LoginPartial"/>
                 <li class="nav-item mb-3 text-center">
-                    <a href="#" class="nav-link link-light" aria-current="page">
+                    <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Imprint">
                         Imprint
                     </a>
                 </li>
