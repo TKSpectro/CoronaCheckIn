@@ -64,18 +64,20 @@
     <div id="createRoomModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <div class="col-12 text-center">
-                        <h4>@Localizer["CreateRoom"]</h4>
+                <div class="modal-header border-0">
+                    <div class="col-11 text-center">
+                        <h4 style="color: #9551FE">@Localizer["CreateRoom"]</h4>
                     </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">X</button>
+                        </div>
                 </div>
                 <div class="modal-body" id="formDetails">
                     <partial id="detailsContent" name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
                     @* <div id="detailsContent" class="container"></div> *@
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-                    <input id="btnSubmit" type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" onclick="submitRoom()"/>
+                <div class="col-12 modal-footer border-0">
+                    <button id="btnSubmit" type="submit"  class="w-100 text-light btn btn-lg" style="background-color:#9551FE " onclick="submitRoom()">@SharedLocalizer["Save"]</button>
                 </div>
             </div>
         </div>
