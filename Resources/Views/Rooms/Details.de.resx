@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,79 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorCompare" xml:space="preserve">
-    <value>"{0}" and "{1}" do not match.</value>
+  <data name="Do you want to generate a new QR code?" xml:space="preserve">
+    <value>Wollen Sie einen neuen QR-Code generieren?</value>
+    <comment>Wollen Sie einen neuen QR-Code generieren?</comment>
   </data>
-  <data name="ErrorEmailAddress" xml:space="preserve">
-    <value>The {0} field is not a valid e-mail address.</value>
-  </data>
-  <data name="ErrorRequired" xml:space="preserve">
-    <value>The field "{0}" is required.</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
-  </data>
-  <data name="Message" xml:space="preserve">
-    <value>Message</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="Faculty" xml:space="preserve">
-    <value>Faculty</value>
-    <comment>Faculty</comment>
-  </data>
-  <data name="MaxDuration" xml:space="preserve">
-    <value>Max. Duration</value>
-    <comment>MaxDuration</comment>
-  </data>
-  <data name="MaxParticipants" xml:space="preserve">
-    <value>Max. Participants</value>
-    <comment>MaxParticipants</comment>
-  </data>
-  <data name="All" xml:space="preserve">
-    <value>All</value>
-    <comment>All</comment>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
-    <comment>Search</comment>
-  </data>
-  <data name="Imprint" xml:space="preserve">
-    <value>Imprint</value>
-    <comment>Imprint</comment>
-  </data>
-  <data name="Privacy" xml:space="preserve">
-    <value>Privacy</value>
-    <comment>Privacy</comment>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-    <comment>Dashboard</comment>
-  <data name="Room" xml:space="preserve">
-    <value>Room</value>
-    <comment>Room</comment>
-  </data>
-  <data name="Minutes" xml:space="preserve">
-    <value>Minute(s)</value>
-    <comment>Minutes</comment>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>Print</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="New QR code" xml:space="preserve">
+    <value>Neuer QR-Code</value>
+    <comment>New QR code</comment>
   </data>
 </root>
