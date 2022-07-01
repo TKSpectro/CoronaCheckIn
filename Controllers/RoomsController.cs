@@ -49,7 +49,7 @@ namespace CoronaCheckIn.Controllers
             return View(_roomManager.GetRoom(id));
         }
 
-        public IActionResult Remove(Guid id)
+        public IActionResult RemoveRoom(Guid id)
         {
             _roomManager.RemoveRoom(id);
             return RedirectToAction("Index");

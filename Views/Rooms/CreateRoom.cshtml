@@ -1,31 +1,33 @@
 @model Room
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @Html.AntiForgeryToken()
 
-<h2>@SharedLocalizer["Room"]</h2>
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <label class="control-label col-md-2" asp-for="Name">Name</label>
-        <div class="col-md-10">
-            <input asp-for="Name" type="text" class="form-control"/>
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <label class="control-label col-md-2" asp-for="MaxParticipants">Max Participants</label>
-        <div class="col-md-10">
-            <input asp-for="MaxParticipants" type="number" class="form-control"/>
-            <span asp-validation-for="MaxParticipants" class="text-danger"></span>
-        </div>
-        <label class="control-label col-md-2" asp-for="MaxDuration">MaxDuration</label>
-        <div class="col-md-10">
-            <input asp-for="MaxDuration" type="number" class="form-control"/>
-            <span asp-validation-for="MaxDuration" class="text-danger"></span>
-        </div>
-        <label class="control-label col-md-2" asp-for="Faculty">Faculty</label>
-        <div class="col-md-10">
-            <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" asp-for="Faculty">
-                <option value="@Faculty.AI" selected=@Faculty.AI>Angewandte Informatik</option>
-                <option value="@Faculty.GET">Gebäude und Energietechnik</option>
-            </select>
-        </div>
-        <input hidden asp-for="Id" type="text" class="form-control"/>
+<div class="form-group">
+    <label class="control-label mb-1" asp-for=@SharedLocalizer["Name"]>@SharedLocalizer["Name"]</label>
+    <div class="mb-4">
+        <input asp-for="Name" type="text" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    
+    <label class="control-label mb-1" asp-for="MaxParticipants">@SharedLocalizer["MaxDuration"]</label>
+    <div class="mb-4">
+        <input asp-for="MaxParticipants" type="number" class="form-control"/>
+        <span asp-validation-for="MaxParticipants" class="text-danger"></span>
+    </div>
+    <label class="control-label mb-1" asp-for="MaxDuration">@SharedLocalizer["MaxParticipants"]</label>
+    <div class="mb-4">
+        <input asp-for="MaxDuration" type="number" class="form-control"/>
+        <span asp-validation-for="MaxDuration" class="text-danger"></span>
+    </div>
+    <div class="input-group mb-4">
+         <div class="input-group-prepend">
+             <label class="input-group-text" asp-for=@SharedLocalizer["Faculty"]>@SharedLocalizer["Faculty"]</label>
+             </div>
+        <select class="form-control" id=@SharedLocalizer["Faculty"] asp-for="Faculty">
+            <option value="@Faculty.AI">Angewandte Informatik</option>
+            <option value="@Faculty.GET">Gebäude und Energietechnik</option>
+        </select>
+    </div>
+    <input hidden asp-for="Id" type="text" class="form-control"/>
+</div>

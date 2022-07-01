@@ -181,4 +181,12 @@
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Erstellen</value>
+    <comment>Create</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+    <comment>Save</comment>
+  </data>
 </root>

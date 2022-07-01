@@ -2,7 +2,6 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 
-
 <h1>@Localizer["All Rooms"]</h1>
 
 <div>
@@ -45,13 +44,15 @@
     @foreach (var room in Model)
     {
         <tr onclick="getRoomModal('@room.Id')">
-            <th hidden  scope="row">@room.Id</th>
+            <th hidden scope="row">@room.Id</th>
             <td>@room.Name</td>
             <td>@room.Faculty</td>
             <td>@room.MaxDuration</td>
             <td>@room.MaxParticipants</td>
             <td>
-                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn btn-primary"><i class="bi bi-trash"></i></a>
+                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn btn-primary">
+                    <i class="bi bi-trash"></i>
+                </a>
             </td>
         </tr>
     }
@@ -64,18 +65,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4>@Localizer["RegistrationForm"]</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="col-12 text-center">
+                        <h4>@Localizer["CreateRoom"]</h4>
+                    </div>
                 </div>
                 <div class="modal-body" id="formDetails">
-                    <partial  id="detailsContent"  name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
+                    <partial id="detailsContent" name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
                     @* <div id="detailsContent" class="container"></div> *@
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
-                    <input id="btnSubmit" type="submit" value="Erstellen" class="btn btn-primary" onclick="submitRoom()"/>
+                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                    <input id="btnSubmit" type="submit" value="@SharedLocalizer["Save"]" class="btn btn-primary" onclick="submitRoom()"/>
                 </div>
             </div>
         </div>
@@ -154,32 +154,32 @@
         }
         
         function getRoomModal(room){
-            console.log('room id', room);
                    $.ajax({
                             url: "/rooms/CreateRoom",
                             method: "GET",
                             data: {"roomId": room},
-                            success: function (result) {
-                                console.log('result', result);
-                                
+                            success: function (result) {                                
                                  $("#createRoomModal").modal("show");
-                                 
+                               
                                  let modalBody = $("#formDetails")[0];
+                                
                                  let children = modalBody.children[1];
-                                console.log('children', children.children);
+                                    
                                 let name = children.children[1].children[0];
                                 name.value= result.name;
-                                
+
                                 let maxParticipants= children.children[3].children[0];
                                 maxParticipants.value= result.maxParticipants;
-                            
+
                                  let maxDuration= children.children[5].children[0];
                                     maxDuration.value= result.maxDuration;
+
                                     
-                                let faculty= children.children[7].children[0];
+                                let faculty= children.children[6].children[1];
                                     faculty.selectedIndex= result.faculty;
-                                    
-                                 let id= children.children[8];
+                            
+
+                                 let id= children.children[7];
                                     id.value= result.id;
                             }
                         });
