@@ -205,7 +205,7 @@
              $('#roomForm').on('submit', function(e){
                    e.preventDefault();
                         let dataForm = $("#roomForm").serialize();   
-                        console.log(dataForm);
+               
                               $.ajax({
                                   type: 'POST',
                                   url: '/rooms/CreateRoom',
@@ -216,7 +216,7 @@
                                         window.location.reload();
                                   },
                                   error: function () {
-                                      console.log('Failed to receive the Data');
+                                      console.error('Failed to receive the Data');
                                   }
                               })
                });

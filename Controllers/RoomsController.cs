@@ -78,13 +78,10 @@ namespace CoronaCheckIn.Controllers
                 
                 if (checkRoom != null)
                 {
-                    Console.WriteLine("update");
                     var newRoom = _roomManager.UpdateRoom(room);
-                    Console.WriteLine(newRoom);
                 }
                 else
                 {
-                    Console.WriteLine("add");
                     _roomManager.AddRoom(room);
                 }
             }
