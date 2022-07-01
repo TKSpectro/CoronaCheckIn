@@ -1,24 +1,29 @@
 @model IEnumerable<Room>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-
 @{
-    ViewData["Title"] = @Localizer["All Rooms"].Value;
+    ViewBag.title = SharedLocalizer["Rooms"].Value;
 }
 
-<h1>@Localizer["All Rooms"]</h1>
+<div class="d-flex justify-content-between mb-4">
+    <h3>@Localizer["All Rooms"]</h3>
+    <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">Erstellen</button>
+</div>
 
-<div>
-    <div class="input-group mb-3">
-        <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]" aria-label="@Localizer["Search by name..."]">
-        <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button><button id="modalBtn">Erstellen</button>
-    </div>
 
-    <div class="input-group mb-3">
-        <label class="input-group-text" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
-        <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
-            <option value="-1">@SharedLocalizer["All"]</option>
-        </select>
+<div class="container mb-5 px-0">
+    <div class="row">
+        <div class="col-sm input-group">
+            <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]" aria-label="@Localizer["Search by name..."]">
+            <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
+        </div>
+        <div class="col-sm"></div>
+        <div class="col-sm input-group  justify-content-end">
+            <label class="input-group-text" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
+            <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
+                <option value="-1">@SharedLocalizer["All"]</option>
+            </select>
+        </div>
     </div>
 </div>
 
@@ -52,10 +57,10 @@
             <td>@room.Name</td>
             <td>@room.Faculty</td>
             <td>@room.MaxDuration</td>
-            <td>@room.MaxParticipants</td>
-            <td>
-                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn btn-primary">
-                    <i class="bi bi-trash"></i>
+            <td >@room.MaxParticipants</td>
+            <td class="pr-0" style="float: right;">
+                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE ">
+                    <i class="bi bi-trash text-light"></i>
                 </a>
             </td>
         </tr>
@@ -74,14 +79,14 @@
                     </div>
                     <div class="col-1">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">X</button>
-                        </div>
+                    </div>
                 </div>
                 <div class="modal-body" id="formDetails">
                     <partial id="detailsContent" name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
                     @* <div id="detailsContent" class="container"></div> *@
                 </div>
                 <div class="col-12 modal-footer border-0">
-                    <button id="btnSubmit" type="submit"  class="w-100 text-light btn btn-lg" style="background-color:#9551FE " onclick="submitRoom()">@SharedLocalizer["Save"]</button>
+                    <button id="btnSubmit" type="submit" class="w-100 text-light btn btn-lg" style="background-color:#9551FE " onclick="submitRoom()">@SharedLocalizer["Save"]</button>
                 </div>
             </div>
         </div>
