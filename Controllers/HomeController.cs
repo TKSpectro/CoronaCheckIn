@@ -42,7 +42,6 @@ namespace CoronaCheckIn.Controllers
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang))
             );
-
             return LocalRedirect(url);
         }
 
