@@ -8,9 +8,5 @@ namespace CoronaCheckIn.Controllers
         private readonly ILogger<HomeController> _logger;
 
 
-        public IActionResult Setting()
-        {
-            return Redirect("/Identity/Account/Manage");
-        }
     }
 }

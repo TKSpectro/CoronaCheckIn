@@ -9,19 +9,17 @@
     }
 }
 
-<h3 class="mb-5" >Setting</h3>
-
 
 <div>
     <div>
         <partial name="_ManageNav"/>
     </div>
-    <div>
+    <div class="pt-4">
         @RenderBody()
     </div>
 </div>
 
-<partial id="detailsContent" name="~/Views/Settings/Setting.cshtml" model="@ViewBag.newRoom"/>
+<partial id="detailsContent" name="~/Views/Home/Setting.cshtml" model="@ViewBag.newRoom"/>
 
 
 @section Scripts {
