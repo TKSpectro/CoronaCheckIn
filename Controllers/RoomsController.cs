@@ -23,10 +23,14 @@ namespace CoronaCheckIn.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Index([FromQuery] string? name = null, [FromQuery] string? sortBy = null, [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
+        public IActionResult Index([FromQuery] string? name = null, [FromQuery] string? sortBy = null,
+            [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
         {
-            IEnumerable<Room> rooms = _roomManager.GetRooms(name: name, sortBy: sortBy, sortOrder: sortOrder, faculty: faculty);
+            IEnumerable<Room> rooms =
+                _roomManager.GetRooms(name: name, sortBy: sortBy, sortOrder: sortOrder, faculty: faculty);
 
+            ViewBag.room = rooms.ToArray()[0];
+            ViewBag.newRoom = new Room();
             return View(rooms);
         }
 
@@ -45,10 +49,44 @@ namespace CoronaCheckIn.Controllers
             return View(_roomManager.GetRoom(id));
         }
 
-        public IActionResult Remove(Guid id)
+        public IActionResult RemoveRoom(Guid id)
         {
             _roomManager.RemoveRoom(id);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult CreateRoom(string? roomId)
+        {
+            if (roomId == null)
+            {
+                return PartialView(new Room());
+            }
+
+            var room = _roomManager.GetRoom(new Guid(roomId));
+            ViewBag.getRoom = room;
+            return Json(room);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateRoom(Room room)
+        {
+            if (ModelState.IsValid)
+            {
+                 var checkRoom = _roomManager.GetRoom(room.Id);
+                
+                if (checkRoom != null)
+                {
+                    var newRoom = _roomManager.UpdateRoom(room);
+                }
+                else
+                {
+                    _roomManager.AddRoom(room);
+                }
+            }
+
+            return Json(room);
         }
 
         public byte[] GenerateQrCode(Guid id)

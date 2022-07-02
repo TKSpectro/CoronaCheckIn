@@ -1,22 +1,29 @@
 @model IEnumerable<Room>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = @Localizer["All Rooms"].Value;
+    ViewBag.title = SharedLocalizer["Rooms"].Value;
 }
 
-<h1>@Localizer["All Rooms"]</h1>
+<div class="d-flex justify-content-between mb-4">
+    <h3>@Localizer["All Rooms"]</h3>
+    <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">Erstellen</button>
+</div>
 
-<div>
-    <div class="input-group mb-3">
-        <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]" aria-label="@Localizer["Search by name..."]">
-        <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
-    </div>
-    
-    <div class="input-group mb-3">
-        <label class="input-group-text" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
-        <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
-            <option value="-1">@SharedLocalizer["All"]</option>
-        </select>
+
+<div class="container-fluid mb-5 px-0">
+    <div class="row">
+        <div class="col-sm input-group">
+            <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]" aria-label="@Localizer["Search by name..."]">
+            <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
+        </div>
+        <div class="col-sm"></div>
+        <div class="col-sm input-group  justify-content-end">
+            <label class="input-group-text" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
+            <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
+                <option value="-1">@SharedLocalizer["All"]</option>
+            </select>
+        </div>
     </div>
 </div>
 
@@ -45,21 +52,50 @@
     <tbody>
     @foreach (var room in Model)
     {
-        <tr>
+        <tr onclick="getRoomModal('@room.Id')">
             <th hidden scope="row">@room.Id</th>
             <td>@room.Name</td>
             <td>@room.Faculty</td>
             <td>@room.MaxDuration</td>
-            <td>@room.MaxParticipants</td>
-            @* <td> *@
-            @*     <a type="submit" asp-action="Remove" asp-route-id="@room.Id" class="btn btn-primary"><i class="bi bi-trash"></i></a> *@
-            @* </td> *@
+            <td >@room.MaxParticipants</td>
+            <td class="w-100 pr-0 text-end" style="float: right;">
+                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE ">
+                    <i class="bi bi-trash text-light"></i>
+                </a>
+            </td>
         </tr>
     }
     </tbody>
 </table>
 
+
+<form id="roomForm" data-ajax-method="POST">
+    <div id="createRoomModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <div class="col-11 text-center">
+                        <h4 style="color: #9551FE">@Localizer["CreateRoom"]</h4>
+                    </div>
+                    <div class="col-1">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">X</button>
+                    </div>
+                </div>
+                <div class="modal-body" id="formDetails">
+                    <partial id="detailsContent" name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
+                    @* <div id="detailsContent" class="container"></div> *@
+                </div>
+                <div class="col-12 modal-footer border-0">
+                    <button id="btnSubmit" type="submit" class="w-100 text-light btn btn-lg" style="background-color:#9551FE " onclick="submitRoom()">@SharedLocalizer["Save"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
 @section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script>
         let initialFacultySwitch = false;
         
@@ -127,5 +163,75 @@
             
             window.location.search = params.toString();
         }
+        
+        function getRoomModal(room){
+                   $.ajax({
+                            url: "/rooms/CreateRoom",
+                            method: "GET",
+                            data: {"roomId": room},
+                            success: function (result) {                                
+                                 $("#createRoomModal").modal("show");
+                               
+                                 let modalBody = $("#formDetails")[0];
+                                
+                                 let children = modalBody.children[1];
+                                    
+                                let name = children.children[1].children[0];
+                                name.value= result.name;
+
+                                let maxParticipants= children.children[3].children[0];
+                                maxParticipants.value= result.maxParticipants;
+
+                                 let maxDuration= children.children[5].children[0];
+                                    maxDuration.value= result.maxDuration;
+
+                                    
+                                let faculty= children.children[6].children[1];
+                                    faculty.selectedIndex= result.faculty;
+                            
+
+                                 let id= children.children[7];
+                                    id.value= result.id;
+                            }
+                        });
+
+        }
+        
+        // Modal 
+        $("#modalBtn").click(function () {
+            $("#roomForm")[0].reset();
+            $("#createRoomModal").modal("show");
+        });
+
+        $('[data-dismiss="modal"]').each(function () {
+            $(this).click(function () {
+                $("#createRoomModal").modal("hide");
+            });
+        });
+ 
+         function submitRoom() {
+             if ($("#roomForm").valid()){
+             $('#roomForm').on('submit', function(e){
+                   e.preventDefault();
+                        let dataForm = $("#roomForm").serialize();   
+               
+                              $.ajax({
+                                  type: 'POST',
+                                  url: '/rooms/CreateRoom',
+                                  contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                  data: dataForm,
+                                  success: function (result) {
+                                        $("#createRoomModal").modal("hide");
+                                        window.location.reload();
+                                  },
+                                  error: function () {
+                                      console.error('Failed to receive the Data');
+                                  }
+                              })
+               });
+            }
+          
+           }
+         
     </script>
 }

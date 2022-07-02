@@ -175,6 +175,7 @@
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
     <comment>Dashboard</comment>
+  </data>
   <data name="Room" xml:space="preserve">
     <value>Raum</value>
     <comment>Room</comment>
@@ -191,5 +192,33 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Erstellen</value>
+    <comment>Create</comment>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+    <comment>Save</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+    <comment>Dashboard</comment>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Konten</value>
+    <comment>Accounts</comment>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Räume</value>
+    <comment>Rooms</comment>
   </data>
 </root>

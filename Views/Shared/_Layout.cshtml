@@ -45,7 +45,7 @@
 {
     <div class="container-fluid p-0 vh-100 d-flex">
 
-        <div class="h-100 d-flex flex-column flex-shrink-0 p-3 bg-dark" id="navbar" style="width: 280px;">
+        <div class="h-100 position-fixed d-flex flex-column flex-shrink-0 p-3 bg-dark" id="navbar" style="width: 280px;">
             <div class="h3 nav-item text-center mb-5 pb-5 mt-4">
                 <a class="mb-3 link-light text-decoration-none" style="color: #9551FE" asp-area="" asp-controller="Home" asp-action="Index">
                     CoronaCheckIn
@@ -54,16 +54,15 @@
             <ul class="nav nav-pills h-50 flex-column mt-4 mb-auto">
                 <li class="nav-item mb-4 text-center">
                     <div>
-                        <a class="nav-link link-light @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" && ViewBag.title != "" ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
+                        <a class="nav-link link-light @(ViewData["Title"].Equals(SharedLocalizer["Dashboard"].Value)  ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
                             <i class="bi bi-layout-text-window-reverse pe-1"></i>
-                            Dashboard
+                            @SharedLocalizer["Dashboard"]
                         </a>
                     </div>
                 </li>
                 <li class="nav-item mb-4 text-center">
                     <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Privacy">
                         <i class="bi bi-clock pe-1"></i>
-
                         Session
                     </a>
                 </li>
@@ -74,15 +73,15 @@
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title?.Equals("Rooms") ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
+                    <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Rooms"].Value) ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
                         <i class="bi bi-house pe-1"></i>
-                        Rooms
+                          @SharedLocalizer["Rooms"]
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title?.Equals("Accounts") ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="List">
+                    <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Accounts"].Value) ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="List">
                         <i class="bi bi-people-fill pe-1"></i>
-                        Profilies
+                          @SharedLocalizer["Accounts"]
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
@@ -112,22 +111,22 @@
 
         </div>
 
-        <main role="main">
+        <main role="main" style="width: calc(100% - 280px); margin:  38px 30px 0 300px">
 
             @RenderBody()
             @* <div class="w-100 position-absolute bottom-0"> *@
-            @*<footer class="border-top footer text-muted ">
-            <div class="container">
-                &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-
-                $1$ TODO: Vertical center the select #1#
-                <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)">
-                    $1$ TODO: Is there a better way to do this #1#
-                    <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
-                    <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option>
-                </select>
-            </div>
-        </footer>*@
+        @*     <footer class="border-top footer text-muted "> *@
+        @*     <div class="container"> *@
+        @*         &copy; 2022 - CoronaCheckIn - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+        @* *@
+        @*         $1$ TODO: Vertical center the select #1# *@
+        @*         <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)"> *@
+        @*             $1$ TODO: Is there a better way to do this #1# *@
+        @*             <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option> *@
+        @*             <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option> *@
+        @*         </select> *@
+        @*     </div> *@
+        @* </footer> *@
             @* </div> *@
         </main>
     </div>
