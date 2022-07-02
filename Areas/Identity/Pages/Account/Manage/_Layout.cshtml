@@ -9,20 +9,20 @@
     }
 }
 
-<h1>Manage your account</h1>
+<h3 class="mb-5" >Setting</h3>
+
 
 <div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
+    <div>
+        <partial name="_ManageNav"/>
+    </div>
+    <div>
+        @RenderBody()
     </div>
 </div>
+
+<partial id="detailsContent" name="~/Views/Settings/Setting.cshtml" model="@ViewBag.newRoom"/>
+
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

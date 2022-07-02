@@ -1,0 +1,24 @@
+@{
+    ViewBag.title = SharedLocalizer["Setting"].Value;
+}
+
+@* *@
+@* <select class="form-select form-select-md float-end w-auto mt-2" id="languageSelector" onchange="switchLanguage(this)"> *@
+@*     $1$ TODO: Is there a better way to do this #1# *@
+@*     <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option> *@
+@*     <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option> *@
+@* </select> *@
+
+<civ class="row">
+    <div class="col-md-7 m-auto">
+        <div class="input-group my-5">
+            <div class="input-group-prepend">
+                <label class="input-group-text bg-secondary text-light" asp-for=@SharedLocalizer["Faculty"]>Change Language</label>
+            </div>
+            <select class="form-control" id="languageSelector" onchange="switchLanguage(this)">
+                <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
+                <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option>
+            </select>
+        </div>
+    </div>
+</civ>

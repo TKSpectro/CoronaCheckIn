@@ -221,4 +221,8 @@
     <value>Rooms</value>
     <comment>Rooms</comment>
   </data>
+  <data name="Setting" xml:space="preserve">
+    <value>Setting</value>
+    <comment>Setting</comment>
+  </data>
 </root>

@@ -84,12 +84,12 @@
                           @SharedLocalizer["Accounts"]
                     </a>
                 </li>
-                <li class="nav-item mb-4 text-center">
-                    <a href="#" class="nav-link link-light">
-                        <i class="bi bi-gear pe-1"></i>
-                        Settings
-                    </a>
-                </li>
+          <li class="nav-item mb-4 text-center">
+              <a  class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Setting"].Value) ? "link-active" : "")" asp-area=""  asp-controller="settings" asp-action="Setting">
+                  <i class="bi bi-gear pe-1"></i>
+                  Settings
+              </a>
+          </li>
             </ul>
 
             <ul class="nav nav-pills flex-column align-items-center">
