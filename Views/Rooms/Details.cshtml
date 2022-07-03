@@ -1,9 +1,14 @@
 ﻿@model Room
 
-<div class="container">
-    <div class="row">
+@{
+    ViewBag.title = SharedLocalizer["Room Details"].Value;
+}
+<div class="d-flex justify-content-between mb-4">
+    <h1 class="print">@SharedLocalizer["Room"]: @Model.Name</h1>
+</div>
 
-        <h1 class="print">@SharedLocalizer["Room"]: @Model.Name</h1>
+<div class="container-fluid mb-5 px-0">
+    <div class="row">
         <p class="print">@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
         <p class="print">@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
         <p>@SharedLocalizer["Faculty"]: @Model.Faculty</p>
@@ -11,20 +16,20 @@
         <h2 class="print">QR-Code</h2>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid print" style="image-rendering: pixelated;"/>
         </div>
     </div>
     <p class="print only-print">Bitte scannen Sie den QR-Code mit der Corona-Checkin-App ein!</p>
     <div class="row">
-        <div class="col-md-3 d-grid gap-2 mt-2">
+        <div class="col-md-2 d-grid gap-2 mt-2">
             <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
                 <span class="bi bi-arrow-clockwise"></span> @Localizer["New QR code"]
             </button>
         </div>
     </div>    
     <div class="row">
-        <div class="col-md-3 d-grid gap-2 mt-2">
+        <div class="col-md-2 d-grid gap-2 mt-2">
             <button type="button" class="btn btn-outline-primary btn-block" onclick="window.print()">
                 <span class="bi bi-printer"></span> @SharedLocalizer["Drucken"]
             </button>
