@@ -120,4 +120,8 @@
   <data name="Search by room-name..." xml:space="preserve">
     <value>Suche nach Raumnamen...</value>
   </data>
+  <data name="All Sessions" xml:space="preserve">
+    <value>Alle Sessions</value>
+    <comment>All Sessions</comment>
+  </data>
 </root>

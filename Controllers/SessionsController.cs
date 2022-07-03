@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CoronaCheckIn.Controllers
 {
-    public class CasesController : Controller
+    public class SessionsController : Controller
     {
-        private readonly ILogger<CasesController> _logger;
+        private readonly ILogger<SessionsController> _logger;
         private readonly SessionManager _sessionManager;
 
-        public CasesController(ILogger<CasesController> logger, SessionManager sessionManager)
+        public SessionsController(ILogger<SessionsController> logger, SessionManager sessionManager)
         {
             _logger = logger;
             _sessionManager = sessionManager;
@@ -20,9 +20,9 @@ namespace CoronaCheckIn.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Index([FromQuery] string? roomName = null, [FromQuery] string? sortBy = null,
             [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null,
-            [FromQuery] DateTime? start = null, [FromQuery] DateTime? end = null)
+            [FromQuery] DateTime? start = null, [FromQuery] DateTime? end = null, [FromQuery] bool? infected = null)
         {
-            var sessions = _sessionManager.GetSessions(isInfected: true, after: start, before: end,
+            var sessions = _sessionManager.GetSessions(isInfected: infected, after: start, before: end,
                 sortBy: sortBy, sortOrder: sortOrder, faculty: faculty, roomName: roomName, includeRoom: true, includeUser: true);
 
             return View(sessions);

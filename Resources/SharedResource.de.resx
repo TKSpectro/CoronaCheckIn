@@ -245,4 +245,12 @@
     <value>Home</value>
     <comment>Home</comment>
   </data>
+  <data name="Sessions" xml:space="preserve">
+    <value>Sessions</value>
+    <comment>Sessions</comment>
+  </data>
+  <data name="Only Infected" xml:space="preserve">
+    <value>Nur Infizierte</value>
+    <comment>Only Infected</comment>
+  </data>
 </root>

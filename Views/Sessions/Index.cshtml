@@ -1,10 +1,12 @@
 @model IEnumerable<Session>
 
 @{
-    ViewData["Title"] = @SharedLocalizer["Cases"].Value;
+    ViewBag.title = SharedLocalizer["Sessions"].Value;
 }
 
-<h1 style="color: #9551FE">@ViewData["Title"]</h1>
+<div class="mb-4">
+    <h3>@Localizer["All Sessions"]</h3>
+</div>
 
 <div>
     <div class="input-group mb-3">
@@ -24,6 +26,20 @@
         <div class="flex-row ms-1">
             <label class="control-label"> </label>
             <button class="btn btn-outline-secondary form-control" type="button" onclick="searchDate(this)">@SharedLocalizer["Filter"]</button>
+        </div>
+        
+        <div class="flex-row ms-4">
+            <label class="control-label"> </label>
+            <div>
+                @* <div class="form-check form-check-inline"> *@
+                  <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
+                  <label class="btn" style="border-color:#9551FE" id="input-infected-label" for="input-infected">@SharedLocalizer["Only Infected"]</label>
+                @* </div> *@
+            </div>
+            @* <div> *@
+            @* <input type="checkbox" class="btn-check" id="input-infected" autocomplete="off" onchange="filterInfected(this)"> *@
+            @* <label class="btn" style="background-color:#9551FE" for="input-infected">@SharedLocalizer["Only Infected"]</label> *@
+            @* </div> *@
         </div>
         
         <div class="flex-row ms-auto">
@@ -78,6 +94,7 @@
 @section Scripts {
     <script>
         let initialFacultySwitch = false;
+        let initialInfected = false;
         
         $(document).ready(function() {
             const params = new URLSearchParams(window.location.search);
@@ -88,6 +105,11 @@
             $("#faculty-filter-switch").val(faculty).change();
             initialFacultySwitch = true;
             
+            const inputInfected = $("#input-infected");
+            inputInfected.prop('checked', params.get('infected') === 'true');
+            $("#input-infected-label").css('background-color', params.get('infected') === 'true' ? '#9551FE' : 'unset');
+            initialInfected = true;
+
             // Set name search to url query
             $("#input-room-name-search").val(params.get('roomName'));
             
@@ -120,6 +142,21 @@
             const url = `/cases?sortBy=${key}&sortOrder=${sortOrder}`
             
             window.location.replace(url);
+        }
+        
+        function filterInfected(checkbox) {
+            if (initialInfected){
+                const infected = checkbox.checked;
+                
+                const params = new URLSearchParams(window.location.search);
+                if (!infected){
+                    params.delete('infected');
+                } else {
+                    params.set('infected', 'true');
+                }
+
+                window.location.search = params.toString();
+            }
         }
         
         function filterFaculty(dropdown) {

@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="Views\Cases\Index.cshtml" />
+    <AdditionalFiles Include="Views\Sessions\Index.cshtml" />
   </ItemGroup>
 
 </Project>
