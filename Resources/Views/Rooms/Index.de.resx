@@ -129,4 +129,8 @@
     <value>Nach Fakultät filtern</value>
     <comment>Filter by faculty</comment>
   </data>
+  <data name="CreateRoom" xml:space="preserve">
+    <value>Room Erstellen</value>
+    <comment>CreateRoom</comment>
+  </data>
 </root>

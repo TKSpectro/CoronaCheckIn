@@ -1,0 +1,72 @@
+﻿@model Room
+
+<div class="container">
+    <div class="row">
+
+        <h1 class="print">@SharedLocalizer["Room"]: @Model.Name</h1>
+        <p class="print">@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
+        <p class="print">@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
+        <p>@SharedLocalizer["Faculty"]: @Model.Faculty</p>
+        
+        <h2 class="print">QR-Code</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid print" style="image-rendering: pixelated;"/>
+        </div>
+    </div>
+    <p class="print only-print">Bitte scannen Sie den QR-Code mit der Corona-Checkin-App ein!</p>
+    <div class="row">
+        <div class="col-md-3 d-grid gap-2 mt-2">
+            <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                <span class="bi bi-arrow-clockwise"></span> @Localizer["New QR code"]
+            </button>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-3 d-grid gap-2 mt-2">
+            <button type="button" class="btn btn-outline-primary btn-block" onclick="window.print()">
+                <span class="bi bi-printer"></span> @SharedLocalizer["Drucken"]
+            </button>
+        </div>
+    </div>    
+    <div class="row">    
+        <h2>Sessions</h2>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">@Localizer["New QR code"]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @Localizer["Do you want to generate a new QR code?"]
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="generateQrCode('@Model.Id')">@SharedLocalizer["Yes"]</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+       function generateQrCode(id) {
+           console.log(id);
+           $.ajax({
+            url: "/rooms/GenerateQrCode/" + id,
+            success: function (data) {
+                document.getElementById('qrcode').src = 'data:image/png;base64,' + data;
+            },
+            error: function (error) {
+                alert("Error: " + error);
+            }
+          })
+       }
+    </script>
+}

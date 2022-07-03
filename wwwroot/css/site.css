@@ -16,3 +16,31 @@ html {
   color:#9551FE;
   
 }
+
+.only-print {
+    display: none;
+}
+
+@media print {
+    #navbar {
+        display: none !important;
+    }
+
+    /* removes URL, title, date from head and footer of a printed document */
+    @page {
+        size: auto;
+        margin: 0;
+    }
+
+    :not(.print) {
+        visibility: hidden;
+    }
+
+    .print {
+        visibility: visible;
+    }
+
+    .only-print {
+        display: block;
+    }
+}

@@ -1,5 +1,9 @@
 @model IEnumerable<User>
 
+@{
+    ViewBag.title = SharedLocalizer["Accounts"].Value;
+}
+
 <h2>@ViewBag.title</h2>
 
 @Localizer["Users"]

@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoronaCheckIn.Controllers
 {
     public class HomeController : Controller
+    
     {
         private readonly ILogger<HomeController> _logger;
+        
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -16,19 +18,20 @@ namespace CoronaCheckIn.Controllers
 
         public IActionResult Index()
         {
-            Console.WriteLine("Test");
-            Console.WriteLine(User.Identity.IsAuthenticated);
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity is { IsAuthenticated: true })
             {
-                return View(); 
+                return View();
             }
+
             return Redirect("/Identity/Account/Login");
-            
         }
-
-
-       
+        
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        
+        public IActionResult Imprint()
         {
             return View();
         }
@@ -39,7 +42,6 @@ namespace CoronaCheckIn.Controllers
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(lang))
             );
-
             return LocalRedirect(url);
         }
 
