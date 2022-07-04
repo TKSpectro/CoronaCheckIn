@@ -212,4 +212,7 @@
   <data name="Room Details" xml:space="preserve">
     <value>Raum-Details</value>
   </data>
+  <data name="Error404" xml:space="preserve">
+    <value>Die gewünschte Seite konnte nicht gefunden werden.</value>
+  </data>
 </root>

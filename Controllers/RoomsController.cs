@@ -47,6 +47,9 @@ namespace CoronaCheckIn.Controllers
         {
             Room room = _roomManager.GetRoom(id);
 
+            if(room == null)
+            { return View("404"); }
+
             byte[] qrCodeImage = createQrCode(id);
             ViewBag.QrCode = qrCodeImage;
 
