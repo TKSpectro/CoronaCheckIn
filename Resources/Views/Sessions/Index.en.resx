@@ -117,10 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="New QR code" xml:space="preserve">
-    <value>New QR-Code</value>
+  <data name="Search by room-name..." xml:space="preserve">
+    <value>Search by room-name...</value>
   </data>
-  <data name="Do you want to generate a new QR code?" xml:space="preserve">
-    <value>Want to generate a new QR-Code?</value>
+  <data name="All Sessions" xml:space="preserve">
+    <value>All Sessions</value>
+    <comment>All Sessions</comment>
   </data>
 </root>
