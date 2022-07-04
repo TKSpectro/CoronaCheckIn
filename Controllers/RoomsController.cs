@@ -53,9 +53,10 @@ namespace CoronaCheckIn.Controllers
             byte[] qrCodeImage = createQrCode(id);
             ViewBag.QrCode = qrCodeImage;
 
-            IEnumerable<Session> sessions = _sessionManager.GetSessions(room);
+            var allRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true);
+            var infectedRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true, isInfected: true);
 
-            var model = (room, sessions);
+            var model = (room, allRoomSessions, infectedRoomSessions);
             return View(model);
         }
 

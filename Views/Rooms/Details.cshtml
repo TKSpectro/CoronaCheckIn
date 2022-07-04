@@ -1,4 +1,4 @@
-﻿@model (Room room, IEnumerable<Session> session)
+﻿@model (Room room, IEnumerable<Session> allRoomSessions, IEnumerable<Session> infectedRoomSessions)
 
 @{
     ViewBag.title = SharedLocalizer["Room Details"].Value;
@@ -21,6 +21,7 @@
         </div>
     </div>
     <p class="print only-print">Bitte scannen Sie den QR-Code mit der Corona-Checkin-App ein!</p>
+    <p class="print only-print">Please scan the QR-Code with your Corona-Checkin-App!</p>
     <div class="row">
         <div class="col-md-2 d-grid gap-2 mt-2">
             <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
@@ -36,30 +37,93 @@
         </div>
     </div>    
     <div class="row">    
-        <h2>Sessions</h2>
     </div>
 </div>
 
 
-<table class="table table-hover" style="cursor: pointer;">
-    <thead>
-    <tr class="user-select-none">
-        <th hidden scope="col">Id</th>
-        <th scope="col" id="table-head-name" onclick="sortBy('name')">
-            Start Time
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var session in @Model.session)
-    {
-        <tr onclick="getRoomModal('@session.Id')">
-            <th hidden scope="row">@session.Id</th>
-            <td>@session.StartTime</td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-6">
+        <h2>@Localizer["Last Sessions"]</h2>
+        <table class="table table-hover" style="cursor: pointer;">
+            <thead>
+            <tr class="user-select-none">
+                <th hidden scope="col">Id</th>
+                <th scope="col" id="table-head-user" onclick="sortBy('user')">
+                    @SharedLocalizer["User"]
+                    <i class="bi bi-dash-lg pe-1"></i>
+                </th>
+                <th scope="col" id="table-head-start" onclick="sortBy('start')">
+                    @SharedLocalizer["StartTime"]
+                    <i class="bi bi-dash-lg pe-1"></i>
+                </th>
+                <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                    @SharedLocalizer["EndTime"]
+                    <i class="bi bi-dash-lg pe-1"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var session in Model.allRoomSessions)
+            {
+                <tr>
+                    <th hidden scope="row">@session.Id</th>
+                    <td>@session.User.Firstname @session.User.Lastname</td>
+                    <td>@session.StartTime</td>
+                    <td>@session.EndTime</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <a href="/sessions?roomName=@Model.room.Name" class="btn btn-primary" role="button">@Localizer["All Sessions"]</a>
+    </div>
+    <div class="col-md-6">
+        <h2>@Localizer["Last Infections"]</h2>
+        @if(Model.infectedRoomSessions.Count() > 0)
+        {
+            <table class="table table-hover" style="cursor: pointer;">
+                <thead>
+                <tr class="user-select-none">
+                    <th hidden scope="col">Id</th>
+                    <th scope="col" id="table-head-user" onclick="sortBy('user')">
+                        @SharedLocalizer["User"]
+                        <i class="bi bi-dash-lg pe-1"></i>
+                    </th>
+                    <th scope="col" id="table-head-start" onclick="sortBy('start')">
+                        @SharedLocalizer["StartTime"]
+                        <i class="bi bi-dash-lg pe-1"></i>
+                    </th>
+                    <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                        @SharedLocalizer["EndTime"]
+                        <i class="bi bi-dash-lg pe-1"></i>
+                    </th>
+                    <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                        @SharedLocalizer["InfectionDate"]
+                        <i class="bi bi-dash-lg pe-1"></i>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var session in Model.infectedRoomSessions)
+                {
+                    <tr>
+                        <th hidden scope="row">@session.Id</th>
+                        <td>@session.User.Firstname @session.User.Lastname</td>
+                        <td>@session.StartTime</td>
+                        <td>@session.EndTime</td>
+                        <td>TODO</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        } 
+        else
+        {
+            <div class="alert alert-primary mt-5" role="alert">
+                @Localizer["No infections found"]
+            </div>
+        }
+    </div>
+</div>
 
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -247,4 +247,7 @@
     <value>Nur Infizierte</value>
     <comment>Only Infected</comment>
   </data>
+  <data name="InfectionDate" xml:space="preserve">
+    <value>Infektionsdatum</value>
+  </data>
 </root>
