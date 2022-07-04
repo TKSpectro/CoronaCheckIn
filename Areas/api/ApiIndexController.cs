@@ -84,7 +84,7 @@ namespace CoronaCheckIn.Areas.api
             return res;
         }
     }
-
+    
     public class LoginBody
     {
         public string Email { get; set; } = string.Empty;
