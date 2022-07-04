@@ -15,11 +15,13 @@ namespace CoronaCheckIn.Controllers
     {
         private readonly ILogger<RoomsController> _logger;
         private readonly RoomManager _roomManager;
+        private readonly SessionManager _sessionManager;
 
-        public RoomsController(ILogger<RoomsController> logger, RoomManager roomManager)
+        public RoomsController(ILogger<RoomsController> logger, RoomManager roomManager, SessionManager sessionManager)
         {
             _logger = logger;
             _roomManager = roomManager;
+            _sessionManager = sessionManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -43,10 +45,15 @@ namespace CoronaCheckIn.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Details(Guid id)
         {
-            byte[] qrCodeImage = createQrCode(id);
+            Room room = _roomManager.GetRoom(id);
 
+            byte[] qrCodeImage = createQrCode(id);
             ViewBag.QrCode = qrCodeImage;
-            return View(_roomManager.GetRoom(id));
+
+            IEnumerable<Session> sessions = _sessionManager.GetSessions(room);
+
+            var model = (room, sessions);
+            return View(model);
         }
 
         public IActionResult RemoveRoom(Guid id)
