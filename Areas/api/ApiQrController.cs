@@ -33,6 +33,15 @@ namespace CoronaCheckIn.Areas.api
         public ActionResult<string> Scan([FromBody] ScanBody body)
         {
             var room = _roomManager.GetRoom(new Guid(body.RoomId));
+            
+            var session = new Session()
+            {
+                Infected = true,
+                RoomId = Guid.Parse(body.RoomId),
+                UserId = body.UserId,
+                StartTime = DateTime.Now
+            };
+            _sessionManager.AddSession(session);
             return "TODO: needs implementation";
         }
     }
@@ -40,5 +49,8 @@ namespace CoronaCheckIn.Areas.api
     public class ScanBody
     {
         public string RoomId { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
+        
+        public string Date { get; set; } = string.Empty;
     }
 }
