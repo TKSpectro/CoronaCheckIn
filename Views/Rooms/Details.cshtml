@@ -1,17 +1,17 @@
-﻿@model Room
+﻿@model (Room room, IEnumerable<Session> session)
 
 @{
     ViewBag.title = SharedLocalizer["Room Details"].Value;
 }
 <div class="d-flex justify-content-between mb-4">
-    <h1 class="print">@SharedLocalizer["Room"]: @Model.Name</h1>
+    <h1 class="print">@SharedLocalizer["Room"]: @Model.room.Name</h1>
 </div>
 
 <div class="container-fluid mb-5 px-0">
     <div class="row">
-        <p class="print">@SharedLocalizer["MaxParticipants"]: @Model.MaxParticipants</p>
-        <p class="print">@SharedLocalizer["MaxDuration"]: @Model.MaxDuration @SharedLocalizer["Minutes"]</p>
-        <p>@SharedLocalizer["Faculty"]: @Model.Faculty</p>
+        <p class="print">@SharedLocalizer["MaxParticipants"]: @Model.room.MaxParticipants</p>
+        <p class="print">@SharedLocalizer["MaxDuration"]: @Model.room.MaxDuration @SharedLocalizer["Minutes"]</p>
+        <p>@SharedLocalizer["Faculty"]: @Model.room.Faculty</p>
         
         <h2 class="print">QR-Code</h2>
     </div>
@@ -40,6 +40,27 @@
     </div>
 </div>
 
+
+<table class="table table-hover" style="cursor: pointer;">
+    <thead>
+    <tr class="user-select-none">
+        <th hidden scope="col">Id</th>
+        <th scope="col" id="table-head-name" onclick="sortBy('name')">
+            Start Time
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var session in @Model.session)
+    {
+        <tr onclick="getRoomModal('@session.Id')">
+            <th hidden scope="row">@session.Id</th>
+            <td>@session.StartTime</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -52,7 +73,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="generateQrCode('@Model.Id')">@SharedLocalizer["Yes"]</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="generateQrCode('@Model.room.Id')">@SharedLocalizer["Yes"]</button>
       </div>
     </div>
   </div>
