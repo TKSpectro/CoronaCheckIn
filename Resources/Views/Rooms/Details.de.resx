@@ -117,12 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="All Sessions" xml:space="preserve">
+    <value>Alle Sessions für diesen Raum</value>
+  </data>
   <data name="Do you want to generate a new QR code?" xml:space="preserve">
     <value>Wollen Sie einen neuen QR-Code generieren?</value>
     <comment>Wollen Sie einen neuen QR-Code generieren?</comment>
   </data>
+  <data name="Last Infections" xml:space="preserve">
+    <value>Letzte Infektionen</value>
+  </data>
+  <data name="Last Sessions" xml:space="preserve">
+    <value>Letzte Sessions</value>
+  </data>
   <data name="New QR code" xml:space="preserve">
     <value>Neuer QR-Code</value>
     <comment>New QR code</comment>
+  </data>
+  <data name="No infections found" xml:space="preserve">
+    <value>Dieser Raum hat keine Sessions mit infizierten Personen</value>
   </data>
 </root>

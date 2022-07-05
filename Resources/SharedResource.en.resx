@@ -201,18 +201,6 @@
     <value>Save</value>
     <comment>Save</comment>
   </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-    <comment>Dashboard</comment>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-    <comment>Dashboard</comment>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-    <comment>Dashboard</comment>
-  </data>
   <data name="Accounts" xml:space="preserve">
     <value>Accounts</value>
     <comment>Accounts</comment>
@@ -220,6 +208,12 @@
   <data name="Rooms" xml:space="preserve">
     <value>Rooms</value>
     <comment>Rooms</comment>
+  </data>
+  <data name="Room Details" xml:space="preserve">
+    <value>Room Details</value>
+  </data>
+  <data name="Error404" xml:space="preserve">
+    <value>Page not found.</value>
   </data>
   <data name="Cases" xml:space="preserve">
     <value>Cases</value>
@@ -252,5 +246,8 @@
   <data name="Only Infected" xml:space="preserve">
     <value>Only Infected</value>
     <comment>Only Infected</comment>
+  </data>
+  <data name="InfectionDate" xml:space="preserve">
+    <value>Date of infection</value>
   </data>
 </root>
