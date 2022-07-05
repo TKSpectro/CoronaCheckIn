@@ -7,7 +7,7 @@ using QRCoder;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using static QRCoder.PayloadGenerator;
-
+using System.Text.Json;
 
 namespace CoronaCheckIn.Controllers
 {
@@ -123,10 +123,18 @@ namespace CoronaCheckIn.Controllers
         private byte[] createQrCode(Guid id)
         {
             Room room = _roomManager.GetRoom(id);
-            long? timestamp = room.QrCodeTimestamp;
+
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            string payload = "{\"roomId\": \"" + id + "\", \"timestamp\": \"" + timestamp + "\"}";
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
+
+            var json = new
+            {
+                roomId = id,
+                timestamp = room.QrCodeTimestamp
+            };
+
+            var jsonPayload = JsonSerializer.Serialize(json);
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(jsonPayload, QRCodeGenerator.ECCLevel.Q);
             BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
             return qrCode.GetGraphic(10);
         }
