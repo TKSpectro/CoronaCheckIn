@@ -47,10 +47,10 @@ namespace CoronaCheckIn.Controllers
         {
             Room room = _roomManager.GetRoom(id);
 
-            if(room == null)
+            if (room == null)
             { return View("404"); }
 
-            if(room.QrCodeCreatedAt == null)
+            if (room.QrCodeCreatedAt == null)
             {
                 updateRoomTimestamp(room);
             }
@@ -90,8 +90,8 @@ namespace CoronaCheckIn.Controllers
         {
             if (ModelState.IsValid)
             {
-                 var checkRoom = _roomManager.GetRoom(room.Id);
-                
+                var checkRoom = _roomManager.GetRoom(room.Id);
+
                 if (checkRoom != null)
                 {
                     var newRoom = _roomManager.UpdateRoom(room);
