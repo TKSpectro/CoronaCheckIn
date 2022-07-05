@@ -50,7 +50,7 @@ namespace CoronaCheckIn.Controllers
             if(room == null)
             { return View("404"); }
 
-            if(room.QrCodeTimestamp == null)
+            if(room.QrCodeCreatedAt == null)
             {
                 updateRoomTimestamp(room);
             }
@@ -105,13 +105,6 @@ namespace CoronaCheckIn.Controllers
             return Json(room);
         }
 
-        private void updateRoomTimestamp(Room room)
-        {
-            DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
-            room.QrCodeTimestamp = dateTimeOffset.ToUnixTimeSeconds();
-            _roomManager.UpdateRoom(room);
-        }
-
         public byte[] GenerateQrCode(Guid id)
         {
             Room room = _roomManager.GetRoom(id);
@@ -120,16 +113,24 @@ namespace CoronaCheckIn.Controllers
             return createQrCode(id);
         }
 
+        private void updateRoomTimestamp(Room room)
+        {
+            room.QrCodeCreatedAt = DateTime.UtcNow;
+
+            _roomManager.UpdateRoom(room);
+        }
+
         private byte[] createQrCode(Guid id)
         {
             Room room = _roomManager.GetRoom(id);
+            string qrCodeCreatedAt = room.QrCodeCreatedAt.Value.ToUniversalTime().ToString("o", System.Globalization.CultureInfo.InvariantCulture);
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
             var json = new
             {
                 roomId = id,
-                timestamp = room.QrCodeTimestamp
+                qrCodeCreatedAt = qrCodeCreatedAt
             };
 
             var jsonPayload = JsonSerializer.Serialize(json);
