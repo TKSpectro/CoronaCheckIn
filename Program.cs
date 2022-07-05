@@ -48,11 +48,6 @@ builder.Services
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization(options =>
     {
-        // options.DataAnnotationLocalizerProvider = (type, factory) =>
-        // {
-        //     var assemblyName = new AssemblyName(typeof(IdentityResource).GetTypeInfo().Assembly.FullName);
-        //     return factory.Create("IdentityResource", assemblyName.Name);
-        // };
         options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
     });
 

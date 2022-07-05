@@ -225,4 +225,64 @@
     <value>Einstellung</value>
     <comment>Setting</comment>
   </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profile</value>
+    <comment>Profiles</comment>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>Persönliche Daten</value>
+    <comment>PersonalData</comment>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+    <comment>Profile</comment>
+  </data>
+  <data name="ManageEmail" xml:space="preserve">
+    <value>Email bearbeiten</value>
+    <comment>ManageEmail</comment>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort bearbeiten</value>
+    <comment>ChangePassword</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Unterladen</value>
+    <comment>Download</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="PersonalDataHint" xml:space="preserve">
+    <value>Ihr Konto enthält persönliche Daten, die Sie uns mitgeteilt haben. Auf dieser Seite können Sie diese Daten herunterladen oder löschen.</value>
+    <comment>PersonalDataHint</comment>
+  </data>
+  <data name="PersonalDataWarning" xml:space="preserve">
+    <value>Wenn Sie diese Daten löschen, wird Ihr Konto dauerhaft gelöscht und kann nicht wiederhergestellt werden.</value>
+    <comment>PersonalDataWarning</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Telefon Nummer</value>
+    <comment>PhoneNumber</comment>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Role</value>
+    <comment>Roles</comment>
+  </data>
+  <data name="NewEmail" xml:space="preserve">
+    <value>Neue E-Mail</value>
+    <comment>NewEmail</comment>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Altes Passwort</value>
+    <comment>OldPassword</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Neues Passwort</value>
+    <comment>NewPassword</comment>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Neues Passwort bestätigen</value>
+    <comment>ConfirmPassword</comment>
+  </data>
 </root>
