@@ -250,4 +250,7 @@
   <data name="InfectionDate" xml:space="preserve">
     <value>Date of infection</value>
   </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>Room Name</value>
+  </data>
 </root>

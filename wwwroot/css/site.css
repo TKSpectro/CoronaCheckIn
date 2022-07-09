@@ -17,30 +17,17 @@ html {
   
 }
 
-.only-print {
-    display: none;
+.tile {
+    background-color: white;
+    border: 1px solid red;
 }
 
-@media print {
-    #navbar {
-        display: none !important;
-    }
+.fixed-width {
+    flex: 0 0 200px;
+}
 
-    /* removes URL, title, date from head and footer of a printed document */
-    @page {
-        size: auto;
-        margin: 0;
-    }
-
-    :not(.print) {
-        visibility: hidden;
-    }
-
-    .print {
-        visibility: visible;
-    }
-
-    .only-print {
-        display: block;
-    }
+.fixed-margin {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 12px;
 }
