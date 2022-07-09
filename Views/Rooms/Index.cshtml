@@ -52,13 +52,19 @@
     <tbody>
     @foreach (var room in Model)
     {
-        <tr onclick="getRoomModal('@room.Id')">
+        <tr >
             <th hidden scope="row">@room.Id</th>
             <td>@room.Name</td>
             <td>@room.Faculty</td>
             <td>@room.MaxDuration</td>
             <td >@room.MaxParticipants</td>
-            <td class="w-100 pr-0 text-end" style="float: right;">
+            <td class="w-100 pr-0 text-end"></td>
+            <td onclick="getRoomModal('@room.Id')">
+                <div class="btn" style="background-color:#9551FE ">
+                    <i class="bi bi-pen text-light"></i>
+                </div>
+            </td>
+            <td class="w-100 pr-0 text-end">
                 <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE ">
                     <i class="bi bi-trash text-light"></i>
                 </a>
@@ -74,8 +80,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <div class="col-11 text-center">
-                        <h4 style="color: #9551FE">@Localizer["CreateRoom"]</h4>
+                    <div id="titleDetails" class="col-11 text-center">
+                        <h4 style="color: #9551FE; display: none">@Localizer["CreateRoom"]</h4>
+                        <h4 style="color: #9551FE; display: none">@Localizer["UpdateRoom"]</h4>
                     </div>
                     <div class="col-1">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">X</button>
@@ -83,7 +90,6 @@
                 </div>
                 <div class="modal-body" id="formDetails">
                     <partial id="detailsContent" name="~/Views/Rooms/CreateRoom.cshtml" model="@ViewBag.newRoom"/>
-                    @* <div id="detailsContent" class="container"></div> *@
                 </div>
                 <div class="col-12 modal-footer border-0">
                     <button id="btnSubmit" type="submit" class="w-100 text-light btn btn-lg" style="background-color:#9551FE " onclick="submitRoom()">@SharedLocalizer["Save"]</button>
@@ -172,6 +178,13 @@
                             success: function (result) {                                
                                  $("#createRoomModal").modal("show");
                                
+                                 let titleFormCreate = $("#titleDetails")[0].children[0];
+                                 titleFormCreate.style.display= "none";
+                                 
+                                 let titleFormUpdate = $("#titleDetails")[0].children[1];
+                                 titleFormUpdate.style.display= "block";
+                            
+                                 
                                  let modalBody = $("#formDetails")[0];
                                 
                                  let children = modalBody.children[1];
@@ -200,7 +213,14 @@
         // Modal 
         $("#modalBtn").click(function () {
             $("#roomForm")[0].reset();
-            $("#createRoomModal").modal("show");
+          
+              let titleFormCreate = $("#titleDetails")[0].children[0];
+             titleFormCreate.style.display= "block";
+                                           
+             let titleFormUpdate = $("#titleDetails")[0].children[1];
+             titleFormUpdate.style.display= "none";
+               $("#createRoomModal").modal("show");
+            
         });
 
         $('[data-dismiss="modal"]').each(function () {

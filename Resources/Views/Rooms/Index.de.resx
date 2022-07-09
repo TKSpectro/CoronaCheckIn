@@ -130,7 +130,11 @@
     <comment>Filter by faculty</comment>
   </data>
   <data name="CreateRoom" xml:space="preserve">
-    <value>Room Erstellen</value>
+    <value>Raum Erstellen</value>
     <comment>CreateRoom</comment>
+  </data>
+  <data name="UpdateRoom" xml:space="preserve">
+    <value>Raum bearbeiten</value>
+    <comment>UpdateRoom</comment>
   </data>
 </root>

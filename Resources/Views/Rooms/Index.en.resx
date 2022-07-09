@@ -133,4 +133,8 @@
     <value>Create Room</value>
     <comment>CreateRoom</comment>
   </data>
+  <data name="UpdateRoom" xml:space="preserve">
+    <value> Room Update</value>
+    <comment>UpdateRoom</comment>
+  </data>
 </root>
