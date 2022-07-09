@@ -1,25 +1,35 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
-.link-active{
-  color:#9551FE;
-  
+
+.link-active {
+    color: #9551FE;
+
 }
 
 .tile {
     background-color: white;
     border: 1px solid red;
+}
+
+#setting-menu .nav-link {
+    color: #9551FE; !important;
+}
+
+#setting-menu .active {
+    background-color: #9551FE;
+    color:white;
 }
 
 .fixed-width {

@@ -133,7 +133,7 @@
     <value>Name</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>E-mail</value>
+    <value>Email</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Message</value>
@@ -208,6 +208,70 @@
   <data name="Rooms" xml:space="preserve">
     <value>Rooms</value>
     <comment>Rooms</comment>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Setting</comment>
+  </data>
+  <data name="Profiles" xml:space="preserve">
+    <value>Profiles</value>
+    <comment>Profiles</comment>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>PersonalData</value>
+    <comment>PersonalData</comment>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>Profile</comment>
+  </data>
+  <data name="ManageEmail" xml:space="preserve">
+    <value>ManageEmail</value>
+    <comment>ManageEmail</comment>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>ChangePassword</value>
+    <comment>ChangePassword</comment>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+    <comment>Download</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="PersonalDataHint" xml:space="preserve">
+    <value>Your account contains personal data that you have given us. This page allows you to download or delete that data.</value>
+    <comment>PersonalDataHint</comment>
+  </data>
+  <data name="PersonalDataWarning" xml:space="preserve">
+    <value>Deleting this data will permanently remove your account, and this cannot be recovered.</value>
+    <comment>PersonalDataWarning</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+    <comment>PhoneNumber</comment>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+    <comment>Roles</comment>
+  </data>
+  <data name="NewEmail" xml:space="preserve">
+    <value>New Email</value>
+    <comment>NewEmail</comment>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
+    <comment>OldPassword</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+    <comment>NewPassword</comment>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm new Password</value>
+    <comment>ConfirmPassword</comment>
   </data>
   <data name="Room Details" xml:space="preserve">
     <value>Room Details</value>
