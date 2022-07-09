@@ -137,11 +137,7 @@ namespace CoronaCheckIn.Areas.api
 
                         var res = new AuthResponse();
                         res.Token = new JwtSecurityTokenHandler().WriteToken(token);
-                        return Ok(new
-                        {
-                            token = new JwtSecurityTokenHandler().WriteToken(token),
-                            expiration = token.ValidTo
-                        });
+                        return Ok(res);
                     }
                     
                     return BadRequest("Passwords must have at least one non alphanumeric character. \n" +
