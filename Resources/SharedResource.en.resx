@@ -221,8 +221,8 @@
     <value>Rooms</value>
     <comment>Rooms</comment>
   </data>
-  <data name="Setting" xml:space="preserve">
-    <value>Setting</value>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
     <comment>Setting</comment>
   </data>
   <data name="Profiles" xml:space="preserve">
