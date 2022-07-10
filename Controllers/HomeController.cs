@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,5 +51,13 @@ namespace CoronaCheckIn.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
+        public IActionResult Setting()
+        {
+            return Redirect("/Identity/Account/Manage");
+        }
+
+        
+        
     }
 }
