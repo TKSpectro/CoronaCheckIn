@@ -55,12 +55,12 @@
                 </div>
                 <div class="row fixed-margin">
                     <div class="col-md-6 d-grid gap-2">
-                        <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <button type="button" class="btn text-light btn-block" style="background-color:#9551FE" data-bs-toggle="modal" data-bs-target="#myModal">
                             <span class="bi bi-arrow-clockwise"></span>
                         </button>
                     </div>
                     <div class="col-md-6 d-grid gap-2">
-                        <button type="button" class="btn btn-outline-primary btn-block" onclick="window.print()">
+                        <button type="button" class="btn text-light btn-block" style="background-color:#9551FE" onclick="window.print()">
                             <span class="bi bi-printer"></span>
                         </button>
                     </div>
@@ -113,7 +113,7 @@
                 @Localizer["No sessions found"]
             </div>
         }
-        <a href="/sessions?roomName=@Model.room.Name" class="btn btn-primary" role="button">@Localizer["All Sessions"]</a>
+        <a href="/sessions?roomName=@Model.room.Name" class="btn text-light" style="background-color:#9551FE" role="button">@Localizer["All Sessions"]</a>
     </div>
     <div class="col-md-6">
         <h4>@Localizer["Last Infections"]</h4>
