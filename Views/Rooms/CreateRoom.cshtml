@@ -10,12 +10,12 @@
         <input asp-for="Name" type="text" class="form-control"/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <label class="control-label mb-1" asp-for="MaxParticipants">@SharedLocalizer["MaxDuration"]</label>
+    <label class="control-label mb-1" asp-for="MaxParticipants">@SharedLocalizer["MaxParticipants"]</label>
     <div class="mb-4">
         <input asp-for="MaxParticipants" type="number" class="form-control"/>
         <span asp-validation-for="MaxParticipants" class="text-danger"></span>
     </div>
-    <label class="control-label mb-1" asp-for="MaxDuration">@SharedLocalizer["MaxParticipants"]</label>
+    <label class="control-label mb-1" asp-for="MaxDuration">@SharedLocalizer["MaxDuration"]</label>
     <div class="mb-4">
         <input asp-for="MaxDuration" type="number" class="form-control"/>
         <span asp-validation-for="MaxDuration" class="text-danger"></span>
