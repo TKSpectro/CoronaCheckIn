@@ -35,4 +35,8 @@
     <_ContentIncludedByDefault Remove="Areas\Identity\Pages\_ViewStart.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Sessions\Index.cshtml" />
+  </ItemGroup>
+
 </Project>

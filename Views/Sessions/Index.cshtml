@@ -1,0 +1,209 @@
+@model IEnumerable<Session>
+
+@{
+    ViewBag.title = SharedLocalizer["Sessions"].Value;
+}
+
+<div class="mb-4">
+    <h3>@Localizer["All Sessions"]</h3>
+</div>
+
+<div>
+    <div class="input-group mb-3">
+        <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Search by room-name..."]">
+        <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
+    </div>
+    
+    <div class="input-group mb-3 flex">
+        <div class="flex-row">
+            <label class="control-label">@SharedLocalizer["StartTime"]</label>
+            <input id="input-start-time" type="date" class="form-control"/>
+        </div>
+        <div class="flex-row ms-1">
+            <label class="control-label">@SharedLocalizer["EndTime"]</label>
+            <input id="input-end-time" type="date" class="form-control"/>
+        </div>
+        <div class="flex-row ms-1">
+            <label class="control-label"> </label>
+            <button class="btn btn-outline-secondary form-control" type="button" onclick="searchDate(this)">@SharedLocalizer["Filter"]</button>
+        </div>
+        
+        <div class="flex-row ms-4">
+            <label class="control-label"> </label>
+            <div>
+                @* <div class="form-check form-check-inline"> *@
+                  <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
+                  <label class="btn" style="border-color:#9551FE" id="input-infected-label" for="input-infected">@SharedLocalizer["Only Infected"]</label>
+                @* </div> *@
+            </div>
+            @* <div> *@
+            @* <input type="checkbox" class="btn-check" id="input-infected" autocomplete="off" onchange="filterInfected(this)"> *@
+            @* <label class="btn" style="background-color:#9551FE" for="input-infected">@SharedLocalizer["Only Infected"]</label> *@
+            @* </div> *@
+        </div>
+        
+        <div class="flex-row ms-auto">
+            <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
+            <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
+                <option value="-1">@SharedLocalizer["All"]</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="input-group mb-3">
+        
+    </div>
+</div>
+
+<table class="table table-hover" style="cursor: pointer;">
+    <thead>
+    <tr class="user-select-none">
+        <th hidden scope="col">Id</th>
+        <th scope="col" id="table-head-room" onclick="sortBy('room')">
+            @SharedLocalizer["Room"]
+            <i class="bi bi-dash-lg pe-1"></i>
+        </th>
+        <th scope="col" id="table-head-user" onclick="sortBy('user')">
+            @SharedLocalizer["User"]
+            <i class="bi bi-dash-lg pe-1"></i>
+        </th>
+        <th scope="col" id="table-head-start" onclick="sortBy('start')">
+            @SharedLocalizer["StartTime"]
+            <i class="bi bi-dash-lg pe-1"></i>
+        </th>
+        <th scope="col" id="table-head-end" onclick="sortBy('end')">
+            @SharedLocalizer["EndTime"]
+            <i class="bi bi-dash-lg pe-1"></i>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var session in Model)
+    {
+        <tr>
+            <th hidden scope="row">@session.Id</th>
+            <td>@session.Room.Name</td>
+            <td>@session.User.Email</td>
+            <td>@session.StartTime</td>
+            <td>@session.EndTime</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        let initialFacultySwitch = false;
+        let initialInfected = false;
+        
+        $(document).ready(function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Set faculty switch to filtered one
+            const faculty = params.get('faculty') || '-1';
+            
+            $("#faculty-filter-switch").val(faculty).change();
+            initialFacultySwitch = true;
+            
+            const inputInfected = $("#input-infected");
+            inputInfected.prop('checked', params.get('infected') === 'true');
+            $("#input-infected-label").css('background-color', params.get('infected') === 'true' ? '#9551FE' : 'unset');
+            initialInfected = true;
+
+            // Set name search to url query
+            $("#input-room-name-search").val(params.get('roomName'));
+            
+            $("#input-start-time").val(params.get('start'));
+            $("#input-end-time").val(params.get('end'));
+            
+            // Setup sorting of table heads
+            const sortBy = params.get('sortBy');
+            const sortOrder = params.get('sortOrder');
+            
+            // Place the correct icons beside the sorted table headings
+            const heading = $(`#table-head-${sortBy} > i`);
+            heading.removeClass('bi-dash-lg');
+            heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
+        });
+    
+        function sortBy(key) {
+            // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+            const params = new URLSearchParams(window.location.search);
+            
+            // Either get the sortOrder from the url or if null an empty string
+            // And then just switch to the other one (default to asc)
+            let sortOrder = params.get('sortOrder') || '';
+            if (sortOrder === '' || sortOrder === 'desc'){
+                sortOrder = 'asc';
+            } else {
+                sortOrder = 'desc';
+            }
+            
+            const url = `/cases?sortBy=${key}&sortOrder=${sortOrder}`
+            
+            window.location.replace(url);
+        }
+        
+        function filterInfected(checkbox) {
+            if (initialInfected){
+                const infected = checkbox.checked;
+                
+                const params = new URLSearchParams(window.location.search);
+                if (!infected){
+                    params.delete('infected');
+                } else {
+                    params.set('infected', 'true');
+                }
+
+                window.location.search = params.toString();
+            }
+        }
+        
+        function filterFaculty(dropdown) {
+            if (initialFacultySwitch){
+                const faculty = dropdown.options[dropdown.selectedIndex].value;
+                
+                const params = new URLSearchParams(window.location.search);
+                
+                if (faculty.toString() === '-1'){
+                    params.delete('faculty');
+                } else {
+                    params.set('faculty', faculty);
+                }
+                
+                window.location.search = params.toString();
+            }
+        }
+        
+        function searchName(){
+            const searchString = $("#input-room-name-search").val();
+            
+            const params = new URLSearchParams(window.location.search);
+            if (searchString.toString().trim().length > 0){
+                params.set('roomName', searchString);
+            } else {
+                params.delete('roomName');
+            }
+            
+            window.location.search = params.toString();
+        }
+        
+        function searchDate(){
+            const startTime = $("#input-start-time").val();
+            const endTime = $("#input-end-time").val();
+            
+            const params = new URLSearchParams(window.location.search);
+            if (startTime.toString().trim().length > 0){
+                params.set('start', startTime);
+            } else {
+                params.delete('start');
+            }
+            if (endTime.toString().trim().length > 0){
+                params.set('end', endTime);
+            } else {
+                params.delete('end');
+            }
+            window.location.search = params.toString();
+        }
+    </script>
+}

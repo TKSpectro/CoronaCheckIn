@@ -22,7 +22,7 @@ namespace CoronaCheckIn.Models
 
         public byte[]? QrCode { get; set; }
 
-        public long? QrCodeTimestamp { get; set; }
+        public DateTime? QrCodeCreatedAt { get; set; }
 
         public static Faculty? ParseFacultyFromString(string? faculty)
         {

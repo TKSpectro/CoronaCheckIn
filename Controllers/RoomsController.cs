@@ -7,7 +7,7 @@ using QRCoder;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using static QRCoder.PayloadGenerator;
-
+using System.Text.Json;
 
 namespace CoronaCheckIn.Controllers
 {
@@ -15,11 +15,13 @@ namespace CoronaCheckIn.Controllers
     {
         private readonly ILogger<RoomsController> _logger;
         private readonly RoomManager _roomManager;
+        private readonly SessionManager _sessionManager;
 
-        public RoomsController(ILogger<RoomsController> logger, RoomManager roomManager)
+        public RoomsController(ILogger<RoomsController> logger, RoomManager roomManager, SessionManager sessionManager)
         {
             _logger = logger;
             _roomManager = roomManager;
+            _sessionManager = sessionManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -45,10 +47,24 @@ namespace CoronaCheckIn.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Details(Guid id)
         {
-            byte[] qrCodeImage = createQrCode(id);
+            Room room = _roomManager.GetRoom(id);
 
+            if (room == null)
+            { return View("404"); }
+
+            if (room.QrCodeCreatedAt == null)
+            {
+                updateRoomTimestamp(room);
+            }
+
+            byte[] qrCodeImage = createQrCode(id);
             ViewBag.QrCode = qrCodeImage;
-            return View(_roomManager.GetRoom(id));
+
+            var allRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true);
+            var infectedRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true, isInfected: true);
+
+            var model = (room, allRoomSessions, infectedRoomSessions);
+            return View(model);
         }
 
         public IActionResult RemoveRoom(Guid id)
@@ -76,8 +92,8 @@ namespace CoronaCheckIn.Controllers
         {
             if (ModelState.IsValid)
             {
-                 var checkRoom = _roomManager.GetRoom(room.Id);
-                
+                var checkRoom = _roomManager.GetRoom(room.Id);
+
                 if (checkRoom != null)
                 {
                     var newRoom = _roomManager.UpdateRoom(room);
@@ -94,20 +110,34 @@ namespace CoronaCheckIn.Controllers
         public byte[] GenerateQrCode(Guid id)
         {
             Room room = _roomManager.GetRoom(id);
-            DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
-            room.QrCodeTimestamp = dateTimeOffset.ToUnixTimeSeconds();
-            _roomManager.UpdateRoom(room);
+            updateRoomTimestamp(room);
 
             return createQrCode(id);
+        }
+
+        private void updateRoomTimestamp(Room room)
+        {
+            room.QrCodeCreatedAt = DateTime.UtcNow;
+
+            _roomManager.UpdateRoom(room);
         }
 
         private byte[] createQrCode(Guid id)
         {
             Room room = _roomManager.GetRoom(id);
-            long? timestamp = room.QrCodeTimestamp;
+            string qrCodeCreatedAt = room.QrCodeCreatedAt.Value.ToUniversalTime().ToString("o", System.Globalization.CultureInfo.InvariantCulture);
+
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            string payload = "{'id': " + 1 + ", 'timestamp':" + timestamp + "}";
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
+
+            var json = new
+            {
+                roomId = id,
+                qrCodeCreatedAt = qrCodeCreatedAt
+            };
+
+            var jsonPayload = JsonSerializer.Serialize(json);
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(jsonPayload, QRCodeGenerator.ECCLevel.Q);
             BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
             return qrCode.GetGraphic(10);
         }
