@@ -152,7 +152,7 @@ namespace CoronaCheckIn.Areas.api
             return BadRequest();
         }
     }
-
+    
     public class LoginBody
     {
         public string Email { get; set; } = string.Empty;

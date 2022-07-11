@@ -52,7 +52,7 @@
     <tbody>
     @foreach (var room in Model)
     {
-        <tr >
+        <tr onclick="navigate(this)">
             <th hidden scope="row">@room.Id</th>
             <td>@room.Name</td>
             <td>@room.Faculty</td>
@@ -127,6 +127,12 @@
             heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
         });
     
+        function navigate(row){
+            const url = `/rooms/details/${row.children[0].innerHTML}`;
+            
+            window.location.replace(url);
+        }
+        
         function sortBy(key) {
             // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
             const params = new URLSearchParams(window.location.search);

@@ -31,15 +31,12 @@
         <div class="flex-row ms-4">
             <label class="control-label"> </label>
             <div>
-                @* <div class="form-check form-check-inline"> *@
                   <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
-                  <label class="btn" style="border-color:#9551FE" id="input-infected-label" for="input-infected">@SharedLocalizer["Only Infected"]</label>
-                @* </div> *@
+                  <label class="btn" style="color:rgb(248, 249, 250)" id="input-infected-label" for="input-infected">
+                      <i class="bi bi-dash-lg pe-1"></i>
+                      @SharedLocalizer["Only Infected"]
+                  </label>
             </div>
-            @* <div> *@
-            @* <input type="checkbox" class="btn-check" id="input-infected" autocomplete="off" onchange="filterInfected(this)"> *@
-            @* <label class="btn" style="background-color:#9551FE" for="input-infected">@SharedLocalizer["Only Infected"]</label> *@
-            @* </div> *@
         </div>
         
         <div class="flex-row ms-auto">
@@ -55,7 +52,7 @@
     </div>
 </div>
 
-<table class="table table-hover" style="cursor: pointer;">
+<table class="table table-hover">
     <thead>
     <tr class="user-select-none">
         <th hidden scope="col">Id</th>
@@ -107,9 +104,19 @@
             
             const inputInfected = $("#input-infected");
             inputInfected.prop('checked', params.get('infected') === 'true');
-            $("#input-infected-label").css('background-color', params.get('infected') === 'true' ? '#9551FE' : 'unset');
+            
+            const inputInfectedLabel = $("#input-infected-label");
+            inputInfectedLabel.css('background-color', params.get('infected') === 'true' ? '#9551FE' : 'unset');
+            inputInfectedLabel.css('border-color', params.get('infected') === 'true' ? '#9551FE' : '#212529');
+            inputInfectedLabel.css('color', params.get('infected') === 'true' ? '#F8F9FA' : '#212529');
             initialInfected = true;
-
+            
+            if (params.get('infected') === 'true'){
+                const inputInfectedLabelIcon = $("#input-infected-label i");
+                inputInfectedLabelIcon.removeClass('bi-dash-lg');
+                inputInfectedLabelIcon.addClass('bi-check-lg');
+            }
+            
             // Set name search to url query
             $("#input-room-name-search").val(params.get('roomName'));
             
@@ -139,7 +146,7 @@
                 sortOrder = 'desc';
             }
             
-            const url = `/cases?sortBy=${key}&sortOrder=${sortOrder}`
+            const url = `/sessions?sortBy=${key}&sortOrder=${sortOrder}`
             
             window.location.replace(url);
         }
