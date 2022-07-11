@@ -4,80 +4,119 @@
     ViewBag.title = SharedLocalizer["Room Details"].Value;
 }
 <div class="d-flex justify-content-between mb-4">
-    <h1 class="print">@SharedLocalizer["Room"]: @Model.room.Name</h1>
+    <h3>@SharedLocalizer["Room Details"]: @Model.room.Name</h3>
 </div>
 
 <div class="container-fluid mb-5 px-0">
     <div class="row">
-        <p class="print">@SharedLocalizer["MaxParticipants"]: @Model.room.MaxParticipants</p>
-        <p class="print">@SharedLocalizer["MaxDuration"]: @Model.room.MaxDuration @SharedLocalizer["Minutes"]</p>
-        <p>@SharedLocalizer["Faculty"]: @Model.room.Faculty</p>
-        
-        <h2 class="print">QR-Code</h2>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid print" style="image-rendering: pixelated;"/>
+        <div class="col">
+            <div class="card px-3 h-100">
+                <div class="row align-items-center h-25 border-bottom">
+                    <div class="col-lg-4 col-md-7">
+                        <p class="mb-0 fw-bold ">@SharedLocalizer["RoomName"]:</p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-0">@Model.room.Name</p>
+                    </div>
+                </div>
+                <div class="row align-items-center h-25 border-bottom">
+                    <div class="col-lg-4 col-md-7">
+                        <p class="mb-0 fw-bold ">@SharedLocalizer["MaxParticipants"]:</p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-0">@Model.room.MaxParticipants</p>
+                    </div>
+                </div>
+                <div class="row align-items-center h-25 border-bottom">
+                    <div class="col-lg-4 col-md-7">
+                        <p class="mb-0 fw-bold ">@SharedLocalizer["MaxDuration"]:</p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-0">@Model.room.MaxDuration @SharedLocalizer["Minutes"]</p>
+                    </div>
+                </div>
+                <div class="row align-items-center h-25">
+                    <div class="col-lg-4 col-md-7">
+                        <p class="mb-0 fw-bold ">@SharedLocalizer["Faculty"]:</p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-0">@Model.room.Faculty</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <p class="print only-print">Bitte scannen Sie den QR-Code mit der Corona-Checkin-App ein!</p>
-    <p class="print only-print">Please scan the QR-Code with your Corona-Checkin-App!</p>
-    <div class="row">
-        <div class="col-md-2 d-grid gap-2 mt-2">
-            <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
-                <span class="bi bi-arrow-clockwise"></span> @Localizer["New QR code"]
-            </button>
+        <div class="col fixed-width">
+            <div class="card h-100">
+                <div class="row">
+                    <div class="col">
+                        <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.QrCode)" id="qrcode" class="img-fluid" style="image-rendering: pixelated;"/>
+
+                    </div>
+                </div>
+                <div class="row fixed-margin">
+                    <div class="col-md-6 d-grid gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                            <span class="bi bi-arrow-clockwise"></span>
+                        </button>
+                    </div>
+                    <div class="col-md-6 d-grid gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-block" onclick="window.print()">
+                            <span class="bi bi-printer"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>    
-    <div class="row">
-        <div class="col-md-2 d-grid gap-2 mt-2">
-            <button type="button" class="btn btn-outline-primary btn-block" onclick="window.print()">
-                <span class="bi bi-printer"></span> @SharedLocalizer["Drucken"]
-            </button>
-        </div>
-    </div>    
-    <div class="row">    
     </div>
 </div>
 
 
 <div class="row">
     <div class="col-md-6">
-        <h2>@Localizer["Last Sessions"]</h2>
-        <table class="table table-hover" style="cursor: pointer;">
-            <thead>
-            <tr class="user-select-none">
-                <th hidden scope="col">Id</th>
-                <th scope="col" id="table-head-user" onclick="sortBy('user')">
-                    @SharedLocalizer["User"]
-                    <i class="bi bi-dash-lg pe-1"></i>
-                </th>
-                <th scope="col" id="table-head-start" onclick="sortBy('start')">
-                    @SharedLocalizer["StartTime"]
-                    <i class="bi bi-dash-lg pe-1"></i>
-                </th>
-                <th scope="col" id="table-head-end" onclick="sortBy('end')">
-                    @SharedLocalizer["EndTime"]
-                    <i class="bi bi-dash-lg pe-1"></i>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var session in Model.allRoomSessions)
-            {
-                <tr>
-                    <th hidden scope="row">@session.Id</th>
-                    <td>@session.User.Firstname @session.User.Lastname</td>
-                    <td>@session.StartTime</td>
-                    <td>@session.EndTime</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        <h4>@Localizer["Last Sessions"]</h4>
+        @if (Model.allRoomSessions.Count() > 0)
+        {
+            <table class="table table-hover" style="cursor: pointer;">
+                <thead>
+                    <tr class="user-select-none">
+                        <th hidden scope="col">Id</th>
+                        <th scope="col" id="table-head-user" onclick="sortBy('user')">
+                            @SharedLocalizer["User"]
+                            <i class="bi bi-dash-lg pe-1"></i>
+                        </th>
+                        <th scope="col" id="table-head-start" onclick="sortBy('start')">
+                            @SharedLocalizer["StartTime"]
+                            <i class="bi bi-dash-lg pe-1"></i>
+                        </th>
+                        <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                            @SharedLocalizer["EndTime"]
+                            <i class="bi bi-dash-lg pe-1"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var session in Model.allRoomSessions)
+                    {
+                        <tr>
+                            <th hidden scope="row">@session.Id</th>
+                            <td>@session.User.Firstname @session.User.Lastname</td>
+                            <td>@session.StartTime</td>
+                            <td>@session.EndTime</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-primary mt-3" role="alert">
+                @Localizer["No sessions found"]
+            </div>
+        }
         <a href="/sessions?roomName=@Model.room.Name" class="btn btn-primary" role="button">@Localizer["All Sessions"]</a>
     </div>
     <div class="col-md-6">
-        <h2>@Localizer["Last Infections"]</h2>
+        <h4>@Localizer["Last Infections"]</h4>
         @if(Model.infectedRoomSessions.Count() > 0)
         {
             <table class="table table-hover" style="cursor: pointer;">
@@ -118,7 +157,7 @@
         } 
         else
         {
-            <div class="alert alert-primary mt-5" role="alert">
+            <div class="alert alert-primary mt-3" role="alert">
                 @Localizer["No infections found"]
             </div>
         }
@@ -134,6 +173,9 @@
       </div>
       <div class="modal-body">
         @Localizer["Do you want to generate a new QR code?"]
+          <div class="alert alert-warning mt-3" role="alert">
+              @Localizer["GenerateQRCodeWarning"]
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Cancel"]</button>

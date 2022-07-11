@@ -124,6 +124,9 @@
     <value>Wollen Sie einen neuen QR-Code generieren?</value>
     <comment>Wollen Sie einen neuen QR-Code generieren?</comment>
   </data>
+  <data name="GenerateQRCodeWarning" xml:space="preserve">
+    <value>Aushänge mit dem bisherigen QR-Code müssen durch einen neuen Ausdruck ersetzt werden, da der bisherige QR-Code überschrieben wird und nicht mehr zum einchecken verwendet werden kann.</value>
+  </data>
   <data name="Last Infections" xml:space="preserve">
     <value>Letzte Infektionen</value>
   </data>
@@ -135,6 +138,9 @@
     <comment>New QR code</comment>
   </data>
   <data name="No infections found" xml:space="preserve">
-    <value>Dieser Raum hat keine Sessions mit infizierten Personen</value>
+    <value>Für diesen Raum gibt es noch keine Sessions mit infizierten Personen</value>
+  </data>
+  <data name="No sessions found" xml:space="preserve">
+    <value>Für diesen Raum gibt es noch keine Sessions</value>
   </data>
 </root>

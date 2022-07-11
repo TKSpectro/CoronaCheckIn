@@ -135,4 +135,10 @@
   <data name="No infections found" xml:space="preserve">
     <value>This room has no sessions with infected persons.</value>
   </data>
+  <data name="GenerateQRCodeWarning" xml:space="preserve">
+    <value>Printouts with the previous QR code must be replaced with a new printout, as the previous QR code will be overwritten and can no longer be used for check-in.</value>
+  </data>
+  <data name="No sessions found" xml:space="preserve">
+    <value>This room has no sessions yet.</value>
+  </data>
 </root>
