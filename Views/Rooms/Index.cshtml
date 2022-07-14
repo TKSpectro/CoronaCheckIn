@@ -52,20 +52,17 @@
     <tbody>
     @foreach (var room in Model)
     {
-        <tr>
+        <tr >
             <th hidden scope="row">@room.Id</th>
-            <td><a href="/rooms/details/@room.Id">@room.Name</a></td>
-            <td>@room.Faculty</td>
-            <td>@room.MaxDuration</td>
-            <td >@room.MaxParticipants</td>
-            <td class="w-100 pr-0 text-end"></td>
-            <td onclick="getRoomModal('@room.Id')">
-                <div class="btn" style="background-color:#9551FE ">
+            <td onclick="navigate('@room.Id')">@room.Name</td>
+            <td onclick="navigate('@room.Id')">@room.Faculty</td>
+            <td onclick="navigate('@room.Id')">@room.MaxDuration</td>
+            <td onclick="navigate('@room.Id')">@room.MaxParticipants</td>
+            <td class="pr-0 text-end">
+                <div class="btn" onclick="getRoomModal('@room.Id')" style="background-color:#9551FE ">
                     <i class="bi bi-pen text-light"></i>
                 </div>
-            </td>
-            <td class="w-100 pr-0 text-end">
-                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE ">
+                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE">
                     <i class="bi bi-trash text-light"></i>
                 </a>
             </td>
@@ -127,6 +124,11 @@
             heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
         });
         
+       function navigate(row){
+            const url = `/rooms/details/${row}`;
+            window.location.replace(url);
+        }
+        
         function sortBy(key) {
             // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
             const params = new URLSearchParams(window.location.search);
@@ -163,7 +165,6 @@
         
         function searchName(){
             const searchString = $("#input-name-search").val();
-            
             const params = new URLSearchParams(window.location.search);
             params.set('name', searchString);
             
@@ -171,42 +172,42 @@
         }
         
         function getRoomModal(room){
-                   $.ajax({
-                            url: "/rooms/CreateRoom",
-                            method: "GET",
-                            data: {"roomId": room},
-                            success: function (result) {                                
-                                 $("#createRoomModal").modal("show");
-                               
-                                 let titleFormCreate = $("#titleDetails")[0].children[0];
-                                 titleFormCreate.style.display= "none";
-                                 
-                                 let titleFormUpdate = $("#titleDetails")[0].children[1];
-                                 titleFormUpdate.style.display= "block";
-                            
-                                 
-                                 let modalBody = $("#formDetails")[0];
-                                
-                                 let children = modalBody.children[1];
-                                    
-                                let name = children.children[1].children[0];
-                                name.value= result.name;
-
-                                let maxParticipants= children.children[3].children[0];
-                                maxParticipants.value= result.maxParticipants;
-
-                                 let maxDuration= children.children[5].children[0];
-                                    maxDuration.value= result.maxDuration;
-
-                                    
-                                let faculty= children.children[6].children[1];
-                                    faculty.selectedIndex= result.faculty;
-                            
-
-                                 let id= children.children[7];
-                                    id.value= result.id;
-                            }
-                        });
+            $.ajax({
+                url: "/rooms/CreateRoom",
+                method: "GET",
+                data: {"roomId": room},
+                success: function (result) {                                
+                     $("#createRoomModal").modal("show");
+                   
+                     let titleFormCreate = $("#titleDetails")[0].children[0];
+                     titleFormCreate.style.display= "none";
+                     
+                     let titleFormUpdate = $("#titleDetails")[0].children[1];
+                     titleFormUpdate.style.display= "block";
+                
+                     
+                     let modalBody = $("#formDetails")[0];
+                    
+                     let children = modalBody.children[1];
+                        
+                    let name = children.children[1].children[0];
+                    name.value= result.name;
+    
+                    let maxParticipants= children.children[3].children[0];
+                    maxParticipants.value= result.maxParticipants;
+    
+                     let maxDuration= children.children[5].children[0];
+                        maxDuration.value= result.maxDuration;
+    
+                        
+                    let faculty= children.children[6].children[1];
+                        faculty.selectedIndex= result.faculty;
+                
+    
+                     let id= children.children[7];
+                        id.value= result.id;
+                }
+        });
 
         }
         
@@ -232,26 +233,23 @@
          function submitRoom() {
              if ($("#roomForm").valid()){
              $('#roomForm').on('submit', function(e){
-                   e.preventDefault();
-                        let dataForm = $("#roomForm").serialize();   
-               
-                              $.ajax({
-                                  type: 'POST',
-                                  url: '/rooms/CreateRoom',
-                                  contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                                  data: dataForm,
-                                  success: function (result) {
-                                        $("#createRoomModal").modal("hide");
-                                        window.location.reload();
-                                  },
-                                  error: function () {
-                                      console.error('Failed to receive the Data');
-                                  }
-                              })
+               e.preventDefault();
+                let dataForm = $("#roomForm").serialize();   
+                  $.ajax({
+                      type: 'POST',
+                      url: '/rooms/CreateRoom',
+                      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                      data: dataForm,
+                      success: function (result) {
+                            $("#createRoomModal").modal("hide");
+                            window.location.reload();
+                      },
+                      error: function () {
+                          console.error('Failed to receive the Data');
+                      }
+                  })
                });
             }
-          
            }
-         
     </script>
 }
