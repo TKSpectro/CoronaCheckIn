@@ -5,7 +5,8 @@
 }
 
 <div class="mb-4">
-    <h3>@Localizer["All Sessions"]</h3>
+    <h3 id="sessionTitle">@Localizer["All Sessions"]</h3>
+    <h3 id="casesTitle" style="display: none">@SharedLocalizer["All Cases"]</h3>
 </div>
 
 <div>
@@ -95,7 +96,9 @@
         
         $(document).ready(function() {
             const params = new URLSearchParams(window.location.search);
-            
+             let cases = $("#cases")[0];
+             let session = $("#session")[0];
+             
             // Set faculty switch to filtered one
             const faculty = params.get('faculty') || '-1';
             
@@ -110,11 +113,18 @@
             inputInfectedLabel.css('border-color', params.get('infected') === 'true' ? '#9551FE' : '#212529');
             inputInfectedLabel.css('color', params.get('infected') === 'true' ? '#F8F9FA' : '#212529');
             initialInfected = true;
-            
+      
             if (params.get('infected') === 'true'){
                 const inputInfectedLabelIcon = $("#input-infected-label i");
                 inputInfectedLabelIcon.removeClass('bi-dash-lg');
                 inputInfectedLabelIcon.addClass('bi-check-lg');
+                cases.className= "nav-link link-light link-active";
+                session.className= "nav-link link-light";
+                 $("#casesTitle")[0].style.display= "block";
+                 $("#sessionTitle")[0].style.display= "none";
+            } else{
+                cases.className= "nav-link link-light";
+                $("#casesTitle")[0].style.display= "none";
             }
             
             // Set name search to url query

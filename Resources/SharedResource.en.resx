@@ -317,4 +317,8 @@
   <data name="RoomName" xml:space="preserve">
     <value>Room Name</value>
   </data>
+  <data name="All Cases" xml:space="preserve">
+    <value>All Cases</value>
+    <comment>All Cases</comment>
+  </data>
 </root>

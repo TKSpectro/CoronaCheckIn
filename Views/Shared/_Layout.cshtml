@@ -61,7 +61,7 @@
                     </div>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
+                    <a id="session" class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
                         <i class="bi bi-clock pe-1"></i>
                         @SharedLocalizer["Sessions"]
                     </a>
@@ -73,7 +73,7 @@
                     };
                 }
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title.Equals("Cases") ? "link-active" : "")" asp-controller="sessions" asp-action="Index" asp-all-route-data="para">
+                    <a id="cases" class="nav-link link-light" asp-controller="sessions" asp-action="Index" asp-all-route-data="para">
                         <i class="bi bi-clipboard-pulse pe-1"></i>
                         @SharedLocalizer["Cases"]
                     </a>

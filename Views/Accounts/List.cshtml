@@ -4,9 +4,8 @@
     ViewBag.title = SharedLocalizer["Accounts"].Value;
 }
 
-<h2>@ViewBag.title</h2>
+<h3>@ViewBag.title</h3>
 
-@Localizer["Users"]
 <table class="table table-hover">
     <thead>
         <tr>
@@ -16,9 +15,7 @@
             <th scope="col">@SharedLocalizer["Password"]</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var account in Model)
-        {
+    <tbody>        @foreach (var account in Model)        {
         <tr>
             <th scope="row">@account.Id</th>
             <td>@account.Firstname</td>

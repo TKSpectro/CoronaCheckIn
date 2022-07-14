@@ -317,4 +317,8 @@
   <data name="RoomName" xml:space="preserve">
     <value>Raumname</value>
   </data>
+  <data name="All Cases" xml:space="preserve">
+    <value>Alle Infektionen</value>
+    <comment>All Cases</comment>
+  </data>
 </root>
