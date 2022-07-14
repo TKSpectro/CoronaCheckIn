@@ -61,7 +61,7 @@
                     </div>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
+                    <a id="session" class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
                         <i class="bi bi-clock pe-1"></i>
                         @SharedLocalizer["Sessions"]
                     </a>
@@ -73,13 +73,13 @@
                     };
                 }
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title.Equals("Cases") ? "link-active" : "")" asp-controller="sessions" asp-action="Index" asp-all-route-data="para">
+                    <a id="cases" class="nav-link link-light" asp-controller="sessions" asp-action="Index" asp-all-route-data="para">
                         <i class="bi bi-clipboard-pulse pe-1"></i>
                         @SharedLocalizer["Cases"]
                     </a>
                 </li>
                 <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Rooms"].Value) ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
+                    <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Rooms"].Value ) ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
                         <i class="bi bi-house pe-1"></i>
                           @SharedLocalizer["Rooms"]
                     </a>
@@ -104,12 +104,12 @@
                 <partial name="_LoginPartial"/>
                 <li class="nav-item mb-3 text-center">
                     <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Imprint">
-                        Imprint
+                        @SharedLocalizer["Imprint"]
                     </a>
                 </li>
                 <li class="nav-item  text-center">
                     <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Privacy">
-                        Privacy
+                        @SharedLocalizer["Privacy"]
                     </a>
                 </li>
 
