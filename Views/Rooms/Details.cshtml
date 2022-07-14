@@ -1,7 +1,7 @@
 ﻿@model (Room room, IEnumerable<Session> allRoomSessions, IEnumerable<Session> infectedRoomSessions)
 
 @{
-    ViewBag.title = SharedLocalizer["Room Details"].Value;
+    ViewBag.title = SharedLocalizer["Rooms"].Value;
 }
 <div class="d-flex justify-content-between mb-4">
     <h3>@SharedLocalizer["Room Details"]: @Model.room.Name</h3>
@@ -179,7 +179,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Cancel"]</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="generateQrCode('@Model.room.Id')">@SharedLocalizer["Yes"]</button>
+        <button type="button" class="btn btn-danger"  data-bs-dismiss="modal" onclick="generateQrCode('@Model.room.Id')">@SharedLocalizer["Yes"]</button>
       </div>
     </div>
   </div>
