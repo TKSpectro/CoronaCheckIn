@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using CoronaCheckIn.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -18,7 +19,7 @@ namespace CoronaCheckIn.Managers
         public IEnumerable<Session> GetSessions(Room? room = null, Guid? roomId = null, User? user = null,
             string? userId = null, bool? isInfected = null, DateTime? after = null, DateTime? before = null,
             string? sortBy = null, string? sortOrder = "asc", Faculty? faculty = null,
-            string? roomName = null, bool includeRoom = false, bool includeUser = false, bool endTimeNull = false)
+            string? roomName = null, bool includeRoom = false, bool includeUser = false, bool endTimeNull = false, int limit = 0 )
         {
             var queryable = Context.Sessions.AsQueryable();
 
@@ -95,7 +96,12 @@ namespace CoronaCheckIn.Managers
                     _ => queryable
                 };
             }
-
+            
+            if (limit != 0)
+            {
+                queryable = queryable.OrderBy(s => s.EndTime).Take(limit);
+            }
+            
             return queryable.AsEnumerable();
         }
 

@@ -35,10 +35,10 @@ public class ApiSessionsController : ControllerBase
     [HttpGet("")]
     public ActionResult<IEnumerable<Session>> GetAll([FromQuery] Guid? roomId, [FromQuery] string? userId,
         [FromQuery] bool? isInfected, [FromQuery] DateTime? after, [FromQuery] DateTime? before,
-        [FromQuery] bool includeRoom = false)
+        [FromQuery] bool includeRoom = false, [FromQuery] int limit = 0)
     {
         var sessions = _sessionManager.GetSessions(roomId: roomId, userId: userId, isInfected: isInfected, after: after,
-            before: before, includeRoom: includeRoom);
+            before: before, includeRoom: includeRoom, limit: limit);
 
         return sessions.ToList();
     }
