@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using System.Text.Json;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
@@ -5,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CoronaCheckIn.Areas.api;
 
@@ -16,14 +19,16 @@ public class ApiSessionsController : ControllerBase
     private readonly RoomManager _roomManager;
     private readonly SessionManager _sessionManager;
     private readonly UserManager<User> _userManager;
+    private readonly IConfiguration _config;
 
     public ApiSessionsController(ILogger<ApiSessionsController> logger, SessionManager sessionManager,
-        RoomManager roomManager, UserManager<User> userManager)
+        RoomManager roomManager, UserManager<User> userManager, IConfiguration config)
     {
         _logger = logger;
         _sessionManager = sessionManager;
         _roomManager = roomManager;
         _userManager = userManager;
+        _config = config;
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -49,6 +54,54 @@ public class ApiSessionsController : ControllerBase
         }
         
         return session;
+    }
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet("current-session")]
+    public ActionResult<Session> GetCurrentSession()
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
+        var secret = _config.GetValue<string>("Jwt:Secret");
+        var key = Encoding.UTF8.GetBytes(secret);
+        var issuer = _config.GetValue<string>("Jwt:Issuer");
+        if (issuer.Trim().Length == 0) issuer = "ccn";
+        var audience = _config.GetValue<string>("Jwt:Audience");;
+        if (audience.Trim().Length == 0) issuer = "ccn";
+            
+        tokenHandler.ValidateToken(token, new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = true,
+            ValidIssuer = issuer,
+            ValidateAudience = true,
+            ValidAudience = audience,
+        }, out SecurityToken validatedToken);
+
+        var jwtToken = (JwtSecurityToken)validatedToken;
+        var userId = (jwtToken.Claims.First(x => x.Type == "UserId").Value);
+        
+        var runningSessions = _sessionManager.GetSessions(userId: userId,
+            endTimeNull: true, includeRoom: true, sortBy: "start", sortOrder: "desc").ToList();
+        
+        foreach (var session in runningSessions)
+        {
+            // TODO: Need to check this algorithm and proof with more test cases
+            var maxEndTime = session.StartTime.AddMinutes(session.Room.MaxDuration);
+            if (maxEndTime > DateTime.Now)
+            {
+                // Session is an old session which the user did not close
+                session.EndTime = maxEndTime;
+                Console.WriteLine("session");
+                Console.WriteLine(session);
+                return session;
+                
+            }
+        }
+
+        Console.WriteLine("Error");
+        throw new Exception("No current session was found!");
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
