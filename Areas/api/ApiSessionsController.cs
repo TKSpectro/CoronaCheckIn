@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using System.Text.Json;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -93,14 +92,10 @@ public class ApiSessionsController : ControllerBase
             {
                 // Session is an old session which the user did not close
                 session.EndTime = maxEndTime;
-                Console.WriteLine("session");
-                Console.WriteLine(session);
                 return session;
-                
             }
         }
 
-        Console.WriteLine("Error");
         throw new Exception("No current session was found!");
     }
 
