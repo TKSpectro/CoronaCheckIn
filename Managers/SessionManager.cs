@@ -1,8 +1,5 @@
 using CoronaCheckIn.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
-using NuGet.Protocol;
 
 namespace CoronaCheckIn.Managers
 {
@@ -14,11 +11,10 @@ namespace CoronaCheckIn.Managers
         {
             Context = context;
         }
-
         public IEnumerable<Session> GetSessions(Room? room = null, Guid? roomId = null, User? user = null,
             string? userId = null, bool? isInfected = null, DateTime? after = null, DateTime? before = null,
             string? sortBy = null, string? sortOrder = "asc", Faculty? faculty = null,
-            string? roomName = null, bool includeRoom = false, bool includeUser = false, bool endTimeNull = false)
+            string? roomName = null, bool includeRoom = false, bool includeUser = false, bool endTimeNull = false, int limit = 0 )
         {
             var queryable = Context.Sessions.AsQueryable();
 
@@ -71,7 +67,6 @@ namespace CoronaCheckIn.Managers
             {
                 queryable = queryable.Include(s => s.User);
             }
-            
             // The sorting should always be done as the last queryable change
             if (sortBy != null)
             {
@@ -95,7 +90,11 @@ namespace CoronaCheckIn.Managers
                     _ => queryable
                 };
             }
-
+            if (limit != 0)
+            {
+                queryable = queryable.OrderBy(s => s.EndTime).Take(limit);
+            }
+            
             return queryable.AsEnumerable();
         }
 
