@@ -321,4 +321,8 @@
     <value>All Cases</value>
     <comment>All Cases</comment>
   </data>
+  <data name="AllSessions" xml:space="preserve">
+    <value>All Sessions</value>
+    <comment>AllSessions</comment>
+  </data>
 </root>

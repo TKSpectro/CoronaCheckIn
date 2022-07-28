@@ -1,0 +1,10 @@
+@model CoronaCheckIn.Controllers.HomeController.ScanBodyPost
+
+@Html.AntiForgeryToken()
+
+<div hidden>
+    <form id="scan-form" data-ajax-method="POST">
+        <input id="scan-room" asp-for="RoomId" type="text"/>
+        <input id="scan-date" asp-for="Date" type="datetime-local"/>
+    </form>
+</div>
