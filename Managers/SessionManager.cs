@@ -11,10 +11,12 @@ namespace CoronaCheckIn.Managers
         {
             Context = context;
         }
+
         public IEnumerable<Session> GetSessions(Room? room = null, Guid? roomId = null, User? user = null,
             string? userId = null, bool? isInfected = null, DateTime? after = null, DateTime? before = null,
             string? sortBy = null, string? sortOrder = "asc", Faculty? faculty = null,
-            string? roomName = null, bool includeRoom = false, bool includeUser = false, bool endTimeNull = false, int limit = 0 )
+            string? roomName = null, bool includeRoom = false, bool includeUser = false, bool endTimeNull = false,
+            int limit = 0)
         {
             var queryable = Context.Sessions.AsQueryable();
 
@@ -22,51 +24,65 @@ namespace CoronaCheckIn.Managers
             {
                 queryable = queryable.Where(session => session.RoomId == room.Id);
             }
+
             if (roomId != null)
             {
                 queryable = queryable.Where(session => session.RoomId == roomId);
             }
+
             if (roomName != null)
             {
                 // Entity Framework doesnt support direct full text search so we do some lame string check
-                queryable = queryable.Where(session => session.Room.Name.ToLower().Trim().Contains(roomName.ToLower().Trim()));
+                queryable = queryable.Where(session =>
+                    session.Room.Name.ToLower().Trim().Contains(roomName.ToLower().Trim()));
             }
+
             if (user != null)
             {
                 queryable = queryable.Where(session => session.UserId == user.Id);
             }
+
             if (userId != null)
             {
                 queryable = queryable.Where(session => session.UserId == userId);
             }
+
             if (isInfected != null)
             {
                 queryable = queryable.Where(session => session.Infected == isInfected);
             }
+
             if (after != null)
             {
                 queryable = queryable.Where(session => session.StartTime >= after);
             }
+
             if (before != null)
             {
-                queryable = queryable.Where(session => session.EndTime <= before || (session.EndTime == null && session.StartTime <= before));
+                queryable = queryable.Where(session =>
+                    session.EndTime <= before || (session.EndTime == null && session.StartTime <= before));
             }
+
             if (endTimeNull)
             {
                 queryable = queryable.Where(session => session.EndTime == null);
             }
+
             if (faculty != null)
             {
                 queryable = queryable.Where(session => session.Room.Faculty.Equals(faculty));
             }
+
             if (includeRoom)
             {
                 queryable = queryable.Include(s => s.Room);
             }
+
             if (includeUser)
             {
                 queryable = queryable.Include(s => s.User);
             }
+
             // The sorting should always be done as the last queryable change
             if (sortBy != null)
             {
@@ -90,11 +106,12 @@ namespace CoronaCheckIn.Managers
                     _ => queryable
                 };
             }
+
             if (limit != 0)
             {
                 queryable = queryable.OrderBy(s => s.EndTime).Take(limit);
             }
-            
+
             return queryable.AsEnumerable();
         }
 
@@ -117,6 +134,18 @@ namespace CoronaCheckIn.Managers
             Context.SaveChanges();
 
             return editedSession.Entity;
+        }
+
+        public void SetSessionsAsInfected(string id)
+        {
+            DateTime localDate = DateTime.Now.AddDays(-3);
+            var sessions = GetSessions(userId: id, after: localDate);
+            foreach (var session in sessions)
+            {
+                session.Infected = true;
+            }
+
+            Context.SaveChanges();
         }
 
         public void RemoveSession(Session session)
