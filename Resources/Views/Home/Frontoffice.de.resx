@@ -134,7 +134,7 @@
     <comment>CurrentParticipants</comment>
   </data>
   <data name="NoCurrentlyRunningSession" xml:space="preserve">
-    <value>Du bist akutell in keiner Session angemeldet</value>
+    <value>Du bist aktuell in keiner Session angemeldet</value>
     <comment>NoCurrentlyRunningSession</comment>
   </data>
 </root>
