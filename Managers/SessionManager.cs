@@ -145,7 +145,73 @@ namespace CoronaCheckIn.Managers
                 session.Infected = true;
             }
 
+            var newInfection = new Infection()
+            {
+                UserId = id,
+                Date = DateTime.Now,
+            };
+            Context.Infections.Add(newInfection);
             Context.SaveChanges();
+        }
+
+        public string CheckSessions(string id)
+        {
+            DateTime localDate = DateTime.Now.AddDays(-7);
+            var infectedSessions = GetSessions(isInfected: true, after: localDate).ToArray();
+            var mySession = GetSessions(userId: id, after: localDate).ToArray();
+
+            if (infectedSessions != null && mySession != null)
+            {
+                for (int i = 0; i < mySession.Count(); i++)
+                {
+                    if (mySession[i].EndTime == null)
+                    {
+                        mySession[i].EndTime = mySession[i].StartTime.AddHours(1.5);
+                    }
+
+                    for (int j = 0; j < infectedSessions.Count(); j++)
+                    {
+                        if (infectedSessions[j].EndTime == null)
+                        {
+                            infectedSessions[j].EndTime = mySession[i].StartTime.AddHours(1.5);
+                        }
+
+                        if (!infectedSessions[j].RoomId.Equals(mySession[i].RoomId) ||
+                            !infectedSessions[j].StartTime.Date.Equals(mySession[i].StartTime.Date))
+                        {
+                            continue;
+                        }
+
+                        if (infectedSessions[j].StartTime >= mySession[i].StartTime &&
+                            infectedSessions[j].EndTime <= mySession[i].EndTime &&
+                            infectedSessions[j].EndTime >= mySession[i].StartTime)
+                        {
+                            return "Higher risk";
+                        }
+
+                        if (infectedSessions[j].StartTime <= mySession[i].StartTime &&
+                            infectedSessions[j].EndTime >= mySession[i].EndTime &&
+                            infectedSessions[j].StartTime <= mySession[i].EndTime)
+                        {
+                            return "Higher risk";
+                        }
+
+                        if (infectedSessions[j].StartTime >= mySession[i].StartTime &&
+                            infectedSessions[j].EndTime >= mySession[i].EndTime)
+                        {
+                            return "Higher risk";
+                        }
+
+                        if (infectedSessions[j].StartTime <= mySession[i].StartTime &&
+                            infectedSessions[j].EndTime <= mySession[i].EndTime)
+                        {
+                            return "Higher risk";
+                        }
+                    }
+                }
+            }
+
+            return "No risk";
         }
 
         public void RemoveSession(Session session)
