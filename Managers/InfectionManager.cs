@@ -12,7 +12,7 @@ namespace CoronaCheckIn.Managers
             Context = context;
         }
 
-        public IEnumerable<Infection> GetInfections(User? user, Guid? userId)
+        public IEnumerable<Infection> GetInfections(string? userId, DateTime? after = null ,User? user = null)
         {
             var queryable = Context.Infections.AsQueryable();
 
@@ -23,6 +23,10 @@ namespace CoronaCheckIn.Managers
             if (userId != null)
             {
                 queryable = queryable.Where(infection => infection.UserId == userId.ToString());
+            }
+            if (after != null)
+            {
+                queryable = queryable.Where(infection => infection.Date >= after);
             }
 
             return queryable.AsEnumerable();
@@ -65,6 +69,18 @@ namespace CoronaCheckIn.Managers
 
             Context.Infections.Remove(infection);
             Context.SaveChanges();
+        }
+
+        public string CheckInfection(string id)
+        {
+            DateTime localDate = DateTime.Now.AddDays(-7);
+            var infections = GetInfections(userId: id , after: localDate);
+            if (infections != null)
+            {
+                return "infected!";
+            }
+            return "not infected";
+
         }
     }
 }

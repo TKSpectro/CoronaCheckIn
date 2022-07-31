@@ -83,9 +83,9 @@ public class ApiCasesController : ControllerBase
 
         return new InfectedResponse { Message = userStatus };
     }
+    public class InfectedResponse
+    {
+        public string Message { get; set; } = string.Empty;
+    }
 }
 
-public class InfectedResponse
-{
-    public string Message { get; set; } = string.Empty;
-}
