@@ -49,6 +49,9 @@ public class ApiInfectionController : ControllerBase
 
         var jwtToken = (JwtSecurityToken)validatedToken;
         var userId = (jwtToken.Claims.First(x => x.Type == "UserId").Value);
+        
+        Console.WriteLine("user ID");
+        Console.WriteLine(userId);
         var infected = _infectionManager.CheckInfection( id: userId);
         
         return new InfectedResponse { Message = infected };
