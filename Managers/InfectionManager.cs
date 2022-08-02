@@ -75,7 +75,7 @@ namespace CoronaCheckIn.Managers
         {
             DateTime localDate = DateTime.Now.AddDays(-7);
             var infections = GetInfections(userId: id , after: localDate);
-            if (infections != null)
+            if (infections.ToArray().GetLength(0) > 0)
             {
                 return "infected!";
             }
