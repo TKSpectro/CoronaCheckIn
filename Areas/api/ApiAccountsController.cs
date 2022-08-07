@@ -47,7 +47,7 @@ namespace CoronaCheckIn.Areas.api
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("remove-profile")]
+        [HttpDelete("")]
         public ActionResult<string> RemoveAccount()
         {
             var tokenHandler = new JwtSecurityTokenHandler();
