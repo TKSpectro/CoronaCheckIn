@@ -25,7 +25,7 @@ public class ApiCasesController : ControllerBase
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [HttpGet("")]
+    [HttpPut("")]
     public ActionResult<InfectedResponse> SetSessionsAsInfected()
     {
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -55,7 +55,7 @@ public class ApiCasesController : ControllerBase
     }
 
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [HttpGet("set-infected-session/{id}")]
+    [HttpPut("set-infected-session/{id}")]
     public ActionResult<InfectedResponse> SetSessionAsInfected(string id)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
