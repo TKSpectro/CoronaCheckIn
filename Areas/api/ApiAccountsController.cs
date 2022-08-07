@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CoronaCheckIn.Areas.api
 {
@@ -15,11 +16,13 @@ namespace CoronaCheckIn.Areas.api
     {
         private readonly ILogger<AccountsController> _logger;
         private readonly AccountManager _accountManager;
+        private readonly IConfiguration _config;
 
-        public AccountsController(ILogger<AccountsController> logger, AccountManager accountManager)
+        public AccountsController(ILogger<AccountsController> logger, AccountManager accountManager, IConfiguration config)
         {
             _logger = logger;
             _accountManager = accountManager;
+            _config = config;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -29,7 +32,7 @@ namespace CoronaCheckIn.Areas.api
             var accounts = _accountManager.GetAccounts();
             return accounts.ToArray();
         }
-    
+
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
         public ActionResult<User> GetAccount(Guid id)
@@ -39,25 +42,41 @@ namespace CoronaCheckIn.Areas.api
             {
                 return NotFound();
             }
-        
+
             return account;
         }
-        
-        // [HttpPost("{name}")]
-        // public ActionResult<string> GenerateJwtToken(string name)
-        // {
-        //     var jwtTokenHandler = new JwtSecurityTokenHandler();
-        //     if (string.IsNullOrEmpty(name))
-        //     {
-        //         throw new InvalidOperationException("Name is not specified.");
-        //     }
-        //     SymmetricSecurityKey securityKey = new SymmetricSecurityKey(new Guid("00000000-0000-0000-0000-000000000000").ToByteArray());
-        //     
-        //     var claims = new[] { new Claim(ClaimTypes.Name, name) };
-        //     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        //     var token = new JwtSecurityToken("ExampleServer", "ExampleClients", claims, expires: DateTime.Now.AddSeconds(60), signingCredentials: credentials);
-        //     return jwtTokenHandler.WriteToken(token);
-        // }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("remove-profile")]
+        public ActionResult<string> RemoveAccount()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
+            var secret = _config.GetValue<string>("Jwt:Secret");
+            var key = Encoding.UTF8.GetBytes(secret);
+            var issuer = _config.GetValue<string>("Jwt:Issuer");
+            if (issuer.Trim().Length == 0) issuer = "ccn";
+            var audience = _config.GetValue<string>("Jwt:Audience");
+            if (audience.Trim().Length == 0) issuer = "ccn"; 
+            
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+                ValidateAudience = true,
+                ValidAudience = audience,
+            }, out SecurityToken validatedToken);
+
+            var jwtToken = (JwtSecurityToken)validatedToken;
+
+            var userId = (jwtToken.Claims.First(x => x.Type == "UserId").Value);
+            var id = Guid.Parse(userId);
+
+            _accountManager.Remove(id);
+            return "Account successfully deleted";
+        }
     }
 }
 
