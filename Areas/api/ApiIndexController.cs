@@ -2,14 +2,17 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using CoronaCheckIn.Areas.Identity.Pages.Account;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace CoronaCheckIn.Areas.api
@@ -38,6 +41,43 @@ namespace CoronaCheckIn.Areas.api
         public ActionResult<string> Index()
         {
             return "This is the rest api of CoronaCheckIn";
+        }
+        
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("me")]
+        public ActionResult<MeResponse> Me()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = HttpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", "");
+            var secret = _configuration.GetValue<string>("Jwt:Secret");
+            var key = Encoding.UTF8.GetBytes(secret);
+            var issuer = _configuration.GetValue<string>("Jwt:Issuer");
+            if (issuer.Trim().Length == 0) issuer = "ccn";
+            var audience = _configuration.GetValue<string>("Jwt:Audience");;
+            if (audience.Trim().Length == 0) issuer = "ccn";
+            
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+                ValidateAudience = true,
+                ValidAudience = audience,
+            }, out SecurityToken validatedToken);
+
+            var jwtToken = (JwtSecurityToken)validatedToken;
+            var userId = (jwtToken.Claims.First(x => x.Type == "UserId").Value);
+
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                throw new Exception("Token not valid");
+            }
+            
+            var res = new MeResponse();
+            res.Email = user.Email;
+            return res;
         }
 
         [HttpPost("login")]
@@ -170,5 +210,10 @@ namespace CoronaCheckIn.Areas.api
     public class AuthResponse
     {
         public string Token { get; set; } = string.Empty;
+    }
+
+    public class MeResponse
+    {
+        public string Email { get; set; } = string.Empty;
     }
 }
