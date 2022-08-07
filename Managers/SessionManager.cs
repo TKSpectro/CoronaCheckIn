@@ -136,6 +136,7 @@ namespace CoronaCheckIn.Managers
             return editedSession.Entity;
         }
 
+        // set all sessions of user as infected
         public void SetSessionsAsInfected(string id)
         {
             DateTime localDate = DateTime.Now.AddDays(-3);
@@ -150,6 +151,23 @@ namespace CoronaCheckIn.Managers
                 UserId = id,
                 Date = DateTime.Now,
             };
+            Context.Infections.Add(newInfection);
+            Context.SaveChanges();
+        }
+
+        // Set one Session as infected
+        public void SetSessionAsInfected(Guid sessionId, string userId)
+        {
+            var session = GetSession(sessionId);
+
+            var newInfection = new Infection()
+            {
+                UserId = userId,
+                Date = DateTime.Now,
+            };
+
+            session.Infected = true;
+
             Context.Infections.Add(newInfection);
             Context.SaveChanges();
         }
