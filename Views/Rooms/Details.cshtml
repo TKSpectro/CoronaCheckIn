@@ -80,15 +80,15 @@
                 <thead>
                     <tr class="user-select-none">
                         <th hidden scope="col">Id</th>
-                        <th scope="col" id="table-head-user" onclick="sortBy('user')">
+                        <th scope="col" id="table-head-user" onclick="sortBy('user', '@Model.room.Id')">
                             @SharedLocalizer["User"]
                             <i class="bi bi-dash-lg pe-1"></i>
                         </th>
-                        <th scope="col" id="table-head-start" onclick="sortBy('start')">
+                        <th scope="col" id="table-head-start" onclick="sortBy('start', '@Model.room.Id')">
                             @SharedLocalizer["StartTime"]
                             <i class="bi bi-dash-lg pe-1"></i>
                         </th>
-                        <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                        <th scope="col" id="table-head-end" onclick="sortBy('end', '@Model.room.Id')">
                             @SharedLocalizer["EndTime"]
                             <i class="bi bi-dash-lg pe-1"></i>
                         </th>
@@ -123,20 +123,16 @@
                 <thead>
                 <tr class="user-select-none">
                     <th hidden scope="col">Id</th>
-                    <th scope="col" id="table-head-user" onclick="sortBy('user')">
+                    <th scope="col" id="table-head-user" onclick="sortBy('user', '@Model.room.Id')">
                         @SharedLocalizer["User"]
                         <i class="bi bi-dash-lg pe-1"></i>
                     </th>
-                    <th scope="col" id="table-head-start" onclick="sortBy('start')">
+                    <th scope="col" id="table-head-start" onclick="sortBy('start', '@Model.room.Id')">
                         @SharedLocalizer["StartTime"]
                         <i class="bi bi-dash-lg pe-1"></i>
                     </th>
-                    <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                    <th scope="col" id="table-head-end" onclick="sortBy('end', '@Model.room.Id')">
                         @SharedLocalizer["EndTime"]
-                        <i class="bi bi-dash-lg pe-1"></i>
-                    </th>
-                    <th scope="col" id="table-head-end" onclick="sortBy('end')">
-                        @SharedLocalizer["InfectionDate"]
                         <i class="bi bi-dash-lg pe-1"></i>
                     </th>
                 </tr>
@@ -149,7 +145,6 @@
                         <td>@session.User.Firstname @session.User.Lastname</td>
                         <td>@session.StartTime</td>
                         <td>@session.EndTime</td>
-                        <td>TODO</td>
                     </tr>
                 }
                 </tbody>
@@ -186,11 +181,32 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
+    <script type="text/javascript">                
+        $(document).ready(function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Set faculty switch to filtered one
+            const faculty = params.get('faculty') || '-1';
+            
+            $("#faculty-filter-switch").val(faculty).change();
+            initialFacultySwitch = true;
+            
+            // Set name search to url query
+            $("#input-name-search").val(params.get('name'));
+            
+            // Setup sorting of table heads
+            const sortBy = params.get('sortBy');
+            const sortOrder = params.get('sortOrder');
+            
+            // Place the correct icons beside the sorted table headings
+            const heading = $(`#table-head-${sortBy} > i`);
+            heading.removeClass('bi-dash-lg');
+            heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
+        });
 
-       function generateQrCode(id) {
-           console.log(id);
-           $.ajax({
+        function generateQrCode(id) {
+            console.log(id);
+            $.ajax({
             url: "/rooms/GenerateQrCode/" + id,
             success: function (data) {
                 document.getElementById('qrcode').src = 'data:image/png;base64,' + data;
@@ -198,7 +214,26 @@
             error: function (error) {
                 alert("Error: " + error);
             }
-          })
-       }
+            })
+        }
+
+        function sortBy(key, id) {
+            console.log(id);
+            // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+            const params = new URLSearchParams(window.location.search);
+            
+            // Either get the sortOrder from the url or if null an empty string
+            // And then just switch to the other one (default to asc)
+            let sortOrder = params.get('sortOrder') || '';
+            if (sortOrder === '' || sortOrder === 'desc'){
+                sortOrder = 'asc';
+            } else {
+                sortOrder = 'desc';
+            }
+            
+            const url = `/rooms/details/${id}?sortBy=${key}&sortOrder=${sortOrder}`
+            
+            window.location.replace(url);
+        }
     </script>
 }
