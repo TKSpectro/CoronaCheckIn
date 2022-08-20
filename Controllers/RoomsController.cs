@@ -48,7 +48,8 @@ namespace CoronaCheckIn.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Details(Guid id)
+        public IActionResult Details(Guid id, [FromQuery] string? sortBy = null,
+            [FromQuery] string? sortOrder = null)
         {
             Room room = _roomManager.GetRoom(id);
 
@@ -63,8 +64,8 @@ namespace CoronaCheckIn.Controllers
             byte[] qrCodeImage = createQrCode(id);
             ViewBag.QrCode = qrCodeImage;
 
-            var allRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true);
-            var infectedRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true, isInfected: true);
+            var allRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true, sortBy: sortBy, sortOrder: sortOrder);
+            var infectedRoomSessions = _sessionManager.GetSessions(room, includeRoom: true, includeUser: true, isInfected: true, sortBy: sortBy, sortOrder: sortOrder);
 
             var model = (room, allRoomSessions, infectedRoomSessions);
             return View(model);
