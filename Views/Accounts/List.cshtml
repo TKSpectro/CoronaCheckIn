@@ -8,33 +8,26 @@
 
 <table class="table table-hover">
     <thead>
-        <tr>
-            <th scope="col">@SharedLocalizer["Username"]</th>
-            <th scope="col">@SharedLocalizer["Email"]</th>
-        </tr>
+    <tr>
+        <th scope="col">@SharedLocalizer["Username"]</th>
+        <th scope="col">@SharedLocalizer["Email"]</th>
+    </tr>
     </thead>
-    <tbody>        @foreach (var account in Model)        {
+    <tbody>
+    @foreach (var account in Model)
+    {
         <tr>
             <td>@account.Firstname</td>
             <td>@account.Email</td>
-            <td>
-                <a type="submit"  asp-action="Remove" asp-route-id="@account.Id" class="text-light btn" style="background-color:#9551FE"><i class="bi bi-trash"></i></a>
+            <td SetSessionsAsInfected>
+                <a type="submit" asp-action="Remove" asp-route-id="@account.Id" class="text-light btn" style="background-color:#9551FE">
+                    <i class="bi bi-trash"></i>
+                </a>
+                <a type="submit" asp-action="SetAsInfected" asp-route-id="@account.Id" class="text-light btn" style="background-color:#9551FE">
+                    <i class="bi bi-clipboard-pulse"></i>
+                </a>
             </td>
         </tr>
-        }
+    }
     </tbody>
 </table>
-
-<script>
-    // call delete endpoint
-    function deleteUser(id) {
-        var url = "/accounts/delete/" + id;
-        $.ajax({
-            url: url,
-            type: "DELETE",
-            success: function () {
-                window.location.reload();
-            }
-        });
-    }
-</script>

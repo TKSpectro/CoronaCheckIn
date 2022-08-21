@@ -10,7 +10,6 @@
     <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">Erstellen</button>
 </div>
 
-
 <div class="container-fluid mb-5 px-0">
     <div class="row">
         <div class="col-sm input-group">
@@ -26,52 +25,58 @@
         </div>
     </div>
 </div>
-
-<table class="table table-hover" style="cursor: pointer;">
-    <thead>
-    <tr class="user-select-none">
-        <th hidden scope="col">Id</th>
-        <th scope="col" id="table-head-name" onclick="sortBy('name')">
-            @SharedLocalizer["Name"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-        <th scope="col" id="table-head-faculty" onclick="sortBy('faculty')">
-            @SharedLocalizer["Faculty"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-        <th scope="col" id="table-head-maxDuration" onclick="sortBy('maxDuration')">
-            @SharedLocalizer["MaxDuration"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-        <th scope="col" id="table-head-maxParticipants" onclick="sortBy('maxParticipants')">
-            @SharedLocalizer["MaxParticipants"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var room in Model)
-    {
-        <tr >
-            <th hidden scope="row">@room.Id</th>
-            <td onclick="navigate('@room.Id')">@room.Name</td>
-            <td onclick="navigate('@room.Id')">@room.Faculty</td>
-            <td onclick="navigate('@room.Id')">@room.MaxDuration</td>
-            <td onclick="navigate('@room.Id')">@room.MaxParticipants</td>
-            <td class="pr-0 text-end">
-                <div class="btn" onclick="getRoomModal('@room.Id')" style="background-color:#9551FE ">
-                    <i class="bi bi-pen text-light"></i>
-                </div>
-                <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE">
-                    <i class="bi bi-trash text-light"></i>
-                </a>
-            </td>
+@if (Model.ToList().Count() > 0)
+{
+    <table class="table table-hover" style="cursor: pointer;">
+        <thead>
+        <tr class="user-select-none">
+            <th hidden scope="col">Id</th>
+            <th scope="col" id="table-head-name" onclick="sortBy('name')">
+                @SharedLocalizer["Name"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
+            <th scope="col" id="table-head-faculty" onclick="sortBy('faculty')">
+                @SharedLocalizer["Faculty"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
+            <th scope="col" id="table-head-maxDuration" onclick="sortBy('maxDuration')">
+                @SharedLocalizer["MaxDuration"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
+            <th scope="col" id="table-head-maxParticipants" onclick="sortBy('maxParticipants')">
+                @SharedLocalizer["MaxParticipants"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
         </tr>
-    }
-    </tbody>
-</table>
-
-
+        </thead>
+        <tbody>
+        @foreach (var room in Model)
+        {
+            <tr >
+                <th hidden scope="row">@room.Id</th>
+                <td onclick="navigate('@room.Id')">@room.Name</td>
+                <td onclick="navigate('@room.Id')">@room.Faculty</td>
+                <td onclick="navigate('@room.Id')">@room.MaxDuration</td>
+                <td onclick="navigate('@room.Id')">@room.MaxParticipants</td>
+                <td class="pr-0 text-end">
+                    <div class="btn" onclick="getRoomModal('@room.Id')" style="background-color:#9551FE ">
+                        <i class="bi bi-pen text-light"></i>
+                    </div>
+                    <a type="submit" asp-action="RemoveRoom" asp-route-id="@room.Id" class="btn" style="background-color:#9551FE">
+                        <i class="bi bi-trash text-light"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-primary mt-3" role="alert">
+        @Localizer["No rooms found"]
+    </div>
+}
 <form id="roomForm" data-ajax-method="POST">
     <div id="createRoomModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

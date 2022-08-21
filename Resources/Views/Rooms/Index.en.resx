@@ -137,4 +137,8 @@
     <value> Room Update</value>
     <comment>UpdateRoom</comment>
   </data>
+  <data name="No rooms found" xml:space="preserve">
+    <value>There are no created rooms</value>
+    <comment>No rooms found</comment>
+  </data>
 </root>
