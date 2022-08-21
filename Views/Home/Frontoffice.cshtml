@@ -162,34 +162,38 @@
                   codeReader.getVideoInputDevices()
                         .then((videoInputDevices) => {
                               const sourceSelect = document.getElementById('sourceSelect')
-                              selectedDeviceId = videoInputDevices[0].deviceId
                               
-                              if (videoInputDevices.length > 100) {
-                                    videoInputDevices.forEach((element) => {
+                              if (videoInputDevices.length === 0) {
+                                  alert('@SharedLocalizer["NoCameraConnected"]');
+                              } else {
+                                  selectedDeviceId = videoInputDevices[0].deviceId
+                                  
+                                  if (videoInputDevices.length > 100) {
+                                      videoInputDevices.forEach((element) => {
                                           const sourceOption = document.createElement('option')
                                           sourceOption.text = element.label
                                           sourceOption.value = element.deviceId
                                           sourceSelect.appendChild(sourceOption)
-                                    })
+                                      })
+                            
+                                      sourceSelect.onchange = () => {
+                                          selectedDeviceId = sourceSelect.value;
+                                      };
+                            
+                                      const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                                      sourceSelectPanel.style.display = 'block'
+                                  }
                         
-                                    sourceSelect.onchange = () => {
-                                        selectedDeviceId = sourceSelect.value;
-                                    };
+                                  document.getElementById('startButton').addEventListener('click', () => {
+                                      decodeOnce(codeReader, selectedDeviceId);
+                                      document.getElementById('video-icon').hidden = true;
+                                  })
                         
-                                    const sourceSelectPanel = document.getElementById('sourceSelectPanel')
-                                    sourceSelectPanel.style.display = 'block'
+                                  document.getElementById('resetButton').addEventListener('click', () => {
+                                      codeReader.reset()
+                                      document.getElementById('video-icon').hidden = false;
+                                  })
                               }
-                    
-                              document.getElementById('startButton').addEventListener('click', () => {
-                                    decodeOnce(codeReader, selectedDeviceId);
-                                    document.getElementById('video-icon').hidden = true;
-                              })
-                    
-                              document.getElementById('resetButton').addEventListener('click', () => {
-                                    codeReader.reset()
-                                    document.getElementById('video-icon').hidden = false;
-                              })
-                
                         })
                         .catch((err) => {
                             console.error(err)
