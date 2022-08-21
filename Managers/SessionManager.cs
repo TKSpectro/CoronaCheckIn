@@ -109,7 +109,7 @@ namespace CoronaCheckIn.Managers
 
             if (limit != 0)
             {
-                queryable = queryable.OrderBy(s => s.EndTime).Take(limit);
+                queryable = queryable.OrderByDescending(s => s.EndTime).Take(limit);
             }
 
             return queryable.AsEnumerable();

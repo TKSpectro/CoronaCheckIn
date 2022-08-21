@@ -137,4 +137,8 @@
     <value>Raum bearbeiten</value>
     <comment>UpdateRoom</comment>
   </data>
+  <data name="No rooms found" xml:space="preserve">
+    <value>Es gibt keine angelegten Räume</value>
+    <comment>No rooms found</comment>
+  </data>
 </root>

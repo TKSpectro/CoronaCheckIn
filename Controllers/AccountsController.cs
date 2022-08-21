@@ -10,18 +10,18 @@ namespace CoronaCheckIn.Controllers
     {
         private readonly ILogger<AccountsController> _logger;
         private readonly AccountManager _accountManager;
+        private readonly SessionManager _sessionManager;
+        private readonly InfectionManager _infectionManager;
 
-        public AccountsController(ILogger<AccountsController> logger, AccountManager accountManager)
+        public AccountsController(ILogger<AccountsController> logger, AccountManager accountManager,
+            SessionManager sessionManager, InfectionManager infectionManager)
         {
             _logger = logger;
             _accountManager = accountManager;
+            _sessionManager = sessionManager;
+            _infectionManager = infectionManager;
         }
 
-        // public IActionResult Index()
-        // {
-        //     return RedirectToAction("Index");
-        // }
-        
         [Authorize(Roles = "Admin")]
         public IActionResult List()
         {
@@ -36,10 +36,19 @@ namespace CoronaCheckIn.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
         public IActionResult Remove(Guid id)
         {
             _accountManager.Remove(id);
+            return RedirectToAction("List");
+        }
+
+        public IActionResult SetAsInfected(Guid id)
+        {
+            if ( _infectionManager.CheckInfection(id.ToString()) != "infected!")
+            {
+                _sessionManager.SetSessionsAsInfected(id.ToString());
+            }
             return RedirectToAction("List");
         }
     }
