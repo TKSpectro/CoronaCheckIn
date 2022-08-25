@@ -201,10 +201,6 @@
     <value>Save</value>
     <comment>Save</comment>
   </data>
-  <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
-    <comment>Accounts</comment>
-  </data>
   <data name="Rooms" xml:space="preserve">
     <value>Rooms</value>
     <comment>Rooms</comment>
@@ -320,5 +316,9 @@
   <data name="All Cases" xml:space="preserve">
     <value>All Cases</value>
     <comment>All Cases</comment>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>Users</value>
+    <comment>users</comment>
   </data>
 </root>

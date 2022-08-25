@@ -2,10 +2,50 @@ html {
     font-size: 14px;
 }
 
-@media (min-width: 768px) {
+.title {
+    display: none;
+
+}
+
+.icon {
+    display: block;
+}
+
+.sidenav-title {
+    display: none;
+}
+
+.bi {
+    font-size: 24px;
+}
+
+@media (min-width: 980px) {
+    .icon {
+        display: none;
+    }
+
+    .title {
+        display: block;
+    }
+
+    .bi {
+        font-size: 16px;
+    }
+
+    .sidenav-title {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 769px) {
     html {
         font-size: 16px;
     }
+
+}
+
+.content {
+    padding: 38px 30px 0 20px !important;
 }
 
 html {
@@ -24,12 +64,13 @@ html {
 }
 
 #setting-menu .nav-link {
-    color: #9551FE; !important;
+    color: #9551FE;
+!important;
 }
 
 #setting-menu .active {
     background-color: #9551FE;
-    color:white;
+    color: white;
 }
 
 .fixed-width {
