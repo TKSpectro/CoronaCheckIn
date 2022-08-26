@@ -6,11 +6,26 @@
 
 <h3>@ViewBag.title</h3>
 
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 col-lg-5 mb-3">
+            <input id="input-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]">
+        </div>
+        <div class="col-2 mb-3">
+            <button class="btn btn-outline-secondary" type="button" onclick="search(this)">@SharedLocalizer["Search"]</button>
+        </div>
+    </div>
+</div>
+
 <table class="table table-hover">
     <thead>
     <tr>
         <th scope="col">@SharedLocalizer["Username"]</th>
-        <th scope="col">@SharedLocalizer["Email"]</th>
+        <th scope="col">
+            @SharedLocalizer["Email"]
+            <i class="bi bi-arrow-down pe-1"></i>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -31,3 +46,26 @@
     }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            $('#input-search').val(params.get('search'));
+        });
+        
+        function search(){
+            const searchString = $("#input-search").val();
+            
+            const params = new URLSearchParams(window.location.search);
+            if (searchString.toString().trim().length > 0){
+                params.set('search', searchString);
+            } else {
+                params.delete('search');
+            }
+            
+            window.location.search = params.toString();
+        }
+    </script>
+}
