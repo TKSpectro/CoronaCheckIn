@@ -7,7 +7,7 @@
 
 <div class="d-flex justify-content-between mb-4">
     <h3>@Localizer["All Rooms"]</h3>
-    <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">+ Erstellen</button>
+    <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">+ @SharedLocalizer["Create"]</button>
 </div>
 
 <div class="input-group mb-3 flex align-items-end">
@@ -63,11 +63,11 @@
                 <td onclick="navigate('@room.Id')">@room.MaxDuration</td>
                 <td onclick="navigate('@room.Id')">@room.MaxParticipants</td>
                 <td class="pr-0 text-end">
-                    <div class="btn" onclick="getRoomModal('@room.Id')" style="background-color:#9551FE ">
+                    <div class="btn" onclick="getRoomModal('@room.Id')" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["UpdateRoom"]">
                         <i class="bi bi-pen text-light"></i>
                     </div>
-                    <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="modal" data-bs-target="#deleteRoom@(room.Id)Modal">
-                        <i class="bi bi-trash text-light"></i>
+                    <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteRoom"]">
+                        <i class="bi bi-trash text-light" data-bs-toggle="modal" data-bs-target="#deleteRoom@(room.Id)Modal"></i>
                     </button>
                 </td>
             </tr>
@@ -151,6 +151,9 @@ else
             const heading = $(`#table-head-${sortBy} > i`);
             heading.removeClass('bi-arrow-down-up');
             heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
+
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         });
         
        function navigate(row){

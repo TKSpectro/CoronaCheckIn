@@ -130,7 +130,7 @@
     <comment>CreateRoom</comment>
   </data>
   <data name="UpdateRoom" xml:space="preserve">
-    <value> Room Update</value>
+    <value>Update Room</value>
     <comment>UpdateRoom</comment>
   </data>
   <data name="No rooms found" xml:space="preserve">
