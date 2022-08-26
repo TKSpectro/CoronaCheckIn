@@ -124,6 +124,10 @@
     <value>Wollen Sie einen neuen QR-Code generieren?</value>
     <comment>Wollen Sie einen neuen QR-Code generieren?</comment>
   </data>
+  <data name="ExportQrCode" xml:space="preserve">
+    <value>Raum-Aushang ausdrucken</value>
+    <comment>ExportQrCode</comment>
+  </data>
   <data name="GenerateQRCodeWarning" xml:space="preserve">
     <value>Aushänge mit dem bisherigen QR-Code müssen durch einen neuen Ausdruck ersetzt werden, da der bisherige QR-Code überschrieben wird und nicht mehr zum einchecken verwendet werden kann.</value>
   </data>
