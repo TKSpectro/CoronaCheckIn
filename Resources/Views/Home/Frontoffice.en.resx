@@ -117,36 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All Rooms" xml:space="preserve">
-    <value>All Rooms</value>
-    <comment>All Rooms</comment>
+  <data name="Press to scan room" xml:space="preserve">
+    <value>Press to scan room</value>
+    <comment>Press to scan room</comment>
   </data>
-  <data name="Search by name..." xml:space="preserve">
-    <value>Search by name...</value>
-    <comment>Name eingeben</comment>
+  <data name="JoinedAt" xml:space="preserve">
+    <value>Joined at</value>
+    <comment>JoinedAt</comment>
   </data>
-  <data name="Filter by faculty" xml:space="preserve">
-    <value>Filter by faculty</value>
-    <comment>Filter by faculty</comment>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Remaining time</value>
+    <comment>RemainingTime</comment>
   </data>
-  <data name="CreateRoom" xml:space="preserve">
-    <value>Create Room</value>
-    <comment>CreateRoom</comment>
+  <data name="CurrentParticipants" xml:space="preserve">
+    <value>Current participants</value>
+    <comment>CurrentParticipants</comment>
   </data>
-  <data name="UpdateRoom" xml:space="preserve">
-    <value> Room Update</value>
-    <comment>UpdateRoom</comment>
-  </data>
-  <data name="No rooms found" xml:space="preserve">
-    <value>There are no created rooms</value>
-    <comment>No rooms found</comment>
-  </data>
-  <data name="Room1" xml:space="preserve">
-    <value>Room 1</value>
-    <comment>Room1</comment>
-  </data>
-  <data name="Search by room-name" xml:space="preserve">
-    <value>Search by name</value>
-    <comment>Search by room-name</comment>
+  <data name="NoCurrentlyRunningSession" xml:space="preserve">
+    <value>You are currently not registered in any session</value>
+    <comment>NoCurrentlyRunningSession</comment>
   </data>
 </root>

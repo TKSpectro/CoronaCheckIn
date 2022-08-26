@@ -2,6 +2,8 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject SignInManager<User> SignInManager
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,6 +70,18 @@
                             <a id="session" class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
                                 <i class="bi bi-clock pe-1"></i>
                                 <span class="sidenav-title">@SharedLocalizer["Sessions"]</span>
+                @{
+                    var enabledFrontoffice = @Configuration.GetSection("EnableFrontoffice").Value;
+                    if (enabledFrontoffice == "True")
+                    {
+                        <li class="nav-item mb-4 text-center">
+                            <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Frontoffice"].Value) ? "link-active" : "")" asp-area="" asp-controller="home" asp-action="frontoffice">
+                                <i class="bi bi-house-fill pe-1"></i>
+                                @SharedLocalizer["Frontoffice"]
+                            </a>
+                        </li>
+                    }
+                }
 
                             </a>
                         </li>

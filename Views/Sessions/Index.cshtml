@@ -10,46 +10,50 @@
 </div>
 
 <div>
-    <div class="input-group mb-3">
-        <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Search by room-name..."]">
-        <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
-    </div>
-    
-    <div class="input-group mb-3 flex">
-        <div class="flex-row">
-            <label class="control-label">@SharedLocalizer["StartTime"]</label>
-            <input id="input-start-time" type="date" class="form-control"/>
-        </div>
-        <div class="flex-row ms-1">
-            <label class="control-label">@SharedLocalizer["EndTime"]</label>
-            <input id="input-end-time" type="date" class="form-control"/>
-        </div>
-        <div class="flex-row ms-1">
-            <label class="control-label"> </label>
-            <button class="btn btn-outline-secondary form-control" type="button" onclick="searchDate(this)">@SharedLocalizer["Filter"]</button>
-        </div>
-        
-        <div class="flex-row ms-4">
-            <label class="control-label"> </label>
-            <div>
-                  <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
-                  <label class="btn" style="color:rgb(248, 249, 250)" id="input-infected-label" for="input-infected">
-                      <i class="bi bi-dash-lg pe-1"></i>
-                      @SharedLocalizer["Only Infected"]
-                  </label>
+    <div class="col-11 col-md-9 col-lg-7 col-xl-8 col-xxl-6">
+        <div class="row mb-3 justify-content-between">
+            <div class="col">
+                <label class="control-label" for="input-room-name-search">@Localizer["Search by room-name"]</label>
+                <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Room1"]" style="min-width: 160px">
+            </div>
+            <div class="col-auto">
+                <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
+                <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" class="form-select" style="width: 128px">
+                    <option value="-1">@SharedLocalizer["All"]</option>
+                </select>
             </div>
         </div>
         
-        <div class="flex-row ms-auto">
-            <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
-            <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
-                <option value="-1">@SharedLocalizer["All"]</option>
-            </select>
+        <div class="input-group mb-3 flex">
+            <div class="flex-row">
+                <label class="control-label">@SharedLocalizer["StartTime"]</label>
+                <input id="input-start-time" type="date" class="form-control"/>
+            </div>
+            <div class="flex-row ms-1">
+                <label class="control-label">@SharedLocalizer["EndTime"]</label>
+                <input id="input-end-time" type="date" class="form-control"/>
+            </div>
+            <div class="flex-row ms-1">
+                <label class="control-label"> </label>
+                <div>
+                    <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
+                    <label class="btn" style="color:rgb(248, 249, 250)" id="input-infected-label" for="input-infected">
+                        <i class="bi bi-dash-lg pe-1"></i>
+                        @SharedLocalizer["Infected"]
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex-row ms-auto">
+                <label class="control-label"> </label>
+                <button class="btn btn-outline-dark form-control" type="button" onclick="search(this)">@SharedLocalizer["Filter"]</button>
+            </div>
+
+            <div class="flex-row ms-1">
+                <label class="control-label"> </label>
+                <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
+            </div>
         </div>
-    </div>
-    
-    <div class="input-group mb-3">
-        
     </div>
 </div>
 
@@ -61,19 +65,19 @@
             <th hidden scope="col">Id</th>
             <th scope="col" id="table-head-room" onclick="sortBy('room')">
                 @SharedLocalizer["Room"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
             <th scope="col" id="table-head-user" onclick="sortBy('user')">
                 @SharedLocalizer["User"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
             <th scope="col" id="table-head-start" onclick="sortBy('start')">
                 @SharedLocalizer["StartTime"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
             <th scope="col" id="table-head-end" onclick="sortBy('end')">
                 @SharedLocalizer["EndTime"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
         </tr>
         </thead>
@@ -131,15 +135,23 @@ else
                 inputInfectedLabelIcon.addClass('bi-check-lg');
                 cases.className= "nav-link link-light link-active";
                 session.className= "nav-link link-light";
-                 $("#casesTitle")[0].style.display= "block";
-                 $("#sessionTitle")[0].style.display= "none";
-                 $("#noInfections")[0].style.display= "block";
-                 $("#noSessions")[0].style.display= "none";
-                 
+                $("#casesTitle")[0].style.display= "block";
+                $("#sessionTitle")[0].style.display= "none";
+                const noInfectionsEl = $("#noInfections")[0];
+                if (noInfectionsEl?.style) {
+                   noInfectionsEl.style.display= "block";
+                }
+                const noSessionsEl = $("#noSessions")[0];
+                if (noSessionsEl?.style) {
+                   noSessionsEl.style.display= "none"; 
+                }
             } else{
                 cases.className= "nav-link link-light";
                 $("#casesTitle")[0].style.display= "none";
-                $("#noInfections")[0].style.display= "none";
+                const noInfectionsEl = $("#noInfections")[0];
+                if(noInfectionsEl?.style){
+                    noInfectionsEl.style.display = "none";
+                }
             }
             
             // Set name search to url query
@@ -154,7 +166,7 @@ else
             
             // Place the correct icons beside the sorted table headings
             const heading = $(`#table-head-${sortBy} > i`);
-            heading.removeClass('bi-dash-lg');
+            heading.removeClass('bi-arrow-down-up');
             heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
         });
     
@@ -180,51 +192,38 @@ else
             if (initialInfected){
                 const infected = checkbox.checked;
                 
-                const params = new URLSearchParams(window.location.search);
-                if (!infected){
-                    params.delete('infected');
+                const inputInfectedLabel = $("#input-infected-label");
+                inputInfectedLabel.css('background-color', infected ? '#9551FE' : 'unset');
+                inputInfectedLabel.css('border-color', infected ? '#9551FE' : '#212529');
+                inputInfectedLabel.css('color', infected ? '#F8F9FA' : '#212529');
+          
+                const inputInfectedLabelIcon = $("#input-infected-label i");
+                if (infected){
+                    inputInfectedLabelIcon.removeClass('bi-dash-lg');
+                    inputInfectedLabelIcon.addClass('bi-check-lg');
                 } else {
-                    params.set('infected', 'true');
+                    inputInfectedLabelIcon.removeClass('bi-check-lg');
+                    inputInfectedLabelIcon.addClass('bi-dash-lg');
                 }
-
-                window.location.search = params.toString();
             }
         }
         
-        function filterFaculty(dropdown) {
-            if (initialFacultySwitch){
-                const faculty = dropdown.options[dropdown.selectedIndex].value;
-                
-                const params = new URLSearchParams(window.location.search);
-                
-                if (faculty.toString() === '-1'){
-                    params.delete('faculty');
-                } else {
-                    params.set('faculty', faculty);
-                }
-                
-                window.location.search = params.toString();
-            }
-        }
-        
-        function searchName(){
+        function search(){
+            const params = new URLSearchParams(window.location.search);
+            
+            // NAME SEARCH
             const searchString = $("#input-room-name-search").val();
             
-            const params = new URLSearchParams(window.location.search);
             if (searchString.toString().trim().length > 0){
                 params.set('roomName', searchString);
             } else {
                 params.delete('roomName');
             }
             
-            window.location.search = params.toString();
-        }
-        
-        function searchDate(){
+            // DATE INPUTS
             const startTime = $("#input-start-time").val();
             const endTime = $("#input-end-time").val();
             
-            const params = new URLSearchParams(window.location.search);
             if (startTime.toString().trim().length > 0){
                 params.set('start', startTime);
             } else {
@@ -235,7 +234,32 @@ else
             } else {
                 params.delete('end');
             }
+            
+            // FACULTY
+            const facultyEl = $('#faculty-filter-switch')[0];
+            const faculty = facultyEl.options[facultyEl.selectedIndex].value;
+            
+            if (faculty.toString() === '-1'){
+                params.delete('faculty');
+            } else {
+                params.set('faculty', faculty);
+            }
+            
+            // INFECTED
+            const infectedEl = $('#input-infected')[0];
+            const infected = infectedEl.checked;
+                            
+            if (!infected){
+                params.delete('infected');
+            } else {
+                params.set('infected', 'true');
+            }
+            
             window.location.search = params.toString();
+        }
+        
+        function resetFilters(){
+            window.location.search = '';
         }
     </script>
 }

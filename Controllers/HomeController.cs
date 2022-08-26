@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
 using CoronaCheckIn.Managers;
 using CoronaCheckIn.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CoronaCheckIn.Controllers
 {
@@ -11,11 +14,13 @@ namespace CoronaCheckIn.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SessionManager _sessionManager;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, SessionManager sessionManager)
+        public HomeController(ILogger<HomeController> logger, SessionManager sessionManager, ApplicationDbContext context)
         {
             _logger = logger;
             _sessionManager = sessionManager;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -44,6 +49,89 @@ namespace CoronaCheckIn.Controllers
         {
             return View();
         }
+        
+        public IActionResult Frontoffice()
+        {
+
+            var userName = User.Identity.Name;
+            var user = _context.Users.FirstOrDefault(u => u.Email == userName);
+            var result = new FrontofficeViewModel();
+            var runningSessions = _sessionManager.GetSessions(userId: user.Id,
+                endTimeNull: true, includeRoom: true, sortBy: "start", sortOrder: "desc").ToList();
+            
+            foreach (var session in runningSessions)
+            {
+                var maxEndTime = session.StartTime.AddMinutes(session.Room.MaxDuration);
+                if (maxEndTime > DateTime.Now)
+                {
+                    session.EndTime = maxEndTime;
+                    result.CurrentSession = session;
+                    result.RemainingTime = (int)maxEndTime.Subtract(DateTime.Now).TotalMinutes;
+                    
+                    // Get current participants in this session
+                    result.CurrentParticipants = _sessionManager.GetSessions(roomId: session.Room.Id, endTimeNull: true).Count();
+                }
+            }
+
+            var sessions =
+                _sessionManager.GetSessions(userId: user.Id, includeRoom: true, sortBy: "start", sortOrder: "desc");
+            result.Sessions = sessions;
+
+            return View(result);
+        }
+
+        public class ScanBodyPost
+        {
+            public string RoomId { get; set; }
+            
+            public DateTime Date { get; set; }
+        }
+        [HttpPost]
+        // [ValidateAntiForgeryToken]
+        public IActionResult Scan(ScanBodyPost body)
+        {
+            var userName = User.Identity?.Name;
+            var user = _context.Users.FirstOrDefault(u => u.Email == userName);
+            var roomId = new Guid(body.RoomId);
+            var runningSessions = _sessionManager.GetSessions(userId: user?.Id, roomId: roomId,
+                endTimeNull: true, includeRoom: true, sortBy: "start", sortOrder: "desc").ToList();
+
+            var currentRunningSession = false;
+            foreach (var session in runningSessions)
+            {
+                // TODO: Need to check this algorithm and proof with more test cases
+                var maxEndTime = session.StartTime.AddMinutes(session.Room.MaxDuration);
+                if (maxEndTime <= DateTime.Now)
+                {
+                    // Session is an old session which the user did not close
+                    session.EndTime = maxEndTime;
+                    _sessionManager.UpdateSession(session);
+                }
+                else
+                {
+                    // Session is the current session and the user scanned to leave
+                    session.EndTime = DateTime.Now;
+                    _sessionManager.UpdateSession(session);
+                    currentRunningSession = true;
+                }
+            }
+
+            if (currentRunningSession == false)
+            {
+                var newSession = new Session()
+                {
+                    Infected = false,
+                    RoomId = roomId,
+                    UserId = user.Id,
+                    StartTime = DateTime.Now,
+                };
+                _sessionManager.AddSession(newSession);
+                
+                return Json("new");
+            }
+            
+            return Json("closed");
+        }
 
         public IActionResult SetLang(string lang, string url)
         {
@@ -70,5 +158,16 @@ namespace CoronaCheckIn.Controllers
     {
         public IEnumerable<Session> Sessions { get; set; } = new List<Session> { }; 
         public IEnumerable<Session> Infections { get; set; } = new List<Session> { };
+    }
+    
+    public class FrontofficeViewModel
+    {
+        public Session? CurrentSession { get; set; } = null;
+
+        public IEnumerable<Session> Sessions { get; set; } = new List<Session> { };
+        
+        public int RemainingTime { get; set; }
+        
+        public int CurrentParticipants { get; set; }
     }
 }

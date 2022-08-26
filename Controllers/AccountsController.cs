@@ -23,11 +23,11 @@ namespace CoronaCheckIn.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult List()
+        public IActionResult List([FromQuery] string? search = null)
         {
             ViewBag.title = "Accounts";
 
-            IEnumerable<User> accounts = _accountManager.GetAccounts();
+            IEnumerable<User> accounts = _accountManager.GetAccounts(search: search);
             return View(accounts);
         }
 

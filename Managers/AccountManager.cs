@@ -10,9 +10,21 @@ namespace CoronaCheckIn.Managers
             Container = context;
         }
 
-        public IEnumerable<User> GetAccounts()
+        public IEnumerable<User> GetAccounts(string? search = null)
         {
-            return Container.Users.AsEnumerable();
+            var queryable = Container.Users.AsQueryable();
+            
+            if (search != null)
+            {
+                var searchString = search.ToLower().Trim();
+                // Entity Framework doesnt support direct full text search so we do some lame string check
+                queryable = queryable.Where(user => user.Email.ToLower().Trim().Contains(searchString) || 
+                    user.UserName.ToLower().Trim().Contains(searchString) || 
+                    user.Firstname.ToLower().Trim().Contains(searchString) || 
+                    user.Lastname.ToLower().Trim().Contains(searchString));
+            }
+            
+            return queryable.OrderBy(u => u.Email).AsEnumerable();
         }
         
         public User? GetAccount(Guid id)

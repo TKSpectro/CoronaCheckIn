@@ -9,8 +9,8 @@
                 <label class="input-group-text bg-secondary text-light" asp-for=@SharedLocalizer["Faculty"]>Change Language</label>
             </div>
             <select class="form-control" id="languageSelector" onchange="switchLanguage(this)">
-                <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
                 <option value="de" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "de" ? true : false)>Deutsch</option>
+                <option value="en" selected=@(@Context.Request.Cookies[".AspNetCore.Culture"]?.Split("=")[2] == "en" ? true : false)>English</option>
             </select>
         </div>
     </div>
