@@ -6,12 +6,15 @@
 
 <h3>@ViewBag.title</h3>
 
-<div class="row">
-    <div class="col-10 col-lg-5 mb-3">
+<div class="input-group mb-3 flex">
+    <div class="flex-row col-12 col-md-5">
         <input id="input-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]">
     </div>
-    <div class="col-2 mb-3">
+    <div class="flex-row ms-4">
         <button class="btn btn-outline-dark" type="button" onclick="search(this)">@SharedLocalizer["Search"]</button>
+    </div>
+    <div class="flex-row ms-1">
+        <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
     </div>
 </div>
 
@@ -64,5 +67,9 @@
             
             window.location.search = params.toString();
         }
+        
+        function resetFilters(){
+           window.location.search = '';
+       }
     </script>
 }
