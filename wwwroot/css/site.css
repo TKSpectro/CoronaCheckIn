@@ -15,11 +15,17 @@ html {
     display: none;
 }
 
-.bi {
+.sidenav-icon {
     font-size: 24px;
 }
 
 @media (min-width: 980px) {
+    .sidenav {
+        max-width: 280px;
+    }
+}
+
+@media (min-width: 1280px) {
     .icon {
         display: none;
     }
@@ -28,7 +34,7 @@ html {
         display: block;
     }
 
-    .bi {
+    .sidenav-icon {
         font-size: 16px;
     }
 
