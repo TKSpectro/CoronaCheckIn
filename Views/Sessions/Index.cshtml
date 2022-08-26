@@ -131,15 +131,23 @@ else
                 inputInfectedLabelIcon.addClass('bi-check-lg');
                 cases.className= "nav-link link-light link-active";
                 session.className= "nav-link link-light";
-                 $("#casesTitle")[0].style.display= "block";
-                 $("#sessionTitle")[0].style.display= "none";
-                 $("#noInfections")[0].style.display= "block";
-                 $("#noSessions")[0].style.display= "none";
-                 
+                $("#casesTitle")[0].style.display= "block";
+                $("#sessionTitle")[0].style.display= "none";
+                const noInfectionsEl = $("#noInfections")[0];
+                if (noInfectionsEl?.style) {
+                   noInfectionsEl.style.display= "block";
+                }
+                const noSessionsEl = $("#noSessions")[0];
+                if (noSessionsEl?.style) {
+                   noSessionsEl.style.display= "none"; 
+                }
             } else{
                 cases.className= "nav-link link-light";
                 $("#casesTitle")[0].style.display= "none";
-                $("#noInfections")[0].style.display= "none";
+                const noInfectionsEl = $("#noInfections")[0];
+                if(noInfectionsEl?.style){
+                    noInfectionsEl.style.display = "none";
+                }
             }
             
             // Set name search to url query
