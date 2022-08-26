@@ -321,4 +321,10 @@
     <value>All Cases</value>
     <comment>All Cases</comment>
   </data>
+  <data name="ResetFilter" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Infected" xml:space="preserve">
+    <value>Infected</value>
+  </data>
 </root>

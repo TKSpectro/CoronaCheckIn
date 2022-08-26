@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Search by room-name..." xml:space="preserve">
-    <value>Search by room-name...</value>
+  <data name="Search by room-name" xml:space="preserve">
+    <value>Search by room-name</value>
   </data>
   <data name="All Sessions" xml:space="preserve">
     <value>All Sessions</value>
     <comment>All Sessions</comment>
+  </data>
+  <data name="Filter by faculty" xml:space="preserve">
+    <value>Faculty</value>
+  </data>
+  <data name="Room1" xml:space="preserve">
+    <value>Room 1</value>
   </data>
 </root>
