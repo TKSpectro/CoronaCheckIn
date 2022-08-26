@@ -149,7 +149,7 @@
     <comment>Faculty</comment>
   </data>
   <data name="MaxDuration" xml:space="preserve">
-    <value>Max. Dauer</value>
+    <value>Max. Dauer (in Minuten)</value>
     <comment>MaxDuration</comment>
   </data>
   <data name="MaxParticipants" xml:space="preserve">
