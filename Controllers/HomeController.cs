@@ -109,11 +109,6 @@ namespace CoronaCheckIn.Controllers
                 }
                 else
                 {
-                    if (roomId == session.RoomId)
-                    {
-                        // TODO: Check timestamp in qrcode against the one in the database
-                        //body.Date == session.Room.QrCodeTimestamp;
-                    }
                     // Session is the current session and the user scanned to leave
                     session.EndTime = DateTime.Now;
                     _sessionManager.UpdateSession(session);
