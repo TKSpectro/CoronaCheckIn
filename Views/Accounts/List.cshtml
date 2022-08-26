@@ -4,11 +4,15 @@
     ViewBag.title = SharedLocalizer["users"].Value;
 }
 
-<h3>@ViewBag.title</h3>
+<div class="d-flex justify-content-between mb-4">
+    <h3>@ViewBag.title</h3>
+</div>
 
-<div class="input-group mb-3 flex">
+
+<div class="input-group mb-3 flex align-items-end">
     <div class="flex-row col-12 col-md-5">
-        <input id="input-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]">
+        <label class="control-label" for="input-name-search">@Localizer["Search by name"]</label>
+        <input id="input-search" type="text" class="form-control" placeholder="@Localizer["Username"]">
     </div>
     <div class="flex-row ms-4">
         <button class="btn btn-outline-dark" type="button" onclick="search(this)">@SharedLocalizer["Search"]</button>
@@ -34,7 +38,7 @@
         <tr>
             <td>@account.Firstname</td>
             <td>@account.Email</td>
-            <td SetSessionsAsInfected>
+            <td class="pr-0 text-end" SetSessionsAsInfected>
                 <a type="submit" asp-action="Remove" asp-route-id="@account.Id" class="text-light btn" style="background-color:#9551FE">
                     <i class="bi bi-trash"></i>
                 </a>
