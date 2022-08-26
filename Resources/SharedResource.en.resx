@@ -321,4 +321,12 @@
     <value>All Cases</value>
     <comment>All Cases</comment>
   </data>
+  <data name="AllSessions" xml:space="preserve">
+    <value>All Sessions</value>
+    <comment>AllSessions</comment>
+  </data>
+  <data name="NoCameraConnected" xml:space="preserve">
+    <value>No camera connected to pc. The scan feature will be disabled</value>
+    <comment>NoCameraConnected</comment>
+  </data>
 </root>

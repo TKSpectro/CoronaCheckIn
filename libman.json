@@ -12,7 +12,7 @@
       ]
     },
     {
-      "library": "jquery-validate@1.19.3",
+      "library": "jquery-validate@1.19.5",
       "destination": "wwwroot/lib/jquery-validation/dist",
       "files": [
         "additional-methods.js",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "library": "jquery-validation-unobtrusive@3.2.12",
+      "library": "jquery-validation-unobtrusive@4.0.0",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     },
     {
@@ -31,8 +31,17 @@
       "destination": "wwwroot/lib/bootstrap/"
     },
     {
-      "library": "bootstrap-icons@1.8.1",
+      "library": "bootstrap-icons@1.9.1",
       "destination": "wwwroot/lib/bootstrap-icons"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@zxing/library@0.19.1",
+      "destination": "wwwroot/lib/zxing/",
+      "files": [
+        "umd/index.min.js",
+        "umd/index.min.js.map"
+      ]
     }
   ]
 }

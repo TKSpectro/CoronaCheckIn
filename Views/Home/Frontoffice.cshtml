@@ -1,0 +1,200 @@
+@model CoronaCheckIn.Controllers.FrontofficeViewModel
+
+@{
+    ViewBag.title = SharedLocalizer["Frontoffice"].Value;
+}
+
+<div class="mb-4">
+    <h3>@Localizer["Frontoffice-Dashboard"]</h3>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card px-3 h-100">
+                @if (Model.CurrentSession != null)
+                {
+                    <div class="row align-items-center h-25 border-bottom">
+                        <div class="col-lg-6 col-md-7">
+                            <p class="mb-0 fw-bold ">@SharedLocalizer["RoomName"]:</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-0">@Model.CurrentSession?.Room.Name</p>
+                        </div>
+                    </div>
+                    <div class="row align-items-center h-25 border-bottom">
+                        <div class="col-lg-6 col-md-7">
+                            <p class="mb-0 fw-bold ">@Localizer["JoinedAt"]:</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-0">@Model.CurrentSession?.StartTime.ToString("HH:mm:ss")</p>
+                        </div>
+                    </div>
+                    <div class="row align-items-center h-25 border-bottom">
+                        <div class="col-lg-6 col-md-7">
+                            <p class="mb-0 fw-bold ">@Localizer["RemainingTime"]:</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-0">@Model.RemainingTime @SharedLocalizer["Minutes"]</p>
+                        </div>
+                    </div>
+                    <div class="row align-items-center h-25">
+                        <div class="col-lg-6 col-md-7">
+                            <p class="mb-0 fw-bold ">@Localizer["CurrentParticipants"]:</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-0">@Model.CurrentParticipants</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <h3 class="text-center my-auto">
+                        @Localizer["NoCurrentlyRunningSession"]
+                    </h3>
+                }
+            </div>
+        </div>
+        <div class="col fixed-width">
+            <div class="card h-100" id="demo-content">
+                <div class="button" id="startButton" style="display: inline-block; margin: 15px 15px 4px;height: 250px; width: 250px; border-radius: 50%; background-color: lightgray;">
+                    <i id="video-icon" class="bi bi-camera-fill" style="height: 250px; width: 250px; font-size: 4rem; color: black; display: table-cell; vertical-align: middle; text-align: center; text-decoration: none;"></i>
+                    <video id="video" width="250" height="250" style="border-radius: 50%;"></video>
+                </div>
+                <div style="text-align: center;">
+                    @Localizer["Press to scan room"]
+                </div>
+
+                <div id="sourceSelectPanel" style="display:none">
+                    <label for="sourceSelect">Change video source:</label>
+                    <select id="sourceSelect" style="max-width:400px">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h4 class="ps-2 pt-2">@SharedLocalizer["Sessions"]</h4>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="user-select-none">
+                        <th hidden scope="col">Id</th>
+                        <th scope="col" id="table-head-room">
+                            @SharedLocalizer["Room"]
+                        </th>
+                        <th scope="col" id="table-head-user">
+                            @SharedLocalizer["User"]
+                        </th>
+                        <th scope="col" id="table-head-start">
+                            @SharedLocalizer["StartTime"]
+                        </th>
+                        <th scope="col" id="table-head-end">
+                            @SharedLocalizer["EndTime"]
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var session in Model.Sessions)
+                    {
+                        <tr>
+                            <th hidden scope="row">@session.Id</th>
+                            <td>@session.Room.Name</td>
+                            <td>@session.User.Email</td>
+                            <td>@session.StartTime</td>
+                            <td>@session.EndTime</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+
+                <a href="/sessions" style="color: black">
+                    <h5 class="ps-2">@SharedLocalizer["AllSessions"] <i class="bi bi-arrow-right pe-1"></i></h5>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial id="scan-content" name="~/Views/Home/FrontofficeScan.cshtml" model="new CoronaCheckIn.Controllers.HomeController.ScanBodyPost()"/>
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/zxing/umd/index.min.js"></script>
+    <script>
+        function decodeOnce(codeReader, selectedDeviceId) {
+              codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+                  let obj = JSON.parse(result.text);
+                  
+                  document.getElementById("scan-room").value = obj.roomId;
+                  document.getElementById("scan-date").value = new Date().toString("yyyy-MM-ddThh:mm");
+                  
+                  let dataForm = $("#scan-form").serialize();
+                  $.ajax({
+                      type: 'POST',
+                      url: '/Home/Scan',
+                      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                      data: dataForm,
+                      success: function (result) {
+                          window.location.reload();
+                      },
+                      error: function (err) {
+                          console.error(err);
+                      }
+                  });
+              }).catch((err) => {
+                  console.error(err)
+              });
+            }
+        
+            window.addEventListener('load', function () {
+                  let selectedDeviceId;
+                  const codeReader = new ZXing.BrowserQRCodeReader()
+            
+                  codeReader.getVideoInputDevices()
+                        .then((videoInputDevices) => {
+                              const sourceSelect = document.getElementById('sourceSelect')
+                              
+                              if (videoInputDevices.length === 0) {
+                                  alert('@SharedLocalizer["NoCameraConnected"]');
+                              } else {
+                                  selectedDeviceId = videoInputDevices[0].deviceId
+                                  
+                                  if (videoInputDevices.length > 100) {
+                                      videoInputDevices.forEach((element) => {
+                                          const sourceOption = document.createElement('option')
+                                          sourceOption.text = element.label
+                                          sourceOption.value = element.deviceId
+                                          sourceSelect.appendChild(sourceOption)
+                                      })
+                            
+                                      sourceSelect.onchange = () => {
+                                          selectedDeviceId = sourceSelect.value;
+                                      };
+                            
+                                      const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                                      sourceSelectPanel.style.display = 'block'
+                                  }
+                        
+                                  document.getElementById('startButton').addEventListener('click', () => {
+                                      decodeOnce(codeReader, selectedDeviceId);
+                                      document.getElementById('video-icon').hidden = true;
+                                  })
+                        
+                                  document.getElementById('resetButton').addEventListener('click', () => {
+                                      codeReader.reset()
+                                      document.getElementById('video-icon').hidden = false;
+                                  })
+                              }
+                        })
+                        .catch((err) => {
+                            console.error(err)
+                        })
+            })
+    </script>
+}
