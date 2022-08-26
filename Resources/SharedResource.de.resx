@@ -321,6 +321,14 @@
     <value>Alle Infektionen</value>
     <comment>All Cases</comment>
   </data>
+  <data name="AllSessions" xml:space="preserve">
+    <value>Alle Sessions</value>
+    <comment>AllSessions</comment>
+  </data>
+  <data name="NoCameraConnected" xml:space="preserve">
+    <value>Keine Kamera an den PC angeschlossen. Das Scan-Feature wird deaktiviert</value>
+    <comment>NoCameraConnected</comment>
+  </data>
   <data name="ResetFilter" xml:space="preserve">
     <value>Zurücksetzen</value>
   </data>

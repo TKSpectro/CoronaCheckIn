@@ -117,4 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Press to scan room" xml:space="preserve">
+    <value>Drücken um zu scannen</value>
+    <comment>Press to scan room</comment>
+  </data>
+  <data name="JoinedAt" xml:space="preserve">
+    <value>Beigetreten um</value>
+    <comment>JoinedAt</comment>
+  </data>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Verbleibende Zeit</value>
+    <comment>RemainingTime</comment>
+  </data>
+  <data name="CurrentParticipants" xml:space="preserve">
+    <value>Aktuelle Teilnehmeranzahl</value>
+    <comment>CurrentParticipants</comment>
+  </data>
+  <data name="NoCurrentlyRunningSession" xml:space="preserve">
+    <value>Du bist aktuell in keiner Session angemeldet</value>
+    <comment>NoCurrentlyRunningSession</comment>
+  </data>
 </root>

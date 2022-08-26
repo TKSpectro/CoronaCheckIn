@@ -39,19 +39,19 @@
             <th hidden scope="col">Id</th>
             <th scope="col" id="table-head-name" onclick="sortBy('name')">
                 @SharedLocalizer["Name"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
             <th scope="col" id="table-head-faculty" onclick="sortBy('faculty')">
                 @SharedLocalizer["Faculty"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
             <th scope="col" id="table-head-maxDuration" onclick="sortBy('maxDuration')">
                 @SharedLocalizer["MaxDuration"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
             <th scope="col" id="table-head-maxParticipants" onclick="sortBy('maxParticipants')">
                 @SharedLocalizer["MaxParticipants"]
-                <i class="bi bi-dash-lg pe-1"></i>
+                <i class="bi bi-arrow-down-up pe-1"></i>
             </th>
         </tr>
         </thead>
@@ -131,7 +131,7 @@ else
             
             // Place the correct icons beside the sorted table headings
             const heading = $(`#table-head-${sortBy} > i`);
-            heading.removeClass('bi-dash-lg');
+            heading.removeClass('bi-arrow-down-up');
             heading.addClass(sortOrder === 'asc' ? 'bi-arrow-up' : 'bi-arrow-down');
         });
         
