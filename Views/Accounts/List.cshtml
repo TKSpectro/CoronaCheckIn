@@ -6,15 +6,12 @@
 
 <h3>@ViewBag.title</h3>
 
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-10 col-lg-5 mb-3">
-            <input id="input-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]">
-        </div>
-        <div class="col-2 mb-3">
-            <button class="btn btn-outline-secondary" type="button" onclick="search(this)">@SharedLocalizer["Search"]</button>
-        </div>
+<div class="row">
+    <div class="col-10 col-lg-5 mb-3">
+        <input id="input-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]">
+    </div>
+    <div class="col-2 mb-3">
+        <button class="btn btn-outline-dark" type="button" onclick="search(this)">@SharedLocalizer["Search"]</button>
     </div>
 </div>
 
