@@ -329,4 +329,10 @@
     <value>Keine Kamera an den PC angeschlossen. Das Scan-Feature wird deaktiviert</value>
     <comment>NoCameraConnected</comment>
   </data>
+  <data name="ResetFilter" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="Infected" xml:space="preserve">
+    <value>Infiziert</value>
+  </data>
 </root>

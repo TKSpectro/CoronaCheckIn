@@ -10,21 +10,27 @@
     <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">Erstellen</button>
 </div>
 
-<div class="container-fluid mb-5 px-0">
-    <div class="row">
-        <div class="col-sm input-group">
-            <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Search by name..."]" aria-label="@Localizer["Search by name..."]">
-            <button class="btn btn-outline-secondary" type="button" onclick="searchName(this)">@SharedLocalizer["Search"]</button>
-        </div>
-        <div class="col-sm"></div>
-        <div class="col-sm input-group  justify-content-end">
-            <label class="input-group-text" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
-            <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" onchange="filterFaculty(this)" class="form-select" style="max-width: 128px">
-                <option value="-1">@SharedLocalizer["All"]</option>
-            </select>
-        </div>
+<div class="input-group mb-3 flex">
+    <div class="flex-row col-12 col-md-5">
+        <label class="control-label" for="input-name-search">@Localizer["Search by room-name"]</label>
+        <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Room1"]">
+    </div>
+    <div class="flex-row ms-md-4 mt-1 mt-md-0">
+        <label class="control-label" for="faculty-filter-switch">@SharedLocalizer["Faculty"]</label>
+        <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" class="form-select" style="max-width: 128px">
+            <option value="-1">@SharedLocalizer["All"]</option>
+        </select>
+    </div>
+    <div class="flex-row ms-4">
+        <label class="control-label"> </label>
+        <button class="btn btn-outline-dark form-control" type="button" onclick="search(this)">@SharedLocalizer["Filter"]</button>
+    </div>
+    <div class="flex-row ms-1">
+        <label class="control-label"> </label>
+        <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
     </div>
 </div>
+
 @if (Model.ToList().Count() > 0)
 {
     <table class="table table-hover" style="cursor: pointer;">
@@ -152,30 +158,43 @@ else
             window.location.replace(url);
         }
         
-        function filterFaculty(dropdown) {
-            if (initialFacultySwitch){
-                const faculty = dropdown.options[dropdown.selectedIndex].value;
-                
-                const params = new URLSearchParams(window.location.search);
-                
-                if (faculty.toString() === '-1'){
-                    params.delete('faculty');
-                } else {
-                    params.set('faculty', faculty);
-                }
-                
-                window.location.search = params.toString();
-            }
-        }
+       function filterFaculty(dropdown) {
+           if (initialFacultySwitch){
+               
+               const params = new URLSearchParams(window.location.search);
+               
+               const faculty = dropdown.options[dropdown.selectedIndex].value;
+               if (faculty.toString() === '-1'){
+                   params.delete('faculty');
+               } else {
+                   params.set('faculty', faculty);
+               }
+               
+               window.location.search = params.toString();
+           }
+       }
         
-        function searchName(){
-            const searchString = $("#input-name-search").val();
-            const params = new URLSearchParams(window.location.search);
-            params.set('name', searchString);
-            
-            window.location.search = params.toString();
-        }
-        
+       function search(){
+           const params = new URLSearchParams(window.location.search);
+           
+           const searchString = $("#input-name-search").val();
+           if (searchString.toString().trim().length > 0){
+               params.set('name', searchString);
+           } else {
+               params.delete('name');
+           }
+           
+           const facultyEl = $('#faculty-filter-switch')[0];
+           const faculty = facultyEl.options[facultyEl.selectedIndex].value;
+           if (faculty.toString() === '-1'){
+               params.delete('faculty');
+           } else {
+               params.set('faculty', faculty);
+           }
+           
+           window.location.search = params.toString();
+       }
+       
         function getRoomModal(room){
             $.ajax({
                 url: "/rooms/CreateRoom",
@@ -256,5 +275,8 @@ else
                });
             }
            }
+       function resetFilters(){
+           window.location.search = '';
+       }
     </script>
 }

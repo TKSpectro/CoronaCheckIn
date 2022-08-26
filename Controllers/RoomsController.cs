@@ -31,10 +31,13 @@ namespace CoronaCheckIn.Controllers
         public IActionResult Index([FromQuery] string? name = null, [FromQuery] string? sortBy = null,
             [FromQuery] string? sortOrder = null, [FromQuery] Faculty? faculty = null)
         {
-            IEnumerable<Room> rooms =
-                _roomManager.GetRooms(name: name, sortBy: sortBy, sortOrder: sortOrder, faculty: faculty);
+            var rooms =
+                _roomManager.GetRooms(name: name, sortBy: sortBy, sortOrder: sortOrder, faculty: faculty).ToArray();
 
-            ViewBag.room = rooms.ToArray()[0];
+            if (rooms.Length > 0)
+            {
+                ViewBag.room = rooms[0];
+            }
             ViewBag.newRoom = new Room();
             return View(rooms);
         }

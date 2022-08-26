@@ -141,4 +141,12 @@
     <value>Es gibt keine angelegten Räume</value>
     <comment>No rooms found</comment>
   </data>
+  <data name="Room1" xml:space="preserve">
+    <value>Raum 1</value>
+    <comment>Room1</comment>
+  </data>
+  <data name="Search by room-name" xml:space="preserve">
+    <value>Nach Namen suchen</value>
+    <comment>Search by room-name</comment>
+  </data>
 </root>
