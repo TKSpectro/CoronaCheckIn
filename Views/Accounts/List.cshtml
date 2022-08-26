@@ -38,12 +38,12 @@
         <tr>
             <td>@account.Firstname</td>
             <td>@account.Email</td>
-            <td class="pr-0 text-end" SetSessionsAsInfected>
-                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="modal" data-bs-target="#markAsInfected@(account.Id)Modal">
-                    <i class="bi bi-clipboard-pulse text-light"></i>
+            <td class="pr-0 text-end" SetSessionsAsInfected >
+                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["MarkAccountAsInfected"]">
+                    <i class="bi bi-clipboard-pulse text-light" data-bs-toggle="modal" data-bs-target="#markAsInfected@(account.Id)Modal"></i>
                 </button>
-                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="modal" data-bs-target="#deleteAccount@(account.Id)Modal">
-                    <i class="bi bi-trash text-light"></i>
+                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteAccount"]">
+                    <i class="bi bi-trash text-light" data-bs-target="#deleteAccount@(account.Id)Modal" data-bs-toggle="modal"></i>
                 </button>
             </td>
         </tr>
@@ -93,7 +93,8 @@
     <script>
         $(document).ready(function() {
             const params = new URLSearchParams(window.location.search);
-            
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
             $('#input-search').val(params.get('search'));
         });
         
