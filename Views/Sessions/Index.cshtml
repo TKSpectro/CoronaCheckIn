@@ -53,42 +53,53 @@
     </div>
 </div>
 
-<table class="table table-hover">
-    <thead>
-    <tr class="user-select-none">
-        <th hidden scope="col">Id</th>
-        <th scope="col" id="table-head-room" onclick="sortBy('room')">
-            @SharedLocalizer["Room"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-        <th scope="col" id="table-head-user" onclick="sortBy('user')">
-            @SharedLocalizer["User"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-        <th scope="col" id="table-head-start" onclick="sortBy('start')">
-            @SharedLocalizer["StartTime"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-        <th scope="col" id="table-head-end" onclick="sortBy('end')">
-            @SharedLocalizer["EndTime"]
-            <i class="bi bi-dash-lg pe-1"></i>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var session in Model)
-    {
-        <tr>
-            <th hidden scope="row">@session.Id</th>
-            <td>@session.Room.Name</td>
-            <td>@session.User.Email</td>
-            <td>@session.StartTime</td>
-            <td>@session.EndTime</td>
+@if (Model.ToList().Count() > 0)
+{
+    <table class="table table-hover">
+        <thead>
+        <tr class="user-select-none">
+            <th hidden scope="col">Id</th>
+            <th scope="col" id="table-head-room" onclick="sortBy('room')">
+                @SharedLocalizer["Room"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
+            <th scope="col" id="table-head-user" onclick="sortBy('user')">
+                @SharedLocalizer["User"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
+            <th scope="col" id="table-head-start" onclick="sortBy('start')">
+                @SharedLocalizer["StartTime"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
+            <th scope="col" id="table-head-end" onclick="sortBy('end')">
+                @SharedLocalizer["EndTime"]
+                <i class="bi bi-dash-lg pe-1"></i>
+            </th>
         </tr>
-    }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+        @foreach (var session in Model)
+        {
+            <tr>
+                <th hidden scope="row">@session.Id</th>
+                <td>@session.Room.Name</td>
+                <td>@session.User.Email</td>
+                <td>@session.StartTime</td>
+                <td>@session.EndTime</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div  id="noSessions"  class="alert alert-primary mt-3" role="alert">
+        @Localizer["No sessions found"]
+    </div>
+    <div  id="noInfections" style="display: none" class="alert alert-primary mt-3" role="alert">
+        @Localizer["No infections found"]
+    </div>
+}
 @section Scripts {
     <script>
         let initialFacultySwitch = false;
@@ -120,11 +131,23 @@
                 inputInfectedLabelIcon.addClass('bi-check-lg');
                 cases.className= "nav-link link-light link-active";
                 session.className= "nav-link link-light";
-                 $("#casesTitle")[0].style.display= "block";
-                 $("#sessionTitle")[0].style.display= "none";
+                $("#casesTitle")[0].style.display= "block";
+                $("#sessionTitle")[0].style.display= "none";
+                const noInfectionsEl = $("#noInfections")[0];
+                if (noInfectionsEl?.style) {
+                   noInfectionsEl.style.display= "block";
+                }
+                const noSessionsEl = $("#noSessions")[0];
+                if (noSessionsEl?.style) {
+                   noSessionsEl.style.display= "none"; 
+                }
             } else{
                 cases.className= "nav-link link-light";
                 $("#casesTitle")[0].style.display= "none";
+                const noInfectionsEl = $("#noInfections")[0];
+                if(noInfectionsEl?.style){
+                    noInfectionsEl.style.display = "none";
+                }
             }
             
             // Set name search to url query
