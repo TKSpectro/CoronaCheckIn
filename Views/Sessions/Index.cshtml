@@ -10,52 +10,50 @@
 </div>
 
 <div>
-    <div class="row mb-3">
-        <div class="col-9 col-lg-5">
-            <label class="control-label" for="input-room-name-search">@Localizer["Search by room-name"]</label>
-            <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Room1"]">
-        </div>
-        <div class="col-3">
-            <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
-            <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" class="form-select" style="max-width: 128px">
-                <option value="-1">@SharedLocalizer["All"]</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="input-group mb-3 flex">
-        <div class="flex-row">
-            <label class="control-label">@SharedLocalizer["StartTime"]</label>
-            <input id="input-start-time" type="date" class="form-control"/>
-        </div>
-        <div class="flex-row ms-1">
-            <label class="control-label">@SharedLocalizer["EndTime"]</label>
-            <input id="input-end-time" type="date" class="form-control"/>
-        </div>
-        <div class="flex-row ms-1">
-            <label class="control-label"> </label>
-            <div>
-                <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
-                <label class="btn" style="color:rgb(248, 249, 250)" id="input-infected-label" for="input-infected">
-                    <i class="bi bi-dash-lg pe-1"></i>
-                    @SharedLocalizer["Infected"]
-                </label>
+    <div class="col-11 col-md-9 col-lg-7 col-xl-8 col-xxl-6">
+        <div class="row mb-3 justify-content-between">
+            <div class="col">
+                <label class="control-label" for="input-room-name-search">@Localizer["Search by room-name"]</label>
+                <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Room1"]" style="min-width: 160px">
+            </div>
+            <div class="col-auto">
+                <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
+                <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" class="form-select" style="width: 128px">
+                    <option value="-1">@SharedLocalizer["All"]</option>
+                </select>
             </div>
         </div>
+        
+        <div class="input-group mb-3 flex">
+            <div class="flex-row">
+                <label class="control-label">@SharedLocalizer["StartTime"]</label>
+                <input id="input-start-time" type="date" class="form-control"/>
+            </div>
+            <div class="flex-row ms-1">
+                <label class="control-label">@SharedLocalizer["EndTime"]</label>
+                <input id="input-end-time" type="date" class="form-control"/>
+            </div>
+            <div class="flex-row ms-1">
+                <label class="control-label"> </label>
+                <div>
+                    <input class="btn-check" type="checkbox" id="input-infected" onchange="filterInfected(this)" autocomplete="off">
+                    <label class="btn" style="color:rgb(248, 249, 250)" id="input-infected-label" for="input-infected">
+                        <i class="bi bi-dash-lg pe-1"></i>
+                        @SharedLocalizer["Infected"]
+                    </label>
+                </div>
+            </div>
 
-        <div class="flex-row ms-4">
-            <label class="control-label"> </label>
-            <button class="btn btn-outline-dark form-control" type="button" onclick="search(this)">@SharedLocalizer["Filter"]</button>
+            <div class="flex-row ms-auto">
+                <label class="control-label"> </label>
+                <button class="btn btn-outline-dark form-control" type="button" onclick="search(this)">@SharedLocalizer["Filter"]</button>
+            </div>
+
+            <div class="flex-row ms-1">
+                <label class="control-label"> </label>
+                <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
+            </div>
         </div>
-
-        <div class="flex-row ms-1">
-            <label class="control-label"> </label>
-            <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
-        </div>
-    </div>
-
-    <div class="input-group mb-3">
-
     </div>
 </div>
 
