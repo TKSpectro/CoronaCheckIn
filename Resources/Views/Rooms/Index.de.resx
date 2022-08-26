@@ -121,10 +121,6 @@
     <value>Alle Räume</value>
     <comment>All Rooms</comment>
   </data>
-  <data name="Search by name..." xml:space="preserve">
-    <value>Nach Namen suchen...</value>
-    <comment>Name eingeben</comment>
-  </data>
   <data name="Filter by faculty" xml:space="preserve">
     <value>Nach Fakultät filtern</value>
     <comment>Filter by faculty</comment>

@@ -45,53 +45,31 @@
 @* </header> *@
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="container-fluid p-0 vh-100 d-flex">
-
-        <div class="h-100 position-fixed d-flex flex-column flex-shrink-0 p-3 bg-dark" id="navbar" style="width: 280px;">
-            <div class="h3 nav-item text-center mb-5 pb-5 mt-4">
-                <a class="mb-3 link-light text-decoration-none" style="color: #9551FE" asp-area="" asp-controller="Home" asp-action="Index">
-                    CoronaCheckIn
-                </a>
-            </div>
-            <ul class="nav nav-pills h-50 flex-column mt-4 mb-auto">
-                <li class="nav-item mb-4 text-center">
-                    <div>
-                        <a class="nav-link link-light @(ViewData["Title"].Equals(SharedLocalizer["Dashboard"].Value)  ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
-                            <i class="bi bi-layout-text-window-reverse pe-1"></i>
-                            @SharedLocalizer["Dashboard"]
+    <div class="container-fluid p-0 vh-100">
+        <div class="row h-100 m-0">
+            <div class="col-2 col-lg-2 col-sm-2 p-0">
+                <div class="h-100 d-flex flex-column flex-shrink-0 p-3 bg-dark" id="navbar">
+                    <div class="h3 nav-item text-center mb-5 pb-5 mt-4">
+                        <a class="mb-3 link-light text-decoration-none title" style="color: #9551FE" asp-area="" asp-controller="Home" asp-action="Index">
+                            CoronaCheckIn
+                        </a>
+                        <a class="mb-3 link-light text-decoration-none icon" style="color: #9551FE" asp-area="" asp-controller="Home" asp-action="Index">
+                            CCI
                         </a>
                     </div>
-                </li>
-                <li class="nav-item mb-4 text-center">
-                    <a id="session" class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
-                        <i class="bi bi-clock pe-1"></i>
-                        @SharedLocalizer["Sessions"]
-                    </a>
-                </li>
-                @{
-                    var para = new Dictionary<string, string>
-                    {
-                        { "infected", "true" }
-                    };
-                }
-                <li class="nav-item mb-4 text-center">
-                    <a id="cases" class="nav-link link-light" asp-controller="sessions" asp-action="Index" asp-all-route-data="para">
-                        <i class="bi bi-clipboard-pulse pe-1"></i>
-                        @SharedLocalizer["Cases"]
-                    </a>
-                </li>
-                <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Rooms"].Value ) ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
-                        <i class="bi bi-house pe-1"></i>
-                          @SharedLocalizer["Rooms"]
-                    </a>
-                </li>
-                <li class="nav-item mb-4 text-center">
-                    <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Accounts"].Value) ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="List">
-                        <i class="bi bi-people-fill pe-1"></i>
-                        @SharedLocalizer["Accounts"]
-                    </a>
-                </li>
+                    <ul class="nav nav-pills h-50 flex-column mt-4 mb-auto">
+                        <li class="nav-item mb-4 text-center">
+                            <div>
+                                <a class="nav-link link-light @(ViewData["Title"].Equals(SharedLocalizer["Dashboard"].Value) ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-layout-text-window-reverse pe-1"></i>
+                                    <span class="sidenav-title">@SharedLocalizer["Dashboard"]</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item mb-4 text-center">
+                            <a id="session" class="nav-link link-light @(ViewBag.title.Equals("Sessions") ? "link-active" : "")" asp-controller="sessions" asp-action="Index">
+                                <i class="bi bi-clock pe-1"></i>
+                                <span class="sidenav-title">@SharedLocalizer["Sessions"]</span>
                 @{
                     var enabledFrontoffice = @Configuration.GetSection("EnableFrontoffice").Value;
                     if (enabledFrontoffice == "True")
@@ -99,52 +77,75 @@
                         <li class="nav-item mb-4 text-center">
                             <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Frontoffice"].Value) ? "link-active" : "")" asp-area="" asp-controller="home" asp-action="frontoffice">
                                 <i class="bi bi-house-fill pe-1"></i>
-                                @SharedLocalizer["Frontoffice"]
+                                <span class="sidenav-title">@SharedLocalizer["Frontoffice"]</span>
                             </a>
                         </li>
                     }
                 }
-                
-          <li class="nav-item mb-4 text-center">
-              <a  class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Settings"].Value) ? "link-active" : "")" asp-area=""  asp-controller="Home" asp-action="Setting">
-                  <i class="bi bi-gear pe-1"></i>
-                  @SharedLocalizer["Settings"]
-              </a>
-          </li>
-            </ul>
 
-            <ul class="nav nav-pills flex-column align-items-center">
+                            </a>
+                        </li>
+                        @{
+                            var para = new Dictionary<string, string>
+                            {
+                                { "infected", "true" }
+                            };
+                        }
+                        <li class="nav-item mb-4 text-center">
+                            <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Rooms"].Value) ? "link-active" : "")" asp-controller="rooms" asp-action="Index">
+                                <i class="bi bi-house pe-1"></i>
+                                <span class="sidenav-title">@SharedLocalizer["Rooms"]</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mb-4 text-center">
+                            <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["users"].Value) ? "link-active" : "")" asp-area="" asp-controller="accounts" asp-action="List">
+                                <i class="bi bi-people-fill pe-1"></i>
+                                <span class="sidenav-title">@SharedLocalizer["users"]</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mb-4 text-center">
+                            <a class="nav-link link-light @(ViewBag.title?.Equals(SharedLocalizer["Settings"].Value) ? "link-active" : "")" asp-area="" asp-controller="Home" asp-action="Setting">
+                                <i class="bi bi-gear pe-1"></i>
+                                <span class="sidenav-title">@SharedLocalizer["Settings"]</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav nav-pills flex-column align-items-center">
 
 
-                <partial name="_LoginPartial"/>
-                <li class="nav-item mb-3 text-center">
-                    <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Imprint">
-                        @SharedLocalizer["Imprint"]
-                    </a>
-                </li>
-                <li class="nav-item  text-center">
-                    <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Privacy">
-                        @SharedLocalizer["Privacy"]
-                    </a>
-                </li>
+                        <partial name="_LoginPartial"/>
+                        <li class="nav-item mb-3 text-center">
+                            <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Imprint">
+                                @SharedLocalizer["Imprint"]
+                            </a>
+                        </li>
+                        <li class="nav-item  text-center">
+                            <a class="nav-link link-light" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                @SharedLocalizer["Privacy"]
+                            </a>
+                        </li>
 
-            </ul>
+                    </ul>
 
+                </div>
+            </div>
+            <div class="col-10 col-lg-10 col-sm-10 p-0 content">
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
-
-        <main role="main" style="width: calc(100% - 280px); margin:  38px 30px 0 300px">
-            @RenderBody()
-        </main>
     </div>
 }
 else
 {
-<div class="container-fluid p-0 vh-100">
-    <main role="main">
+    <div class="container-fluid p-0 vh-100">
+        <main role="main">
 
-        @RenderBody()
-    </main>
-</div>
+            @RenderBody()
+        </main>
+    </div>
 }
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

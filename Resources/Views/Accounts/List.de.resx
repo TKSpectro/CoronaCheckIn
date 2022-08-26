@@ -117,7 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Search by name..." xml:space="preserve">
-    <value>Suche nach Namen...</value>
+  <data name="Search by name" xml:space="preserve">
+    <value>Nach Namen suchen</value>
+    <comment>Search by name</comment>
   </data>
 </root>

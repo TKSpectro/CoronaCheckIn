@@ -173,7 +173,7 @@
     <comment>Privacy</comment>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Übersicht</value>
     <comment>Dashboard</comment>
   </data>
   <data name="Room" xml:space="preserve">
@@ -200,10 +200,6 @@
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
     <comment>Save</comment>
-  </data>
-  <data name="Accounts" xml:space="preserve">
-    <value>Konten</value>
-    <comment>Accounts</comment>
   </data>
   <data name="Rooms" xml:space="preserve">
     <value>Räume</value>
@@ -320,6 +316,10 @@
   <data name="All Cases" xml:space="preserve">
     <value>Alle Infektionen</value>
     <comment>All Cases</comment>
+  </data>
+  <data name="users" xml:space="preserve">
+    <value>Nutzer</value>
+    <comment>users</comment>
   </data>
   <data name="AllSessions" xml:space="preserve">
     <value>Alle Sessions</value>

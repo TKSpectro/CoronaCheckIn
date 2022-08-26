@@ -7,10 +7,10 @@
 
 <div class="d-flex justify-content-between mb-4">
     <h3>@Localizer["All Rooms"]</h3>
-    <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">Erstellen</button>
+    <button id="modalBtn" class=" text-light btn " style="background-color:#9551FE ">+ Erstellen</button>
 </div>
 
-<div class="input-group mb-3 flex">
+<div class="input-group mb-3 flex align-items-end">
     <div class="flex-row col-12 col-md-5">
         <label class="control-label" for="input-name-search">@Localizer["Search by room-name"]</label>
         <input id="input-name-search" type="text" class="form-control" placeholder="@Localizer["Room1"]">
@@ -22,11 +22,9 @@
         </select>
     </div>
     <div class="flex-row ms-4">
-        <label class="control-label"> </label>
         <button class="btn btn-outline-dark form-control" type="button" onclick="search(this)">@SharedLocalizer["Filter"]</button>
     </div>
     <div class="flex-row ms-1">
-        <label class="control-label"> </label>
         <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
     </div>
 </div>
