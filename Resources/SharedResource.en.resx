@@ -335,4 +335,8 @@
   <data name="Infected" xml:space="preserve">
     <value>Infected</value>
   </data>
+  <data name="Infections" xml:space="preserve">
+    <value>Infections</value>
+    <comment>Infections</comment>
+  </data>
 </root>
