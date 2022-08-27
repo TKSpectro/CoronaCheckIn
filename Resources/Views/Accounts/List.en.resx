@@ -133,4 +133,12 @@
     <value>Search by name</value>
     <comment>Search by name</comment>
   </data>
+  <data name="UserInfectionFailed" xml:space="preserve">
+    <value>User is already marked as infected</value>
+    <comment>UserInfectionFailed</comment>
+  </data>
+  <data name="UserInfectionSuccess" xml:space="preserve">
+    <value>User successfully marked as infected</value>
+    <comment>UserInfectionSuccess</comment>
+  </data>
 </root>

@@ -21,7 +21,18 @@
         <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
     </div>
 </div>
-
+@if(ViewBag.infection == true)
+{
+    <div class="alert alert-success" role="alert">
+        @Localizer["UserInfectionSuccess"]
+    </div>    
+}
+@if(ViewBag.infection == false)
+{
+    <div class="alert alert-info" role="alert">
+        @Localizer["UserInfectionFailed"]
+    </div>    
+}
 <table class="table table-hover">
     <thead>
     <tr>

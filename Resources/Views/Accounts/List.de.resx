@@ -137,4 +137,12 @@
     <value>Nach Namen suchen</value>
     <comment>Search by name</comment>
   </data>
+  <data name="UserInfectionFailed" xml:space="preserve">
+    <value>Nutzer ist bereits als infiziert markiert</value>
+    <comment>UserInfectionFailed</comment>
+  </data>
+  <data name="UserInfectionSuccess" xml:space="preserve">
+    <value>Nutzer wurde erfolgreich als infiziert markiert</value>
+    <comment>UserInfectionSuccess</comment>
+  </data>
 </root>
