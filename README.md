@@ -9,6 +9,9 @@ docker-compose up -d
 # you need to pull our frontend libraries with libman
 libman restore
 
+# update the database with all migrations
+dotnet ef database update
+
 # If you want to use some seed data then call this run this
 dotnet run seed
 
@@ -53,6 +56,16 @@ The appsettings.Local.json can be copied from the Development one or created by 
             "pass": "your password"
         }
     }
+}
+```
+
+## Enabling the Frontoffice Test Page
+
+This can be done by adding a flag in the appsettings.json
+Add this to the root of your appsettings.json file or change it in the appsettings.Development.json
+```json
+{
+    "EnableFrontoffice": true
 }
 ```
 
