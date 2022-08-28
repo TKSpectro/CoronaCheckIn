@@ -111,8 +111,7 @@ else
         
         $(document).ready(function() {
             const params = new URLSearchParams(window.location.search);
-             let cases = $("#cases")[0];
-             let session = $("#session")[0];
+            let session = $("#session")[0];
              
             // Set faculty switch to filtered one
             const faculty = params.get('faculty') || '-1';
@@ -133,7 +132,6 @@ else
                 const inputInfectedLabelIcon = $("#input-infected-label i");
                 inputInfectedLabelIcon.removeClass('bi-dash-lg');
                 inputInfectedLabelIcon.addClass('bi-check-lg');
-                cases.className= "nav-link link-light link-active";
                 session.className= "nav-link link-light";
                 $("#casesTitle")[0].style.display= "block";
                 $("#sessionTitle")[0].style.display= "none";
@@ -146,7 +144,6 @@ else
                    noSessionsEl.style.display= "none"; 
                 }
             } else{
-                cases.className= "nav-link link-light";
                 $("#casesTitle")[0].style.display= "none";
                 const noInfectionsEl = $("#noInfections")[0];
                 if(noInfectionsEl?.style){
