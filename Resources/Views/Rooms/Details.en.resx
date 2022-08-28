@@ -141,4 +141,7 @@
   <data name="No sessions found" xml:space="preserve">
     <value>This room has no sessions yet.</value>
   </data>
+  <data name="ExportQrCode" xml:space="preserve">
+    <value>Generate room-printout</value>
+  </data>
 </root>

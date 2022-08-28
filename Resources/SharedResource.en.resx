@@ -149,7 +149,7 @@
     <comment>Faculty</comment>
   </data>
   <data name="MaxDuration" xml:space="preserve">
-    <value>Max. Duration</value>
+    <value>Max. Duration (in minutes)</value>
     <comment>MaxDuration</comment>
   </data>
   <data name="MaxParticipants" xml:space="preserve">
@@ -334,5 +334,9 @@
   </data>
   <data name="Infected" xml:space="preserve">
     <value>Infected</value>
+  </data>
+  <data name="Infections" xml:space="preserve">
+    <value>Infections</value>
+    <comment>Infections</comment>
   </data>
 </root>

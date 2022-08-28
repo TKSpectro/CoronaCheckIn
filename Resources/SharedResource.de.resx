@@ -149,7 +149,7 @@
     <comment>Faculty</comment>
   </data>
   <data name="MaxDuration" xml:space="preserve">
-    <value>Max. Dauer</value>
+    <value>Max. Dauer (in Minuten)</value>
     <comment>MaxDuration</comment>
   </data>
   <data name="MaxParticipants" xml:space="preserve">
@@ -230,7 +230,7 @@
     <comment>ChangePassword</comment>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Unterladen</value>
+    <value>Herunterladen</value>
     <comment>Download</comment>
   </data>
   <data name="Delete" xml:space="preserve">
@@ -334,5 +334,9 @@
   </data>
   <data name="Infected" xml:space="preserve">
     <value>Infiziert</value>
+  </data>
+  <data name="Infections" xml:space="preserve">
+    <value>Infektionen</value>
+    <comment>Infections</comment>
   </data>
 </root>

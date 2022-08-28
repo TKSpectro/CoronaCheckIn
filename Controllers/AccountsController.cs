@@ -23,9 +23,10 @@ namespace CoronaCheckIn.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult List([FromQuery] string? search = null)
+        public IActionResult List([FromQuery] string? search = null, bool? infectionSuccess = null)
         {
             ViewBag.title = "Accounts";
+            ViewBag.infection = infectionSuccess;
 
             IEnumerable<User> accounts = _accountManager.GetAccounts(search: search);
             return View(accounts);
@@ -45,11 +46,13 @@ namespace CoronaCheckIn.Controllers
 
         public IActionResult SetAsInfected(Guid id)
         {
+            bool infectionSuccess = false;
             if ( _infectionManager.CheckInfection(id.ToString()) != "infected!")
             {
                 _sessionManager.SetSessionsAsInfected(id.ToString());
+                infectionSuccess = true;
             }
-            return RedirectToAction("List");
+            return RedirectToAction("List", new { infectionSuccess = infectionSuccess });
         }
     }
 }

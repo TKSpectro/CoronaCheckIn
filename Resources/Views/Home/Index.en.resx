@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,34 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All Sessions" xml:space="preserve">
-    <value>Alle Sessions für diesen Raum</value>
-  </data>
-  <data name="Do you want to generate a new QR code?" xml:space="preserve">
-    <value>Wollen Sie einen neuen QR-Code generieren?</value>
-    <comment>Wollen Sie einen neuen QR-Code generieren?</comment>
-  </data>
-  <data name="ExportQrCode" xml:space="preserve">
-    <value>Raum-Aushang ausdrucken</value>
-    <comment>ExportQrCode</comment>
-  </data>
-  <data name="GenerateQRCodeWarning" xml:space="preserve">
-    <value>Aushänge mit dem bisherigen QR-Code müssen durch einen neuen Ausdruck ersetzt werden, da der bisherige QR-Code überschrieben wird und nicht mehr zum einchecken verwendet werden kann.</value>
-  </data>
-  <data name="Last Infections" xml:space="preserve">
-    <value>Letzte Infektionen</value>
-  </data>
-  <data name="Last Sessions" xml:space="preserve">
-    <value>Letzte Sessions</value>
-  </data>
-  <data name="New QR code" xml:space="preserve">
-    <value>Neuer QR-Code</value>
-    <comment>New QR code</comment>
-  </data>
   <data name="No infections found" xml:space="preserve">
-    <value>Für diesen Raum gibt es noch keine Sessions mit infizierten Personen</value>
+    <value>No infections found</value>
+    <comment>No sessions found</comment>
   </data>
   <data name="No sessions found" xml:space="preserve">
-    <value>Für diesen Raum gibt es noch keine Sessions</value>
+    <value>No sessions found</value>
+    <comment>No sessions found</comment>
   </data>
 </root>
