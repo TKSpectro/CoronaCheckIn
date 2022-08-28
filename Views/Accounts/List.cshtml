@@ -21,7 +21,18 @@
         <button class="btn btn-outline-danger form-control" type="button" onclick="resetFilters(this)">@SharedLocalizer["ResetFilter"]</button>
     </div>
 </div>
-
+@if(ViewBag.infection == true)
+{
+    <div class="alert alert-success" role="alert">
+        @Localizer["UserInfectionSuccess"]
+    </div>    
+}
+@if(ViewBag.infection == false)
+{
+    <div class="alert alert-info" role="alert">
+        @Localizer["UserInfectionFailed"]
+    </div>    
+}
 <table class="table table-hover">
     <thead>
     <tr>
@@ -38,15 +49,53 @@
         <tr>
             <td>@account.Firstname</td>
             <td>@account.Email</td>
-            <td class="pr-0 text-end" SetSessionsAsInfected>
-                <a type="submit" asp-action="Remove" asp-route-id="@account.Id" class="text-light btn" style="background-color:#9551FE">
-                    <i class="bi bi-trash"></i>
-                </a>
-                <a type="submit" asp-action="SetAsInfected" asp-route-id="@account.Id" class="text-light btn" style="background-color:#9551FE">
-                    <i class="bi bi-clipboard-pulse"></i>
-                </a>
+            <td class="pr-0 text-end" SetSessionsAsInfected >
+                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["MarkAccountAsInfected"]">
+                    <i class="bi bi-clipboard-pulse text-light" data-bs-toggle="modal" data-bs-target="#markAsInfected@(account.Id)Modal"></i>
+                </button>
+                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteAccount"]">
+                    <i class="bi bi-trash text-light" data-bs-target="#deleteAccount@(account.Id)Modal" data-bs-toggle="modal"></i>
+                </button>
             </td>
         </tr>
+        <div class="modal fade" id="markAsInfected@(account.Id)Modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">@Localizer["MarkAccountAsInfected"]</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @Localizer["Do you want to mark this user as infected?"]
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                        <a type="submit" asp-action="SetAsInfected" asp-route-id="@account.Id" class="btn btn-danger">
+                            @SharedLocalizer["Yes"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="deleteAccount@(account.Id)Modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">@Localizer["DeleteAccount"]</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @Localizer["Do you want to delete this user?"]
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@SharedLocalizer["Cancel"]</button>
+                        <a type="submit" asp-action="Remove" asp-route-id="@account.Id" class="btn btn-danger">
+                            @SharedLocalizer["Yes"]
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     </tbody>
 </table>
@@ -55,7 +104,8 @@
     <script>
         $(document).ready(function() {
             const params = new URLSearchParams(window.location.search);
-            
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
             $('#input-search').val(params.get('search'));
         });
         
