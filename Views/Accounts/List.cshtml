@@ -50,12 +50,16 @@
             <td>@account.Firstname</td>
             <td>@account.Email</td>
             <td class="pr-0 text-end" SetSessionsAsInfected >
-                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["MarkAccountAsInfected"]">
-                    <i class="bi bi-clipboard-pulse text-light" data-bs-toggle="modal" data-bs-target="#markAsInfected@(account.Id)Modal"></i>
-                </button>
-                <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteAccount"]">
-                    <i class="bi bi-trash text-light" data-bs-target="#deleteAccount@(account.Id)Modal" data-bs-toggle="modal"></i>
-                </button>
+                <span data-bs-toggle="modal" data-bs-target="#markAsInfected@(account.Id)Modal">
+                    <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["MarkAccountAsInfected"]">
+                        <i class="bi bi-clipboard-pulse text-light"></i>
+                    </button>
+                </span>
+                <span data-bs-target="#deleteAccount@(account.Id)Modal" data-bs-toggle="modal">
+                    <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteAccount"]">
+                        <i class="bi bi-trash text-light"></i>
+                    </button>
+                </span>
             </td>
         </tr>
         <div class="modal fade" id="markAsInfected@(account.Id)Modal" tabindex="-1" aria-hidden="true">
