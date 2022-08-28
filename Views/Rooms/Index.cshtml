@@ -66,9 +66,11 @@
                     <div class="btn" onclick="getRoomModal('@room.Id')" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["UpdateRoom"]">
                         <i class="bi bi-pen text-light"></i>
                     </div>
-                    <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteRoom"]">
-                        <i class="bi bi-trash text-light" data-bs-toggle="modal" data-bs-target="#deleteRoom@(room.Id)Modal"></i>
-                    </button>
+                    <span data-bs-toggle="modal" data-bs-target="#deleteRoom@(room.Id)Modal">
+                        <button type="button" class="btn" style="background-color:#9551FE" data-bs-toggle="tooltip" data-bs-placement="top" title="@Localizer["DeleteRoom"]">
+                            <i class="bi bi-trash text-light"></i>
+                        </button>
+                    </span>
                 </td>
             </tr>
             
