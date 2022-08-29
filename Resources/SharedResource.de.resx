@@ -246,7 +246,7 @@
     <comment>PersonalDataWarning</comment>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Telefon Nummer</value>
+    <value>Telefonnummer</value>
     <comment>PhoneNumber</comment>
   </data>
   <data name="Roles" xml:space="preserve">

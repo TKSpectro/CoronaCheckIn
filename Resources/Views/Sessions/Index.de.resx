@@ -125,7 +125,7 @@
     <comment>All Sessions</comment>
   </data>
   <data name="Filter by faculty" xml:space="preserve">
-    <value>Fakultät</value>
+    <value>Nach Fakultät filtern</value>
   </data>
   <data name="Room1" xml:space="preserve">
     <value>Raum 1</value>

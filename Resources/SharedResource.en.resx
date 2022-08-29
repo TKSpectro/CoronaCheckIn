@@ -121,7 +121,7 @@
     <value>"{0}" and "{1}" do not match.</value>
   </data>
   <data name="ErrorEmailAddress" xml:space="preserve">
-    <value>The {0} field is not a valid e-mail address.</value>
+    <value>The {0} field is not a valid email address.</value>
   </data>
   <data name="ErrorRequired" xml:space="preserve">
     <value>The field "{0}" is required.</value>
@@ -149,11 +149,11 @@
     <comment>Faculty</comment>
   </data>
   <data name="MaxDuration" xml:space="preserve">
-    <value>Max. Duration (in minutes)</value>
+    <value>Max. duration (in minutes)</value>
     <comment>MaxDuration</comment>
   </data>
   <data name="MaxParticipants" xml:space="preserve">
-    <value>Max. Participants</value>
+    <value>Max. participants</value>
     <comment>MaxParticipants</comment>
   </data>
   <data name="All" xml:space="preserve">
@@ -214,7 +214,7 @@
     <comment>Profiles</comment>
   </data>
   <data name="PersonalData" xml:space="preserve">
-    <value>PersonalData</value>
+    <value>Personal data</value>
     <comment>PersonalData</comment>
   </data>
   <data name="Profile" xml:space="preserve">
@@ -222,11 +222,11 @@
     <comment>Profile</comment>
   </data>
   <data name="ManageEmail" xml:space="preserve">
-    <value>ManageEmail</value>
+    <value>Manage Email</value>
     <comment>ManageEmail</comment>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>ChangePassword</value>
+    <value>Change password</value>
     <comment>ChangePassword</comment>
   </data>
   <data name="Download" xml:space="preserve">
@@ -246,7 +246,7 @@
     <comment>PersonalDataWarning</comment>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-    <value>Phone Number</value>
+    <value>Phone number</value>
     <comment>PhoneNumber</comment>
   </data>
   <data name="Roles" xml:space="preserve">
@@ -254,19 +254,19 @@
     <comment>Roles</comment>
   </data>
   <data name="NewEmail" xml:space="preserve">
-    <value>New Email</value>
+    <value>New email</value>
     <comment>NewEmail</comment>
   </data>
   <data name="OldPassword" xml:space="preserve">
-    <value>Old Password</value>
+    <value>Old password</value>
     <comment>OldPassword</comment>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New Password</value>
+    <value>New password</value>
     <comment>NewPassword</comment>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Confirm new Password</value>
+    <value>Confirm new password</value>
     <comment>ConfirmPassword</comment>
   </data>
   <data name="Room Details" xml:space="preserve">
@@ -284,11 +284,11 @@
     <comment>User</comment>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>StartTime</value>
+    <value>Start time</value>
     <comment>StartTime</comment>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>EndTime</value>
+    <value>End time</value>
     <comment>EndTime</comment>
   </data>
   <data name="Filter" xml:space="preserve">
@@ -311,7 +311,7 @@
     <value>Date of infection</value>
   </data>
   <data name="RoomName" xml:space="preserve">
-    <value>Room Name</value>
+    <value>Room name</value>
   </data>
   <data name="All Cases" xml:space="preserve">
     <value>All Cases</value>

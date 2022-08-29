@@ -126,7 +126,7 @@
     <comment>Filter by faculty</comment>
   </data>
   <data name="CreateRoom" xml:space="preserve">
-    <value>Create Room</value>
+    <value> Create room</value>
     <comment>CreateRoom</comment>
   </data>
   <data name="UpdateRoom" xml:space="preserve">

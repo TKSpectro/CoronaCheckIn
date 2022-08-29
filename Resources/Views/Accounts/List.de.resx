@@ -134,7 +134,7 @@
     <comment>MarkAccountAsInfected</comment>
   </data>
   <data name="Search by name" xml:space="preserve">
-    <value>Nach Namen suchen</value>
+    <value>Suche nach Namen</value>
     <comment>Search by name</comment>
   </data>
   <data name="UserInfectionFailed" xml:space="preserve">

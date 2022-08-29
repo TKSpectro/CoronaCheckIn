@@ -17,7 +17,7 @@
                 <input id="input-room-name-search" type="text" class="form-control" placeholder="@Localizer["Room1"]" style="min-width: 160px">
             </div>
             <div class="col-auto">
-                <label class="control-label" for="faculty-filter-switch">@Localizer["Filter by faculty"]</label>
+                <label class="control-label" for="faculty-filter-switch">@SharedLocalizer["Faculty"]</label>
                 <select id="faculty-filter-switch" asp-items="Html.GetEnumSelectList<Faculty>()" class="form-select" style="width: 128px">
                     <option value="-1">@SharedLocalizer["All"]</option>
                 </select>
