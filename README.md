@@ -1,6 +1,6 @@
 # Covid Check-in
 
-## Local development
+## Setup
 
 ```bash
 # -d runs it in detached mode
@@ -12,29 +12,11 @@ libman restore
 # update the database with all migrations
 dotnet ef database update
 
-# If you want to use some seed data then call this run this
+# If you want to get some seeded data then run the application with the following command
 dotnet run seed
 
 # can use "dotnet watch" for development, but its sometimes buggy
 dotnet run
-```
-
-## Database Migrations
-You will have to install the ef tool for the dotnet cli
-
-```bash
-# change "init" (title of the migration)
-dotnet ef migrations add init
-```
-
-Bring your database up to the newest state/migration
-```bash
-dotnet ef database update
-```
-
-Seed your database with good testing data
-```bash
-dotnet run seed
 ```
 
 ## Enabling actual email sending
@@ -59,8 +41,9 @@ The appsettings.Local.json can be copied from the Development one or created by 
 }
 ```
 
-## Enabling the Frontoffice Test Page
+## Enabling the frontoffice test page
 
+You can activate a frontoffice dashboard page for testing purposes. This basically emulates the app usage or a future development step for coronacheckin.
 This can be done by adding a flag in the appsettings.json
 Add this to the root of your appsettings.json file or change it in the appsettings.Development.json
 ```json
@@ -70,6 +53,24 @@ Add this to the root of your appsettings.json file or change it in the appsettin
 ```
 
 ## Examples
+
+### Database Migrations
+You will have to install the ef tool for the dotnet cli
+
+```bash
+# change "init" (title of the migration)
+dotnet ef migrations add init
+```
+
+Bring your database up to the newest state/migration
+```bash
+dotnet ef database update
+```
+
+Seed your database with good testing data
+```bash
+dotnet run seed
+```
 
 ### Read from appsettings.json
 
