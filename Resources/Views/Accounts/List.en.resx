@@ -141,4 +141,8 @@
     <value>User successfully marked as infected</value>
     <comment>UserInfectionSuccess</comment>
   </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+    <comment>Username</comment>
+  </data>
 </root>

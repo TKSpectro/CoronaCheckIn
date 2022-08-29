@@ -142,7 +142,7 @@
     <comment>Room1</comment>
   </data>
   <data name="Search by room-name" xml:space="preserve">
-    <value>Search by name</value>
+    <value>Search by room name</value>
     <comment>Search by room-name</comment>
   </data>
   <data name="DeleteRoom" xml:space="preserve">
