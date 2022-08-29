@@ -23,11 +23,11 @@
                 <label asp-for="Input.PhoneNumber" class="form-label">@SharedLocalizer["PhoneNumber"]</label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <div class="form-floating  mb-3">
-
-                <input asp-for="Roles" class="form-control" disabled/>
-                <label asp-for="Roles" class="form-label">@SharedLocalizer["Roles"]</label>
-            </div>
+            @* <div class="form-floating  mb-3"> *@
+            @* *@
+            @*     <input asp-for="Roles" class="form-control" disabled/> *@
+            @*     <label asp-for="Roles" class="form-label">@SharedLocalizer["Roles"]</label> *@
+            @* </div> *@
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg text-light" style="background-color:#9551FE ">@SharedLocalizer["Save"]</button>
         </form>
     </div>
